@@ -1,7 +1,7 @@
 database:
     driverClass: org.postgresql.Driver
     url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
+    user: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
 
 server:
