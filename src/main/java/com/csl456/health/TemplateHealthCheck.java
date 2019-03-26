@@ -1,4 +1,4 @@
-package com.csl456.application;
+package com.csl456.health;
 
 import com.codahale.metrics.health.HealthCheck;
 

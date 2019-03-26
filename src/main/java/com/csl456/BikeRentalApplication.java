@@ -1,4 +1,6 @@
-package com.csl456.application;
+package com.csl456;
+
+import com.csl456.health.TemplateHealthCheck;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -17,7 +19,6 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
 
 	@Override
 	public void run(BikeRentalAppConfiguration configuration, Environment environment) {
-		final TemplateHealthCheck healthCheck = new TemplateHealthCheck();
-		environment.healthChecks().register("templateHealthCheck", healthCheck);
+		environment.healthChecks().register("templateHealthCheck", new TemplateHealthCheck());
 	}
 }
