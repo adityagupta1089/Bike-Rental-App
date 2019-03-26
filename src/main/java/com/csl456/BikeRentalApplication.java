@@ -8,6 +8,8 @@ import com.csl456.db.CycleDAO;
 import com.csl456.resources.CycleResource;
 
 import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -32,6 +34,8 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
 	@Override
 	public void initialize(Bootstrap<BikeRentalAppConfiguration> bootstrap) {
 		LOGGER.info("Initializing configuration");
+		bootstrap.setConfigurationSourceProvider(new SubstitutingSourceProvider(
+				bootstrap.getConfigurationSourceProvider(), new EnvironmentVariableSubstitutor(true)));
 		bootstrap.addBundle(new MigrationsBundle<BikeRentalAppConfiguration>() {
 			@Override
 			public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
