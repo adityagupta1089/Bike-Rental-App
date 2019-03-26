@@ -1,4 +1,9 @@
-# Bike Rental Application 
+# Bike Rental Application
+[![Build Status](https://travis-ci.com/adityagupta1089/Bike-Rental-App.svg?token=4v3vJQcDSzzVad8yn6JN&branch=master)](https://travis-ci.com/adityagupta1089/Bike-Rental-App)
+
+## Introduction 
+This is the server componenet of an android application that is used for renting
+or leasing cycles.
 
 ## Requirements
 - [Maven](https://maven.apache.org/)
