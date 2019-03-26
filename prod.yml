@@ -1,9 +1,9 @@
 database:
     driverClass: org.postgresql.Driver
-    user: unused-user
-    password: unused-pw
-    url: unused-url
-  
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+
 server:
     type: simple
     applicationContextPath: /
@@ -12,10 +12,6 @@ server:
         port: 8080
 
 logging:
-    level: INFO
-    loggers:
-        com.csl456: DEBUG    
-        org.hibernate.SQL: ALL
-    
+    level: INFO    
     appenders:
         - type: console

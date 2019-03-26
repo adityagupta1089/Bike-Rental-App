@@ -37,6 +37,15 @@
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-hibernate</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.dropwizard</groupId>
+			<artifactId>dropwizard-migrations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901-1.jdbc4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
