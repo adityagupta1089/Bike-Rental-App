@@ -19,11 +19,11 @@ import org.hibernate.validator.constraints.Length;
 @Table(name = "person")
 @NamedQueries({
 		@NamedQuery(
-				name = "com.csl456.core.Person.findAll",
+				name = "Person.findAll",
 				query = "SELECT p FROM Person p"
 		),
 		@NamedQuery(
-				name = "com.csl456.core.Person.findById",
+				name = "Person.findById",
 				query = "SELECT p FROM Person p WHERE p.id = :id"
 		)
 })

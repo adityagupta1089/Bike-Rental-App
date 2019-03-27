@@ -4,8 +4,8 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/test_coverage)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App/test_coverage)
 
 ## Introduction 
-This is the server componenet of an android application that is used for renting
-or leasing cycles.
+This is the server component of an application that is used for renting or 
+leasing cycles.
 
 ## Requirements
 - [Maven](https://maven.apache.org/)

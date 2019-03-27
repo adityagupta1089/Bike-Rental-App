@@ -24,6 +24,6 @@ public class PersonDAO extends AbstractDAO<Person> {
 
 	@SuppressWarnings("unchecked")
 	public List<Person> findAll() {
-		return list(namedQuery("com.csl456.core.Person.findAll"));
+		return list(namedQuery("Person.findAll"));
 	}
 }

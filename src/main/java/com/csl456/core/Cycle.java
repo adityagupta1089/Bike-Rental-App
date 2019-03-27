@@ -19,12 +19,9 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 @Table(name = "cycle")
 @NamedQueries({
+		@NamedQuery(name = "Cycle.findAll", query = "SELECT c FROM Cycle c"),
 		@NamedQuery(
-				name = "com.csl456.core.Cycle.findAll",
-				query = "SELECT c FROM Cycle c"
-		),
-		@NamedQuery(
-				name = "com.csl456.core.Cycle.findById",
+				name = "Cycle.findById",
 				query = "SELECT c FROM Cycle c WHERE c.id = :id"
 		)
 })

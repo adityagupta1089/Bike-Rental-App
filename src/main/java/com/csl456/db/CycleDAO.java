@@ -25,7 +25,7 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 
 	@SuppressWarnings("unchecked")
 	public List<Cycle> findAll() {
-		return list(namedQuery("com.csl456.core.Cycle.findAll"));
+		return list(namedQuery("Cycle.findAll"));
 	}
 
 }
