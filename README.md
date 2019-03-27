@@ -17,9 +17,15 @@ or leasing cycles.
 ## Incremental building
 1. `mvn compile install`
 
+## Setting up database
+1. Install [postgreSQL](https://www.postgresql.org/download/)
+2. Open pgAdmin and create a user name with password the same as in `dev.yml` database user and password.
+3. Create a database the same as in `dev.yml` database url.
+4. Grant that user access to the database. 
 
 ## Running locally
 **Note**: `config.yml` refers to `dev.yml` or `prod.yml`
+
 `java -jar jarname.jar server config.yml`
 
 ## Database Operations:
@@ -35,8 +41,6 @@ or leasing cycles.
 
 ### Migrate database changes:
 Please use `--dry-run` first
-`java -jar jarname.jar db migrate config.yml`
 
-### Generate documentation:
-`java -jar jarname.jar db generate-docs config.yml ~/db-docs/`
+`java -jar jarname.jar db migrate config.yml`
 

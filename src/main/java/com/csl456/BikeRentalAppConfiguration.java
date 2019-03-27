@@ -15,7 +15,5 @@ public class BikeRentalAppConfiguration extends Configuration {
 	@JsonProperty("database")
 	private DataSourceFactory database = new DataSourceFactory();
 
-	public DataSourceFactory getDataSourceFactory() {
-		return database;
-	}
+	public DataSourceFactory getDataSourceFactory() { return database; }
 }

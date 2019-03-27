@@ -1,8 +1,8 @@
 database:
-  driverClass: org.postgresql.Driver
-  user: unused-user
-  password: unused-pw
-  url: unused-url
+    driverClass: org.postgresql.Driver
+    user: bike_rental_user
+    password: RiVerbit
+    url: jdbc:postgresql://localhost:5432/bike_rental_db
 
 server:
     type: simple
@@ -15,7 +15,6 @@ logging:
     level: INFO
     loggers:
         com.csl456: DEBUG    
-        org.hibernate.SQL: ALL
     
     appenders:
         - type: console

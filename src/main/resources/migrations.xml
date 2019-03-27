@@ -5,5 +5,31 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-
+         
+	<changeSet id="1" author="aditya">
+        <createTable tableName="person">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contactNumber" type="int"/>
+            <column name="email" type="varchar(255)"/>
+        </createTable>
+        
+        <createTable tableName="cycle">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="brand" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ownerid" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_owner_id" references="person(id)"/>
+            </column>
+            <column name="location" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    
 </databaseChangeLog>
