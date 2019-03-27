@@ -1,5 +1,7 @@
 # Bike Rental Application
 [![Build Status](https://travis-ci.com/adityagupta1089/Bike-Rental-App.svg?token=4v3vJQcDSzzVad8yn6JN&branch=master)](https://travis-ci.com/adityagupta1089/Bike-Rental-App)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/maintainability)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/test_coverage)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App/test_coverage)
 
 ## Introduction 
 This is the server componenet of an android application that is used for renting
