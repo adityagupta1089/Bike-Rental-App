@@ -1,7 +1,7 @@
 # Bike Rental Application
 [![Build Status](https://travis-ci.com/adityagupta1089/Bike-Rental-App.svg?token=4v3vJQcDSzzVad8yn6JN&branch=master)](https://travis-ci.com/adityagupta1089/Bike-Rental-App)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/maintainability)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/test_coverage)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App/test_coverage)
+[![Coverage Status](https://coveralls.io/repos/github/adityagupta1089/Bike-Rental-App/badge.svg?branch=master)](https://coveralls.io/github/adityagupta1089/Bike-Rental-App?branch=master)
 
 ## 1. Introduction 
 This is the server component of an application that is used for renting or leasing cycles.
@@ -26,27 +26,17 @@ git clone https://github.com/adityagupta1089/Bike-Rental-App.git
 3. Create a database the same as in `dev.yml` database url.
 4. Grant that user access to the database. 
 
-### 3.3 Importing into IDE
+### 3.3 Importing into Eclipse IDE
 1. Open terminal
 2. `mvn dependency:resolve`
 3. `mvn clean compile install`
-4. Follow IDE specific steps
-5. Can be run using: 
+4. `mvn eclipse:eclipse -DdownloadSources=true`
+5. From eclipse, File –> Import –> Existing Project into workspace
+6. Create initial Database Tables: `java -jar target/bike-rental-app-0.1.jar db migrate dev.yml`
+7. Can be run using `com.csl456.BikeRentalApplication server dev.yml` or
 ```
 java -jar bike-rental-app-0.1.jar server dev.yml
 ```
-
-#### 3.3.1. Eclipse
-1. `mvn eclipse:eclipse -DdownloadSources=true`
-2. From eclipse, File –> Import –> Existing Project into workspace
-3. Create initial Database Tables: `java -jar target/bike-rental-app-0.1.jar db migrate dev.yml`
-4. Can be run using `com.csl456.BikeRentalApplication server dev.yml`
-
-#### 3.3.2. IntelliJ IDEA
-1. Import project (type `Maven`)
-2. You may need to setup jdk path to `java8`
-3. Create initial Database Tables: `java -jar target/bike-rental-app-0.1.jar db migrate dev.yml`
-4. Can be run using `com.csl456.BikeRentalApplication server dev.yml`
 
 ### 3.4 Incremental building (after making changes)
 ```
