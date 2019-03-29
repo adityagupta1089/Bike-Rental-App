@@ -43,9 +43,10 @@ java -jar bike-rental-app-0.1.jar server dev.yml
 4. Can be run using `com.csl456.BikeRentalApplication server dev.yml`
 
 #### 3.3.2. IntelliJ IDEA
-```
-<< TODO Pending >>
-```
+1. Import project (type `Maven`)
+2. You may need to setup jdk path to `java8`
+3. Create initial Database Tables: `java -jar target/bike-rental-app-0.1.jar db migrate dev.yml`
+4. Can be run using `com.csl456.BikeRentalApplication server dev.yml`
 
 ### 3.4 Incremental building (after making changes)
 ```

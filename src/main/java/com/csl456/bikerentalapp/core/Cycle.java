@@ -1,4 +1,4 @@
-package com.csl456.core;
+package com.csl456.bikerentalapp.core;
 
 import java.util.Objects;
 
@@ -19,11 +19,11 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 @Table(name = "cycle")
 @NamedQueries({
-		@NamedQuery(name = "Cycle.findAll", query = "SELECT c FROM Cycle c"),
-		@NamedQuery(
-				name = "Cycle.findById",
-				query = "SELECT c FROM Cycle c WHERE c.id = :id"
-		)
+	@NamedQuery(name = "Cycle.findAll", query = "SELECT c FROM Cycle c"),
+	@NamedQuery(
+		name = "Cycle.findById",
+		query = "SELECT c FROM Cycle c WHERE c.id = :id"
+	)
 })
 public class Cycle {
 
@@ -46,35 +46,37 @@ public class Cycle {
 
 	}
 
-	public int getId() { return id; }
-
-	public void setId(int id) { this.id = id; }
-
-	public String getBrand() { return brand; }
-
-	public void setBrand(String brand) { this.brand = brand; }
-
-	public Location getLocation() { return location; }
-
-	public void setLocation(Location location) { this.location = location; }
-
-	public Person getOwner() { return owner; }
-
-	public void setOwner(Person owner) { this.owner = owner; }
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(brand, id, location, owner);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof Cycle)) return false;
 		Cycle other = (Cycle) obj;
-		return Objects.equals(brand, other.brand) && id == other.id
-				&& location == other.location && owner == other.owner;
+		return Objects.equals(brand, other.brand)
+				&& id == other.id
+				&& location == other.location
+				&& owner == other.owner;
 	}
+
+	public String getBrand() { return brand; }
+
+	public int getId() { return id; }
+
+	public Location getLocation() { return location; }
+
+	public Person getOwner() { return owner; }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(brand, id, location, owner);
+	}
+
+	public void setBrand(String brand) { this.brand = brand; }
+
+	public void setId(int id) { this.id = id; }
+
+	public void setLocation(Location location) { this.location = location; }
+
+	public void setOwner(Person owner) { this.owner = owner; }
 
 }

@@ -1,4 +1,4 @@
-package com.csl456;
+package com.csl456.bikerentalapp;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

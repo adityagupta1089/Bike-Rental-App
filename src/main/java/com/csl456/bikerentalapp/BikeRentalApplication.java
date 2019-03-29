@@ -1,14 +1,14 @@
-package com.csl456;
+package com.csl456.bikerentalapp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.csl456.core.Cycle;
-import com.csl456.core.Person;
-import com.csl456.db.CycleDAO;
-import com.csl456.db.PersonDAO;
-import com.csl456.resources.CycleResource;
-import com.csl456.resources.PersonResource;
+import com.csl456.bikerentalapp.core.Cycle;
+import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.db.CycleDAO;
+import com.csl456.bikerentalapp.db.PersonDAO;
+import com.csl456.bikerentalapp.resources.CycleResource;
+import com.csl456.bikerentalapp.resources.PersonResource;
 
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -20,39 +20,43 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 public class BikeRentalApplication
-		extends Application<BikeRentalAppConfiguration> {
+	extends Application<BikeRentalAppConfiguration> {
 	private static final Logger LOGGER
-			= LoggerFactory.getLogger(BikeRentalAppConfiguration.class);
+		= LoggerFactory.getLogger(BikeRentalAppConfiguration.class);
 
 	public static void main(String[] args) throws Exception {
 		new BikeRentalApplication().run(args);
 	}
 
 	private final HibernateBundle<BikeRentalAppConfiguration> hibernateBundle
-			= new HibernateBundle<BikeRentalAppConfiguration>(
-					Cycle.class, Person.class
+		= new HibernateBundle<BikeRentalAppConfiguration>(
+			Cycle.class,
+			Person.class
+		) {
+			@Override
+			public DataSourceFactory getDataSourceFactory(
+				BikeRentalAppConfiguration configuration
 			) {
-				@Override
-				public DataSourceFactory getDataSourceFactory(
-						BikeRentalAppConfiguration configuration
-				) {
-					return configuration.getDataSourceFactory();
-				}
-			};
+				return configuration.getDataSourceFactory();
+			}
+		};
+
+	@Override
+	public String getName() { return "bike-rental-app"; }
 
 	@Override
 	public void initialize(Bootstrap<BikeRentalAppConfiguration> bootstrap) {
 		LOGGER.info("Initializing configuration");
 		bootstrap.setConfigurationSourceProvider(
-				new SubstitutingSourceProvider(
-						bootstrap.getConfigurationSourceProvider(),
-						new EnvironmentVariableSubstitutor(true)
-				)
+			new SubstitutingSourceProvider(
+				bootstrap.getConfigurationSourceProvider(),
+				new EnvironmentVariableSubstitutor(true)
+			)
 		);
 		bootstrap.addBundle(new MigrationsBundle<BikeRentalAppConfiguration>() {
 			@Override
 			public DataSourceFactory getDataSourceFactory(
-					BikeRentalAppConfiguration configuration
+				BikeRentalAppConfiguration configuration
 			) {
 				return configuration.getDataSourceFactory();
 			}
@@ -62,19 +66,14 @@ public class BikeRentalApplication
 
 	@Override
 	public void run(
-			BikeRentalAppConfiguration configuration, Environment environment
+		BikeRentalAppConfiguration configuration, Environment environment
 	) {
 		LOGGER.info("Starting the Bike Rental App");
 		final CycleDAO cycleDao
-				= new CycleDAO(hibernateBundle.getSessionFactory());
+			= new CycleDAO(hibernateBundle.getSessionFactory());
 		final PersonDAO personDao
-				= new PersonDAO(hibernateBundle.getSessionFactory());
-		environment	.jersey()
-					.register(new CycleResource(cycleDao));
-		environment	.jersey()
-					.register(new PersonResource(personDao));
+			= new PersonDAO(hibernateBundle.getSessionFactory());
+		environment.jersey().register(new CycleResource(cycleDao));
+		environment.jersey().register(new PersonResource(personDao));
 	}
-
-	@Override
-	public String getName() { return "bike-rental-app"; }
 }

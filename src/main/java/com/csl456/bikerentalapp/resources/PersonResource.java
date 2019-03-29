@@ -1,4 +1,4 @@
-package com.csl456.resources;
+package com.csl456.bikerentalapp.resources;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.csl456.core.Person;
-import com.csl456.db.PersonDAO;
+import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.db.PersonDAO;
 
 import io.dropwizard.hibernate.UnitOfWork;
 

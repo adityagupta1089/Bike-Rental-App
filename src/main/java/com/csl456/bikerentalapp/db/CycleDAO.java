@@ -1,11 +1,11 @@
-package com.csl456.db;
+package com.csl456.bikerentalapp.db;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.SessionFactory;
 
-import com.csl456.core.Cycle;
+import com.csl456.bikerentalapp.core.Cycle;
 
 import io.dropwizard.hibernate.AbstractDAO;
 
@@ -15,10 +15,6 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 		super(factory);
 	}
 
-	public Optional<Cycle> findById(Long id) {
-		return Optional.ofNullable(get(id));
-	}
-
 	public Cycle create(Cycle cycle) {
 		return persist(cycle);
 	}
@@ -26,6 +22,10 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 	@SuppressWarnings("unchecked")
 	public List<Cycle> findAll() {
 		return list(namedQuery("Cycle.findAll"));
+	}
+
+	public Optional<Cycle> findById(Long id) {
+		return Optional.ofNullable(get(id));
 	}
 
 }
