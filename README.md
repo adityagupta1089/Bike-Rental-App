@@ -1,7 +1,8 @@
 # Bike Rental Application
 [![Build Status](https://travis-ci.com/adityagupta1089/Bike-Rental-App.svg?token=4v3vJQcDSzzVad8yn6JN&branch=master)](https://travis-ci.com/adityagupta1089/Bike-Rental-App)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/maintainability)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App/maintainability)
-[![Coverage Status](https://coveralls.io/repos/github/adityagupta1089/Bike-Rental-App/badge.svg?branch=master)](https://coveralls.io/github/adityagupta1089/Bike-Rental-App?branch=master)
+[![codecov](https://codecov.io/gh/adityagupta1089/Bike-Rental-App/branch/master/graph/badge.svg)](https://codecov.io/gh/adityagupta1089/Bike-Rental-App)
+[![Known Vulnerabilities](https://snyk.io/test/github/adityagupta1089/Bike-Rental-App/badge.svg)](https://snyk.io/test/github/adityagupta1089/Biek-Rental-App) 
 
 ## 1. Introduction 
 This is the server component of an application that is used for renting or leasing cycles.
