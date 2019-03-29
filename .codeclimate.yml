@@ -4,7 +4,7 @@ engines:
     checkstyle:
         enabled: true
         config:
-        file: "checkstyle.xml"
+            file: "checkstyle.xml"
 
 ratings:
     paths:
