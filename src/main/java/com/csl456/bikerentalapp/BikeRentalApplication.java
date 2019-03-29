@@ -19,10 +19,11 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-public class BikeRentalApplication
-	extends Application<BikeRentalAppConfiguration> {
-	private static final Logger LOGGER
-		= LoggerFactory.getLogger(BikeRentalAppConfiguration.class);
+public class BikeRentalApplication extends
+	Application<BikeRentalAppConfiguration> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(
+		BikeRentalAppConfiguration.class
+	);
 
 	public static void main(String[] args) throws Exception {
 		new BikeRentalApplication().run(args);
@@ -69,10 +70,12 @@ public class BikeRentalApplication
 		BikeRentalAppConfiguration configuration, Environment environment
 	) {
 		LOGGER.info("Starting the Bike Rental App");
-		final CycleDAO cycleDao
-			= new CycleDAO(hibernateBundle.getSessionFactory());
-		final PersonDAO personDao
-			= new PersonDAO(hibernateBundle.getSessionFactory());
+		final CycleDAO cycleDao = new CycleDAO(
+			hibernateBundle.getSessionFactory()
+		);
+		final PersonDAO personDao = new PersonDAO(
+			hibernateBundle.getSessionFactory()
+		);
 		environment.jersey().register(new CycleResource(cycleDao));
 		environment.jersey().register(new PersonResource(personDao));
 	}

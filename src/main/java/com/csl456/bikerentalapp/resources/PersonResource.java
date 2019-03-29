@@ -32,7 +32,7 @@ public class PersonResource {
 
 	@GET
 	@UnitOfWork
-	public List<Person> listPeople() {
+	public List<Person> listPerson() {
 		return personDAO.findAll();
 	}
 }

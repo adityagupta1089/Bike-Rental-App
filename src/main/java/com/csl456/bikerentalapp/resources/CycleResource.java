@@ -26,13 +26,13 @@ public class CycleResource {
 
 	@POST
 	@UnitOfWork
-	public Cycle createPerson(Cycle cycle) {
+	public Cycle createCycle(Cycle cycle) {
 		return cycleDAO.create(cycle);
 	}
 
 	@GET
 	@UnitOfWork
-	public List<Cycle> listPeople() {
+	public List<Cycle> listCycle() {
 		return cycleDAO.findAll();
 	}
 
