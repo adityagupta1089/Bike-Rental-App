@@ -1,19 +1,25 @@
 package com.csl456.bikerentalapp.core;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "person")
@@ -24,12 +30,15 @@ import org.hibernate.validator.constraints.Length;
 		query = "SELECT p FROM Person p WHERE p.id = :id"
 	)
 })
+@JsonIdentityInfo(
+	generator = ObjectIdGenerators.PropertyGenerator.class,
+	property = "id"
+)
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@NotNull
 	@Length(max = 255)
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -42,15 +51,11 @@ public class Person {
 	@Column(name = "email", nullable = false)
 	private String email;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+	private Set<Cycle> cycles = new HashSet<>();
+
 	public Person() {
 
-	}
-
-	public Person(int id, String name, long contactNumber, String email) {
-		this.id = id;
-		this.name = name;
-		this.contactNumber = contactNumber;
-		this.email = email;
 	}
 
 	@Override
@@ -67,6 +72,8 @@ public class Person {
 
 	public long getContactNumber() { return contactNumber; }
 
+	public Set<Cycle> getCycles() { return cycles; }
+
 	public String getEmail() { return email; }
 
 	public int getId() { return id; }
@@ -81,6 +88,8 @@ public class Person {
 	public void setContactNumber(long contactNumber) {
 		this.contactNumber = contactNumber;
 	}
+
+	public void setCycles(Set<Cycle> cycles) { this.cycles = cycles; }
 
 	public void setEmail(String email) { this.email = email; }
 

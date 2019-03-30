@@ -31,21 +31,25 @@ import io.dropwizard.testing.junit5.ResourceExtension;
 class PersonResourceTest {
 
 	private static final PersonDAO PERSON_DAO = mock(PersonDAO.class);
-	
+
 	public static final ResourceExtension RESOURCES = ResourceExtension
 		.builder()
 		.addResource(new PersonResource(PERSON_DAO))
 		.build();
-	
+
 	private ArgumentCaptor<Person> personCaptor = ArgumentCaptor.forClass(
 		Person.class
 	);
-	
+
 	private Person person;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		person = new Person(123, "Abcd Efgh", 1234567890, "email@example.com");
+		person = new Person();
+		person.setId(123);
+		person.setName("Abcd Efgh");
+		person.setContactNumber(1234567890);
+		person.setEmail("email@example.com");
 	}
 
 	@AfterEach

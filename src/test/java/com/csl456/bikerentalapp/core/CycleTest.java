@@ -9,31 +9,39 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.dropwizard.jackson.Jackson;
 
-public class PersonTest {
+public class CycleTest {
 	private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
 	@Test
 	public void serializesToJSON() throws Exception {
 		assertEquals(
-			MAPPER.readValue(fixture("fixtures/person.json"), Person.class),
-			getPerson()
+			MAPPER.readValue(fixture("fixtures/cycle.json"), Cycle.class),
+			getCycle()
 		);
 	}
 
 	@Test
 	public void deserializesFromJSON() throws Exception {
 		assertEquals(
-			MAPPER.readValue(fixture("fixtures/person.json"), Person.class),
-			getPerson()
+			MAPPER.readValue(fixture("fixtures/cycle.json"), Cycle.class),
+			getCycle()
 		);
 	}
 
-	public static Person getPerson() {
-		Person person = new Person();
-		person.setId(123);
-		person.setName("Abcd Efgh");
-		person.setContactNumber(1234567890);
-		person.setEmail("email@example.com");
-		return person;
+	public static Cycle getCycle() {
+		Person owner = new Person();
+		owner.setId(456);
+		owner.setName("OwnerX");
+		owner.setContactNumber(1234567890);
+		owner.setEmail("owner@example.com");
+
+		Cycle cycle = new Cycle();
+		cycle.setId(123);
+		cycle.setBrand("BrandX");
+		cycle.setLocation(Location.LOCATION_1);
+		cycle.setOwner(owner);
+
+		return cycle;
 	}
+
 }

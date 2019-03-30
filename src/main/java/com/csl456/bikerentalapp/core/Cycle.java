@@ -2,6 +2,7 @@ package com.csl456.bikerentalapp.core;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,9 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "cycle")
 @NamedQueries({
@@ -25,6 +29,10 @@ import org.hibernate.validator.constraints.Length;
 		query = "SELECT c FROM Cycle c WHERE c.id = :id"
 	)
 })
+@JsonIdentityInfo(
+	generator = ObjectIdGenerators.PropertyGenerator.class,
+	property = "id"
+)
 public class Cycle {
 
 	@Id
@@ -38,8 +46,8 @@ public class Cycle {
 	@Column(name = "location", nullable = false)
 	private Location location;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ownerid", referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "ownerid", nullable = false)
 	private Person owner;
 
 	public Cycle() {
@@ -55,7 +63,7 @@ public class Cycle {
 		return Objects.equals(brand, other.brand)
 				&& id == other.id
 				&& location == other.location
-				&& owner == other.owner;
+				&& Objects.equals(owner, other.owner);
 	}
 
 	public String getBrand() { return brand; }
@@ -78,5 +86,16 @@ public class Cycle {
 	public void setLocation(Location location) { this.location = location; }
 
 	public void setOwner(Person owner) { this.owner = owner; }
+
+	@Override
+	public String toString() {
+		return "Cycle [id="
+				+ id
+				+ ", brand="
+				+ brand
+				+ ", location="
+				+ location
+				+ "]";
+	}
 
 }
