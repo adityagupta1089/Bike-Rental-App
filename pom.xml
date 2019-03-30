@@ -206,14 +206,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<configuration>
-					<instrumentation>
-						<ignoreTrivial>true</ignoreTrivial>
-						<!-- ignores>
-							<ignore>.*toString.*</ignore>
-							<ignore>.*hashCode.*</ignore>
-							<ignore>.*equals.*</ignore>
-						</ignores-->
-					</instrumentation>
 					<formats>
 						<format>html</format>
 						<format>xml</format>
