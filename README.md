@@ -1,8 +1,8 @@
 # Bike Rental Application
-[![Build Status](https://travis-ci.com/adityagupta1089/Bike-Rental-App.svg?token=4v3vJQcDSzzVad8yn6JN&branch=master)](https://travis-ci.com/adityagupta1089/Bike-Rental-App)
-[![Maintainability](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/maintainability)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App/maintainability)
-[![codecov](https://codecov.io/gh/adityagupta1089/Bike-Rental-App/branch/master/graph/badge.svg)](https://codecov.io/gh/adityagupta1089/Bike-Rental-App)
-[![Known Vulnerabilities](https://snyk.io/test/github/adityagupta1089/Bike-Rental-App/badge.svg)](https://snyk.io/test/github/adityagupta1089/Bike-Rental-App) 
+[![Build Status](https://travis-ci.com/adityagupta1089/Bike-Rental-App-Backend.svg?token=4v3vJQcDSzzVad8yn6JN&branch=master)](https://travis-ci.com/adityagupta1089/Bike-Rental-App-Backend)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7eafcae08a876b764447/maintainability)](https://codeclimate.com/github/adityagupta1089/Bike-Rental-App-Backend/maintainability)
+[![codecov](https://codecov.io/gh/adityagupta1089/Bike-Rental-App-Backend/branch/master/graph/badge.svg)](https://codecov.io/gh/adityagupta1089/Bike-Rental-App-Backend)
+[![Known Vulnerabilities](https://snyk.io/test/github/adityagupta1089/Bike-Rental-App-Backend/badge.svg)](https://snyk.io/test/github/adityagupta1089/Bike-Rental-App-Backend) 
 
 ## 1. Introduction 
 This is the server component of an application that is used for renting or leasing cycles.
@@ -18,7 +18,7 @@ This is the server component of an application that is used for renting or leasi
 
 ### 3.1 Cloning
 ```
-git clone https://github.com/adityagupta1089/Bike-Rental-App.git
+git clone https://github.com/adityagupta1089/Bike-Rental-App-Backend.git
 ```
 
 ### 3.2. Setting up database
