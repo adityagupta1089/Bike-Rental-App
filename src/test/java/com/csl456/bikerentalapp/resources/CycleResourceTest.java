@@ -45,26 +45,6 @@ class CycleResourceTest {
 
 	private Cycle cycle;
 
-	@BeforeEach
-	void setUp() throws Exception {
-		Person owner = new Person();
-		owner.setId(456);
-		owner.setName("OwnerX");
-		owner.setContactNumber(1234567890);
-		owner.setEmail("owner@example.com");
-
-		cycle = new Cycle();
-		cycle.setId(123);
-		cycle.setBrand("BrandX");
-		cycle.setLocation(Location.LOCATION_1);
-		cycle.setOwner(owner);
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-		reset(CYCLE_DAO);
-	}
-
 	@Test
 	void createCycle() {
 		when(CYCLE_DAO.create(any(Cycle.class))).thenReturn(cycle);
@@ -87,6 +67,26 @@ class CycleResourceTest {
 
 		verify(CYCLE_DAO).findAll();
 		assertThat(response).containsAll(cycles);
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
+		Person owner = new Person();
+		owner.setId(456);
+		owner.setName("OwnerX");
+		owner.setContactNumber(1234567890);
+		owner.setEmail("owner@example.com");
+
+		cycle = new Cycle();
+		cycle.setId(123);
+		cycle.setBrand("BrandX");
+		cycle.setLocation(Location.LOCATION_1);
+		cycle.setOwner(owner);
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
+		reset(CYCLE_DAO);
 	}
 
 }

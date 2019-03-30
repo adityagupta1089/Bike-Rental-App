@@ -12,12 +12,13 @@ import io.dropwizard.jackson.Jackson;
 public class PersonTest {
 	private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
-	@Test
-	public void serializesToJSON() throws Exception {
-		assertEquals(
-			MAPPER.readValue(fixture("fixtures/person.json"), Person.class),
-			getPerson()
-		);
+	public static Person getPerson() {
+		Person person = new Person();
+		person.setId(123);
+		person.setName("Abcd Efgh");
+		person.setContactNumber(1234567890);
+		person.setEmail("email@example.com");
+		return person;
 	}
 
 	@Test
@@ -28,12 +29,11 @@ public class PersonTest {
 		);
 	}
 
-	public static Person getPerson() {
-		Person person = new Person();
-		person.setId(123);
-		person.setName("Abcd Efgh");
-		person.setContactNumber(1234567890);
-		person.setEmail("email@example.com");
-		return person;
+	@Test
+	public void serializesToJSON() throws Exception {
+		assertEquals(
+			MAPPER.readValue(fixture("fixtures/person.json"), Person.class),
+			getPerson()
+		);
 	}
 }

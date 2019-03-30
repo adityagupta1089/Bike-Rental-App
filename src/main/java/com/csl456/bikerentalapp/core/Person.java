@@ -65,8 +65,7 @@ public class Person {
 		if (!(obj instanceof Person)) return false;
 		Person other = (Person) obj;
 		return contactNumber == other.contactNumber
-				&& Objects.equals(email, other.email)
-				&& id == other.id
+				&& Objects.equals(email, other.email) && id == other.id
 				&& Objects.equals(name, other.name);
 	}
 
@@ -100,14 +99,8 @@ public class Person {
 	@Override
 	public String toString() {
 		return "Person [id="
-				+ id
-				+ ", name="
-				+ name
-				+ ", contactNumber="
-				+ contactNumber
-				+ ", email="
-				+ email
-				+ "]";
+				+ id + ", name=" + name + ", contactNumber=" + contactNumber
+				+ ", email=" + email + "]";
 	}
 
 }

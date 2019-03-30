@@ -12,22 +12,6 @@ import io.dropwizard.jackson.Jackson;
 public class CycleTest {
 	private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
-	@Test
-	public void serializesToJSON() throws Exception {
-		assertEquals(
-			MAPPER.readValue(fixture("fixtures/cycle.json"), Cycle.class),
-			getCycle()
-		);
-	}
-
-	@Test
-	public void deserializesFromJSON() throws Exception {
-		assertEquals(
-			MAPPER.readValue(fixture("fixtures/cycle.json"), Cycle.class),
-			getCycle()
-		);
-	}
-
 	public static Cycle getCycle() {
 		Person owner = new Person();
 		owner.setId(456);
@@ -42,6 +26,22 @@ public class CycleTest {
 		cycle.setOwner(owner);
 
 		return cycle;
+	}
+
+	@Test
+	public void deserializesFromJSON() throws Exception {
+		assertEquals(
+			MAPPER.readValue(fixture("fixtures/cycle.json"), Cycle.class),
+			getCycle()
+		);
+	}
+
+	@Test
+	public void serializesToJSON() throws Exception {
+		assertEquals(
+			MAPPER.readValue(fixture("fixtures/cycle.json"), Cycle.class),
+			getCycle()
+		);
 	}
 
 }

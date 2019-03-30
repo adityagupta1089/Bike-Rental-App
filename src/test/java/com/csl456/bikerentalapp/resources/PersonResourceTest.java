@@ -43,20 +43,6 @@ class PersonResourceTest {
 
 	private Person person;
 
-	@BeforeEach
-	void setUp() throws Exception {
-		person = new Person();
-		person.setId(123);
-		person.setName("Abcd Efgh");
-		person.setContactNumber(1234567890);
-		person.setEmail("email@example.com");
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-		reset(PERSON_DAO);
-	}
-
 	@Test
 	void createPerson() {
 		when(PERSON_DAO.create(any(Person.class))).thenReturn(person);
@@ -79,6 +65,20 @@ class PersonResourceTest {
 
 		verify(PERSON_DAO).findAll();
 		assertThat(response).containsAll(people);
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
+		person = new Person();
+		person.setId(123);
+		person.setName("Abcd Efgh");
+		person.setContactNumber(1234567890);
+		person.setEmail("email@example.com");
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
+		reset(PERSON_DAO);
 	}
 
 }

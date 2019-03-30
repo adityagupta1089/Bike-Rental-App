@@ -30,18 +30,13 @@ git clone https://github.com/adityagupta1089/Bike-Rental-App.git
 ### 3.3 Importing into Eclipse IDE
 1. Open terminal
 2. `mvn dependency:resolve`
-3. `mvn clean install`
+3. `mvn clean compile install`
 4. `mvn eclipse:eclipse -DdownloadSources=true`
 5. From eclipse, File –> Import –> Existing Project into workspace
 6. Create initial Database Tables: `java -jar target/bike-rental-app-0.1.jar db migrate dev.yml`
 7. Can be run using `com.csl456.BikeRentalApplication server dev.yml` or
 ```
 java -jar bike-rental-app-0.1.jar server dev.yml
-```
-
-### 3.4 Incremental building (after making changes)
-```
-mvn install
 ```
 
 ## 4. Miscellaneous:

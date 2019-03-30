@@ -61,9 +61,8 @@ public class Cycle {
 		if (!(obj instanceof Cycle)) return false;
 		Cycle other = (Cycle) obj;
 		return Objects.equals(brand, other.brand)
-				&& id == other.id
-				&& location == other.location
-				&& Objects.equals(owner, other.owner);
+				&& id == other.id && location == other.location && Objects
+					.equals(owner, other.owner);
 	}
 
 	public String getBrand() { return brand; }
@@ -90,12 +89,7 @@ public class Cycle {
 	@Override
 	public String toString() {
 		return "Cycle [id="
-				+ id
-				+ ", brand="
-				+ brand
-				+ ", location="
-				+ location
-				+ "]";
+				+ id + ", brand=" + brand + ", location=" + location + "]";
 	}
 
 }
