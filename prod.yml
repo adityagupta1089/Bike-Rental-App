@@ -1,8 +1,8 @@
 database:
     driverClass: org.h2.Driver
-    url: sa
     user: sa
-    password: jdbc:h2:./target/prod
+    password: sa
+    url: jdbc:h2:./target/prod
 
 server:
     type: simple
