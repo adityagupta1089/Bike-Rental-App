@@ -19,25 +19,17 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-public class BikeRentalApplication extends
-	Application<BikeRentalAppConfiguration> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(
-		BikeRentalAppConfiguration.class
-	);
+public class BikeRentalApplication extends Application<BikeRentalAppConfiguration> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(BikeRentalAppConfiguration.class);
 
 	public static void main(String[] args) throws Exception {
 		new BikeRentalApplication().run(args);
 	}
 
 	private final HibernateBundle<BikeRentalAppConfiguration> hibernateBundle
-		= new HibernateBundle<BikeRentalAppConfiguration>(
-			Cycle.class,
-			Person.class
-		) {
+		= new HibernateBundle<BikeRentalAppConfiguration>(Cycle.class, Person.class) {
 			@Override
-			public DataSourceFactory getDataSourceFactory(
-				BikeRentalAppConfiguration configuration
-			) {
+			public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
 				return configuration.getDataSourceFactory();
 			}
 		};
@@ -56,9 +48,7 @@ public class BikeRentalApplication extends
 		);
 		bootstrap.addBundle(new MigrationsBundle<BikeRentalAppConfiguration>() {
 			@Override
-			public DataSourceFactory getDataSourceFactory(
-				BikeRentalAppConfiguration configuration
-			) {
+			public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
 				return configuration.getDataSourceFactory();
 			}
 		});
@@ -66,16 +56,10 @@ public class BikeRentalApplication extends
 	}
 
 	@Override
-	public void run(
-		BikeRentalAppConfiguration configuration, Environment environment
-	) {
+	public void run(BikeRentalAppConfiguration configuration, Environment environment) {
 		LOGGER.info("Starting the Bike Rental App");
-		final CycleDAO cycleDao = new CycleDAO(
-			hibernateBundle.getSessionFactory()
-		);
-		final PersonDAO personDao = new PersonDAO(
-			hibernateBundle.getSessionFactory()
-		);
+		final CycleDAO cycleDao = new CycleDAO(hibernateBundle.getSessionFactory());
+		final PersonDAO personDao = new PersonDAO(hibernateBundle.getSessionFactory());
 		environment.jersey().register(new CycleResource(cycleDao));
 		environment.jersey().register(new PersonResource(personDao));
 	}

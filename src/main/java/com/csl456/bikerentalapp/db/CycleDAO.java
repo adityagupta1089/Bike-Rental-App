@@ -24,7 +24,7 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 		return list(namedQuery("Cycle.findAll"));
 	}
 
-	public Optional<Cycle> findById(Long id) {
+	public Optional<Cycle> findById(Integer id) {
 		return Optional.ofNullable(get(id));
 	}
 

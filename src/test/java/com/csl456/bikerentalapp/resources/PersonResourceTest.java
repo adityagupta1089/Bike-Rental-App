@@ -32,14 +32,11 @@ class PersonResourceTest {
 
 	private static final PersonDAO PERSON_DAO = mock(PersonDAO.class);
 
-	public static final ResourceExtension RESOURCES = ResourceExtension
-		.builder()
+	public static final ResourceExtension RESOURCES = ResourceExtension.builder()
 		.addResource(new PersonResource(PERSON_DAO))
 		.build();
 
-	private ArgumentCaptor<Person> personCaptor = ArgumentCaptor.forClass(
-		Person.class
-	);
+	private ArgumentCaptor<Person> personCaptor = ArgumentCaptor.forClass(Person.class);
 
 	private Person person;
 
@@ -69,11 +66,7 @@ class PersonResourceTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		person = new Person();
-		person.setId(123);
-		person.setName("Abcd Efgh");
-		person.setContactNumber(1234567890);
-		person.setEmail("email@example.com");
+		person = new Person("Aditya Gupta", 1234567890L, "aditya@example.com");
 	}
 
 	@AfterEach

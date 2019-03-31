@@ -24,16 +24,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "person")
 @NamedQueries({
-	@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
-	@NamedQuery(
+	@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"), @NamedQuery(
 		name = "Person.findById",
 		query = "SELECT p FROM Person p WHERE p.id = :id"
 	)
 })
-@JsonIdentityInfo(
-	generator = ObjectIdGenerators.PropertyGenerator.class,
-	property = "id"
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,11 +47,17 @@ public class Person {
 	@Column(name = "email", nullable = false)
 	private String email;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
 	private Set<Cycle> cycles = new HashSet<>();
 
 	public Person() {
 
+	}
+
+	public Person(String name, Long contactNumber, String email) {
+		this.name = name;
+		this.contactNumber = contactNumber;
+		this.email = email;
 	}
 
 	@Override
@@ -85,9 +87,7 @@ public class Person {
 		return Objects.hash(contactNumber, email, id, name);
 	}
 
-	public void setContactNumber(long contactNumber) {
-		this.contactNumber = contactNumber;
-	}
+	public void setContactNumber(long contactNumber) { this.contactNumber = contactNumber; }
 
 	public void setCycles(Set<Cycle> cycles) { this.cycles = cycles; }
 

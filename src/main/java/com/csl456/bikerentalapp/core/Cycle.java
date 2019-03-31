@@ -23,16 +23,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "cycle")
 @NamedQueries({
-	@NamedQuery(name = "Cycle.findAll", query = "SELECT c FROM Cycle c"),
-	@NamedQuery(
+	@NamedQuery(name = "Cycle.findAll", query = "SELECT c FROM Cycle c"), @NamedQuery(
 		name = "Cycle.findById",
 		query = "SELECT c FROM Cycle c WHERE c.id = :id"
 	)
 })
-@JsonIdentityInfo(
-	generator = ObjectIdGenerators.PropertyGenerator.class,
-	property = "id"
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Cycle {
 
 	@Id
@@ -52,6 +48,12 @@ public class Cycle {
 
 	public Cycle() {
 
+	}
+
+	public Cycle(String brand, Location location, Person owner) {
+		this.brand = brand;
+		this.location = location;
+		this.owner = owner;
 	}
 
 	@Override
@@ -89,13 +91,7 @@ public class Cycle {
 
 	@Override
 	public String toString() {
-		return "Cycle [id="
-				+ id
-				+ ", brand="
-				+ brand
-				+ ", location="
-				+ location
-				+ "]";
+		return "Cycle [id=" + id + ", brand=" + brand + ", location=" + location + "]";
 	}
 
 }

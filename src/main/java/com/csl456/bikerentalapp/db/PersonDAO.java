@@ -23,7 +23,7 @@ public class PersonDAO extends AbstractDAO<Person> {
 		return list(namedQuery("Person.findAll"));
 	}
 
-	public Optional<Person> findById(Long id) {
+	public Optional<Person> findById(Integer id) {
 		return Optional.ofNullable(get(id));
 	}
 }

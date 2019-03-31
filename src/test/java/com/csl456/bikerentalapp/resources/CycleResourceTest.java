@@ -34,14 +34,11 @@ class CycleResourceTest {
 
 	private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
 
-	public static final ResourceExtension RESOURCES = ResourceExtension
-		.builder()
+	public static final ResourceExtension RESOURCES = ResourceExtension.builder()
 		.addResource(new CycleResource(CYCLE_DAO))
 		.build();
 
-	private ArgumentCaptor<Cycle> cycleCaptor = ArgumentCaptor.forClass(
-		Cycle.class
-	);
+	private ArgumentCaptor<Cycle> cycleCaptor = ArgumentCaptor.forClass(Cycle.class);
 
 	private Cycle cycle;
 
@@ -71,17 +68,11 @@ class CycleResourceTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		Person owner = new Person();
-		owner.setId(456);
-		owner.setName("OwnerX");
-		owner.setContactNumber(1234567890);
-		owner.setEmail("owner@example.com");
-
-		cycle = new Cycle();
-		cycle.setId(123);
-		cycle.setBrand("BrandX");
-		cycle.setLocation(Location.LOCATION_1);
-		cycle.setOwner(owner);
+		cycle = new Cycle(
+			"Atlas",
+			Location.SATLUJ_HOSTEL,
+			new Person("Aditya Gupta", 1234567890L, "aditya@example.com")
+		);
 	}
 
 	@AfterEach
