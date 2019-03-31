@@ -11,10 +11,9 @@ import com.csl456.bikerentalapp.resources.CycleResource;
 import com.csl456.bikerentalapp.resources.PersonResource;
 
 import io.dropwizard.Application;
-import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
-import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -40,12 +39,6 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
 	@Override
 	public void initialize(Bootstrap<BikeRentalAppConfiguration> bootstrap) {
 		LOGGER.info("Initializing configuration");
-		bootstrap.setConfigurationSourceProvider(
-			new SubstitutingSourceProvider(
-				bootstrap.getConfigurationSourceProvider(),
-				new EnvironmentVariableSubstitutor(true)
-			)
-		);
 		bootstrap.addBundle(new MigrationsBundle<BikeRentalAppConfiguration>() {
 			@Override
 			public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
@@ -62,5 +55,6 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
 		final PersonDAO personDao = new PersonDAO(hibernateBundle.getSessionFactory());
 		environment.jersey().register(new CycleResource(cycleDao));
 		environment.jersey().register(new PersonResource(personDao));
+		environment.jersey().register(new JsonProcessingExceptionMapper(true));
 	}
 }

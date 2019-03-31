@@ -12,22 +12,6 @@ This is the server component of an application that is used for renting or leasi
 - [Java JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 ## 3. Getting started
-1. Clone this repository: 
-2. Setup Database
-3. Import into your IDE & Run.
-
-### 3.1 Cloning
-```
-git clone https://github.com/adityagupta1089/Bike-Rental-App.git
-```
-
-### 3.2. Setting up database
-1. Install [postgreSQL](https://www.postgresql.org/download/)
-2. Open pgAdmin and create a user name with password the same as in `dev.yml` database user and password.
-3. Create a database the same as in `dev.yml` database url.
-4. Grant that user access to the database. 
-
-### 3.3 Importing into Eclipse IDE
 1. Open terminal
 2. `mvn dependency:resolve`
 3. `mvn clean compile install`

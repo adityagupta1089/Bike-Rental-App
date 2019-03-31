@@ -43,11 +43,6 @@
 			<artifactId>dropwizard-migrations</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901-1.jdbc4</version>
-		</dependency>
-		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-testing</artifactId>
 			<scope>test</scope>
@@ -72,9 +67,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -201,7 +194,7 @@
 									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.csl456.BikeRentalApplication</mainClass>
+									<mainClass>com.csl456.bikerentalapp.BikeRentalApplication</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>

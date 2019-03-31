@@ -1,8 +1,8 @@
 database:
-    driverClass: org.postgresql.Driver
-    url: ${JDBC_DATABASE_URL}
-    user: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    driverClass: org.h2.Driver
+    url: sa
+    user: sa
+    password: jdbc:h2:./target/prod
 
 server:
     type: simple
@@ -15,3 +15,9 @@ logging:
     level: INFO    
     appenders:
         - type: console
+        - type: file
+          currentLogFilename: './logs/application.log'
+          archivedLogFilenamePattern: './logs/application-%d-%i.log.gz'
+          archive: true
+          archivedFileCount: 7
+          maxFileSize: '1MiB'
