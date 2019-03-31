@@ -220,6 +220,14 @@
 						<haltOnFailure>true</haltOnFailure>
 					</check>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

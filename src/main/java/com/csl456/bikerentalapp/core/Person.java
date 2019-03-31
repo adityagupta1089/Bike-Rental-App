@@ -29,7 +29,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		query = "SELECT p FROM Person p WHERE p.id = :id"
 	)
 })
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(
+	generator = ObjectIdGenerators.PropertyGenerator.class,
+	property = "id",
+	scope = Person.class
+)
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

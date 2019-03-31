@@ -28,7 +28,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		query = "SELECT c FROM Cycle c WHERE c.id = :id"
 	)
 })
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(
+	generator = ObjectIdGenerators.PropertyGenerator.class,
+	property = "id",
+	scope = Cycle.class
+)
 public class Cycle {
 
 	@Id
