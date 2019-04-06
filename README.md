@@ -32,7 +32,7 @@ java -jar bike-rental-app-0.1.jar server dev.yml
 java -jar bike-rental-app-0.1.jar db status dev.yml
 ```
 
-#### 4.1.2. Prepare rollback for migration (before appplying migrations):
+#### 4.1.2. Prepare rollback for migration (before applying migrations):
 ```
 java -jar bike-rental-app-0.1.jar db prepare-rollback dev.yml
 ```

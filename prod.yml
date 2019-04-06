@@ -1,8 +1,8 @@
 database:
-    driverClass: org.h2.Driver
-    user: sa
-    password: sa
-    url: jdbc:h2:./target/prod
+    driverClass: org.postgresql.Driver
+    url: ${JDBC_DATABASE_URL}
+    user: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
 
 server:
     type: simple

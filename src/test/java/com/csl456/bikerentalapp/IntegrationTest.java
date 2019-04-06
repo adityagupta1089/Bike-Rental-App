@@ -1,23 +1,20 @@
 package com.csl456.bikerentalapp;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.File;
-import java.io.IOException;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import com.csl456.bikerentalapp.core.Person;
-
 import io.dropwizard.testing.ConfigOverride;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import java.io.File;
+import java.io.IOException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class IntegrationTest {
@@ -29,7 +26,7 @@ public class IntegrationTest {
 		RULE.getApplication().run("db", "migrate", CONFIG_PATH);
 	}
 
-	public static final DropwizardAppExtension<BikeRentalAppConfiguration> RULE
+	private static final DropwizardAppExtension<BikeRentalAppConfiguration> RULE
 		= new DropwizardAppExtension<>(
 			BikeRentalApplication.class,
 			CONFIG_PATH,
@@ -53,7 +50,7 @@ public class IntegrationTest {
 	}
 
 	@Test
-	public void testPostPerson() throws Exception {
+	public void testPostPerson() {
 		final Person person = new Person("Aditya Gupta", 1234567890L, "aditya@example.com");
 		final Person newPerson = postPerson(person);
 		assertThat(newPerson.getId()).isNotNull();

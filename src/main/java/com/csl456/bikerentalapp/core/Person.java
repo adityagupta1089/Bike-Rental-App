@@ -1,117 +1,83 @@
 package com.csl456.bikerentalapp.core;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.common.base.Objects;
+import org.hibernate.validator.constraints.Email;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "person")
 @NamedQueries({
-	@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"), @NamedQuery(
-		name = "Person.findById",
-		query = "SELECT p FROM Person p WHERE p.id = :id"
-	)
-})
-@JsonIdentityInfo(
-	generator = ObjectIdGenerators.PropertyGenerator.class,
-	property = "id",
-	scope = Person.class
-)
+                      @NamedQuery(name = "Person.findAll", query = "SELECT P FROM Person P"),
+                      @NamedQuery(name = "Person.findById", query = "SELECT P FROM Person P WHERE P.id = :id")
+              })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Person.class)
 public class Person {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@Length(max = 255)
-	@Column(name = "name", nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-	@Column(name = "contactNumber", nullable = false)
-	private long contactNumber;
+    @Column(nullable = false)
+    private long contactNumber;
 
-	@Email
-	@Length(max = 255)
-	@Column(name = "email", nullable = false)
-	private String email;
+    @Email
+    @Column(nullable = false)
+    private String email;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-	private Set<Cycle> cycles = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private Set<Cycle> cycles = new HashSet<>();
 
-	public Person() {
+    public Person() {
 
-	}
+    }
 
-	public Person(String name, Long contactNumber, String email) {
-		this.name = name;
-		this.contactNumber = contactNumber;
-		this.email = email;
-	}
+    public Person(String name, Long contactNumber, String email) {
+        this.name = name;
+        this.contactNumber = contactNumber;
+        this.email = email;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (!(obj instanceof Person)) return false;
-		Person other = (Person) obj;
-		return contactNumber == other.contactNumber
-				&& Objects.equals(email, other.email)
-				&& id == other.id
-				&& Objects.equals(name, other.name);
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+        Person person = (Person) o;
+        return contactNumber == person.contactNumber
+                && Objects.equal(name, person.name)
+                && Objects.equal(email, person.email)
+                && Objects.equal(cycles, person.cycles);
+    }
 
-	public long getContactNumber() { return contactNumber; }
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name, contactNumber, email, cycles);
+    }
 
-	public Set<Cycle> getCycles() { return cycles; }
+    public long getContactNumber() { return contactNumber; }
 
-	public String getEmail() { return email; }
+    public void setContactNumber(long contactNumber) { this.contactNumber = contactNumber; }
 
-	public int getId() { return id; }
+    public Set<Cycle> getCycles() { return cycles; }
 
-	public String getName() { return name; }
+    public void setCycles(Set<Cycle> cycles) { this.cycles = cycles; }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(contactNumber, email, id, name);
-	}
+    public String getEmail() { return email; }
 
-	public void setContactNumber(long contactNumber) { this.contactNumber = contactNumber; }
+    public void setEmail(String email) { this.email = email; }
 
-	public void setCycles(Set<Cycle> cycles) { this.cycles = cycles; }
+    public int getId() { return id; }
 
-	public void setEmail(String email) { this.email = email; }
+    public void setId(int id) { this.id = id; }
 
-	public void setId(int id) { this.id = id; }
+    public String getName() { return name; }
 
-	public void setName(String name) { this.name = name; }
-
-	@Override
-	public String toString() {
-		return "Person [id="
-				+ id
-				+ ", name="
-				+ name
-				+ ", contactNumber="
-				+ contactNumber
-				+ ", email="
-				+ email
-				+ "]";
-	}
+    public void setName(String name) { this.name = name; }
 
 }
