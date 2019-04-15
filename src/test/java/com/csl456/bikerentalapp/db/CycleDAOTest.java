@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class CycleDAOTest {
-	private final DAOTestExtension daoTestRule = DAOTestExtension.newBuilder()
+	/*private final DAOTestExtension daoTestRule = DAOTestExtension.newBuilder()
 																 .addEntityClass(Person.class)
 																 .addEntityClass(Cycle.class)
 																 .build();
@@ -79,5 +79,5 @@ public class CycleDAOTest {
 	@BeforeEach
 	public void setUp() {
 		cycleDAO = new CycleDAO(daoTestRule.getSessionFactory());
-	}
+	}*/
 }

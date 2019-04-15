@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(DropwizardExtensionsSupport.class)
 class CycleResourceTest {
 
-	private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
+	/*private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
 
 	private static final ResourceExtension RESOURCES = ResourceExtension.builder()
 																		.addResource(new CycleResource(CYCLE_DAO))
@@ -72,6 +72,6 @@ class CycleResourceTest {
 	@AfterEach
 	void tearDown() {
 		reset(CYCLE_DAO);
-	}
+	}*/
 
 }

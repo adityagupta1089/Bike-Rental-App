@@ -2,7 +2,8 @@ package com.csl456.bikerentalapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.common.base.Objects;
+
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -10,7 +11,8 @@ import javax.persistence.*;
 @Table(name = "cycle")
 @NamedQueries({
                       @NamedQuery(name = "Cycle.findAll", query = "SELECT C FROM Cycle C"),
-                      @NamedQuery(name = "Cycle.findById", query = "SELECT C FROM Cycle C WHERE C.id = :id")
+                      @NamedQuery(name = "Cycle.findById", query = "SELECT C FROM Cycle C WHERE C.id = :id"),
+                      @NamedQuery(name = "Cycle.findByPersonId", query = "SELECT C FROM Cycle C WHERE C.ownerId = :ownerId")
               })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Cycle.class)
 public class Cycle {
@@ -23,36 +25,31 @@ public class Cycle {
     private String brand;
 
     @Column(nullable = false)
-    private Location location;
+    private int locationId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ownerId", nullable = false)
-    private Person owner;
+    @Column(nullable = false)
+	private int ownerId;
 
     public Cycle() {
 
     }
 
-    public Cycle(String brand, Location location, Person owner) {
-        this.brand = brand;
-        this.location = location;
-        this.owner = owner;
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-        Cycle cycle = (Cycle) o;
-        return Objects.equal(brand, cycle.brand) && location == cycle.location && Objects.equal(owner, cycle.owner);
-    }
+    public Cycle(int id, String brand, int locationId, int ownerId) {
+		this.id = id;
+		this.brand = brand;
+		this.locationId = locationId;
+		this.ownerId = ownerId;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(brand, location, owner);
-    }
 
-    public String getBrand() { return brand; }
+
+    
+
+	
+
+
+	public String getBrand() { return brand; }
 
     public void setBrand(String brand) { this.brand = brand; }
 
@@ -60,12 +57,51 @@ public class Cycle {
 
     public void setId(int id) { this.id = id; }
 
-    public Location getLocation() { return location; }
+	public int getLocationId() {
+		return locationId;
+	}
 
-    public void setLocation(Location location) { this.location = location; }
 
-    public Person getOwner() { return owner; }
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
+	}
 
-    public void setOwner(Person owner) { this.owner = owner; }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(brand, id, locationId, ownerId);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Cycle other = (Cycle) obj;
+		return Objects.equals(brand, other.brand) && id == other.id && locationId == other.locationId
+				&& ownerId == other.ownerId;
+	}
+
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
+
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+
+	public void setPersonId(int ownerId) {
+		this.ownerId = ownerId;
+	}
 
 }

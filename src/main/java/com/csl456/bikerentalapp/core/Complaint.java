@@ -1,6 +1,6 @@
 package com.csl456.bikerentalapp.core;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -17,32 +17,14 @@ public class Complaint {
     @Column
     private ComplaintStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cycleId", nullable = false)
-    private Cycle cycle;
+    @Column(nullable = false)
+	private int cycleId;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "personId", nullable = false)
-    private Person person;
+	@Column(nullable = false)
+	private int personId;
 
     public Complaint() {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-        Complaint complaint = (Complaint) o;
-        return Objects.equal(details, complaint.details)
-                && status == complaint.status
-                && Objects.equal(cycle, complaint.cycle)
-                && Objects.equal(person, complaint.person);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(details, status, cycle, person);
     }
 
     public int getId() {
@@ -65,24 +47,50 @@ public class Complaint {
         return status;
     }
 
-    public void setStatus(ComplaintStatus status) {
+    public Complaint(int id, String details, ComplaintStatus status, int cycleId, int personId) {
+		this.id = id;
+		this.details = details;
+		this.status = status;
+		this.cycleId = cycleId;
+		this.personId = personId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cycleId, details, personId, status);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Complaint other = (Complaint) obj;
+		return cycleId == other.cycleId && Objects.equals(details, other.details) && personId == other.personId
+				&& status == other.status;
+	}
+
+	public void setStatus(ComplaintStatus status) {
         this.status = status;
     }
 
-    public Cycle getCycle() {
-        return cycle;
-    }
+	public int getCycleId() {
+		return cycleId;
+	}
 
-    public void setCycle(Cycle cycle) {
-        this.cycle = cycle;
-    }
+	public void setCycleId(int cycleId) {
+		this.cycleId = cycleId;
+	}
 
-    public Person getPerson() {
-        return person;
-    }
+	public int getPersonId() {
+		return personId;
+	}
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
 
 }
