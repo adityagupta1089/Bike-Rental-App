@@ -24,7 +24,7 @@ public class CycleDAOTest {
 
 	@Test
 	public void createCycle() {
-		final Cycle cycle = daoTestRule.inTransaction(() -> cycleDAO.create(new Cycle("Atlas", 1, 1)));
+		final Cycle cycle = daoTestRule.inTransaction(() -> cycleDAO.create(new Cycle("Atlas", 1, 1,1)));
 		assertThat(cycle.getId()).isGreaterThan(0);
 		assertThat(cycle.getBrand()).isEqualTo("Atlas");
 		assertThat(cycle.getLocationId()).isEqualTo(1);
@@ -35,8 +35,8 @@ public class CycleDAOTest {
 	@Test
 	public void findAll() {
 		daoTestRule.inTransaction(() -> {
-			cycleDAO.create(new Cycle("Atlas", 1, 1));
-			cycleDAO.create(new Cycle("Avon", 2, 2));
+			cycleDAO.create(new Cycle("Atlas", 1, 1,1));
+			cycleDAO.create(new Cycle("Avon", 2, 2,1));
 		});
 
 		final List<Cycle> cycles = cycleDAO.findAll();
@@ -48,7 +48,7 @@ public class CycleDAOTest {
 	@Test
 	public void handlesNullOwner() {
 		assertThatExceptionOfType(ConstraintViolationException.class)
-				.isThrownBy(() -> daoTestRule.inTransaction(() -> cycleDAO.create(new Cycle(null, 1, 1))));
+				.isThrownBy(() -> daoTestRule.inTransaction(() -> cycleDAO.create(new Cycle(null, 1, 1,1))));
 	}
 
 	@BeforeEach

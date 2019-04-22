@@ -17,8 +17,7 @@ import javax.persistence.Table;
 		@NamedQuery(name = "Location.findById", query = "SELECT L FROM Location L WHERE L.id = :id") })
 public class Location {
 
-	public Location(int id, String name, double latitude, double longitude) {
-		this.id = id;
+	public Location(String name, double latitude, double longitude) {
 		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;

@@ -31,6 +31,9 @@ public class Cycle {
     @Column(nullable = false)
 	private int ownerId;
     
+    @Column(nullable = false)
+	private int status;
+    
     public Cycle() {
 
     }
@@ -53,15 +56,21 @@ public class Cycle {
 	}
 
 
-	public Cycle(String brand, int locationId, int ownerId) {
+	public Cycle(String brand, int locationId, int ownerId, int status) {
 		this.brand = brand;
 		this.locationId = locationId;
 		this.ownerId = ownerId;
+		this.status = status;
 	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(brand, locationId, ownerId);
+		return Objects.hash(brand, locationId, ownerId, status);
 	}
 
 	@Override
@@ -73,13 +82,17 @@ public class Cycle {
 		if (getClass() != obj.getClass())
 			return false;
 		Cycle other = (Cycle) obj;
-		return Objects.equals(brand, other.brand) && locationId == other.locationId && ownerId == other.ownerId;
+		return Objects.equals(brand, other.brand) && locationId == other.locationId && ownerId == other.ownerId
+				&& status == other.status;
 	}
 
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
+	public int getStatus() {
+		return status;
 	}
 
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public int getOwnerId() {
 		return ownerId;

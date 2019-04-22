@@ -63,7 +63,7 @@ class CycleResourceTest {
 
 	@BeforeEach
 	void setUp() {
-		cycle = new Cycle("Atlas", 1, 1);
+		cycle = new Cycle("Atlas", 1, 1,1);
 	}
 
 	@AfterEach
