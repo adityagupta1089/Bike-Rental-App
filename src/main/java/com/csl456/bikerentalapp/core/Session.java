@@ -19,10 +19,10 @@ public class Session {
 	@Id
 	private String accessToken;
 
-	@Column(name = "username")
+	@Column(name = "username", nullable = false)
 	private String identity;
 
-	@Column
+	@Column(nullable = false)
 	private Date created;
 
 	public Session() {

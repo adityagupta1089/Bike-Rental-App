@@ -40,7 +40,7 @@ public class Ride {
 	@Column(nullable = false)
 	private int personId;
 
-	@Column(nullable = false)
+	@Column
 	private double cost;
 
 	public Ride() {

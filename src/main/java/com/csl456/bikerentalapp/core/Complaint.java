@@ -18,7 +18,7 @@ public class Complaint {
     @Column
     private String details;
 
-    @Column
+    @Column(nullable = false)
     private ComplaintStatus status;
 
     @Column(nullable = false)
