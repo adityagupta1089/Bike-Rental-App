@@ -7,10 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-        @NamedQuery(name = "User.findAll", query = "SELECT U FROM Users U"),
-        @NamedQuery(name = "User.findByUserNameAndPassword", query = "SELECT U FROM Users U WHERE U.username = :username AND U.password = :password"),
-        @NamedQuery(name = "User.findByUserName", query = "SELECT U FROM Users U WHERE U.username = :username"),
-        @NamedQuery(name = "User.changePassword", query = "UPDATE Users U SET U.password = :password WHERE U.username = :username")
+        @NamedQuery(name = "User.findAll", query = "SELECT U FROM User U"),
+        @NamedQuery(name = "User.findByUserNameAndPassword", query = "SELECT U FROM User U WHERE U.username = :username AND U.password = :password"),
+        @NamedQuery(name = "User.findByUserName", query = "SELECT U FROM User U WHERE U.username = :username"),
+        @NamedQuery(name = "User.changePassword", query = "UPDATE User U SET U.password = :password WHERE U.username = :username")
 }
 )
 public class User {
