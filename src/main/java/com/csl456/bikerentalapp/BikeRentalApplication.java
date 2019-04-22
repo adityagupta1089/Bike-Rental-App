@@ -72,7 +72,8 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
         environment.jersey().register(new CycleResource(cycleDAO));
         environment.jersey().register(new PersonResource(personDAO));
         environment.jersey().register(new SessionResource(userDAO, sessionDAO));
-        environment.jersey().register(new UserResource(userDAO, sessionDAO, personDAO));
+        environment.jersey().register(new UserResource(userDAO, sessionDAO,
+                personDAO, configuration.getSmtpServerDetails()));
         environment.jersey().register(new RideResource(rideDAO));
         environment.jersey().register(new ComplaintResource(complaintDAO));
         environment.jersey().register(new LocationResource(locationDAO));

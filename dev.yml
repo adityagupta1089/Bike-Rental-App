@@ -24,3 +24,9 @@ logging:
           archive: true
           archivedFileCount: 7
           maxFileSize: '1MiB'
+
+smtpServerDetails:
+    host: 'smtp.gmail.com'
+    port: 25
+    username: 'csl456bikerentalapp@gmail.com'
+    password: 'igrcfuvlvvncbtfh'

@@ -1,6 +1,7 @@
 package com.csl456.bikerentalapp.resources;
 
 import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.core.SMTPServerDetails;
 import com.csl456.bikerentalapp.core.User;
 import com.csl456.bikerentalapp.core.UserRole;
 import com.csl456.bikerentalapp.db.PersonDAO;
@@ -16,6 +17,7 @@ import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
 
+import javax.annotation.Nonnull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -31,21 +33,25 @@ public class UserResource {
 	private final PersonDAO personDAO;
 
 	private static final Random random = new Random();
+	private final SMTPServerDetails smtpServerDetails;
 
-	private LoadingCache<String, String> otpCache = CacheBuilder
+	private static final LoadingCache<String, String> otpCache = CacheBuilder
 			.newBuilder()
-			.expireAfterWrite(10, TimeUnit.SECONDS)
+			.expireAfterWrite(5, TimeUnit.MINUTES)
 			.build(new CacheLoader<String, String>() {
 				@Override
-				public String load(String username) {
+				public String load(@Nonnull String username) {
 					return generateOTP();
 				}
 			});
 
-	public UserResource(UserDAO userDAO, SessionDAO sessionDAO, PersonDAO personDAO) {
+	public UserResource(UserDAO userDAO, SessionDAO sessionDAO,
+						PersonDAO personDAO,
+						SMTPServerDetails smtpServerDetails) {
 		this.userDAO = userDAO;
 		this.sessionDAO = sessionDAO;
 		this.personDAO = personDAO;
+		this.smtpServerDetails = smtpServerDetails;
 	}
 
 	@POST
@@ -82,18 +88,20 @@ public class UserResource {
 		User user = userDAO.findByUserName(username);
 		Person person = personDAO.findById(user.getPersonId()).get();
 		String otp = otpCache.get(username);
-		Email email = EmailBuilder.startingBlank()
-				.from("Bike Rental Admin", "bikerentaladmin@iitrpr.ac.in")
+		Email email = EmailBuilder.startingBlank().from("Bike Rental Admin",
+				"noreply@bikerentalapp.com")
 				.to(person.getName(), person.getEmail())
 				.withSubject("Your Forgot Password OTP")
 				.withPlainText("Your OTP is " + otp)
 				.buildEmail();
-		MailerBuilder
+		MailerBuilder.withSMTPServer(smtpServerDetails.getHost(),
+				smtpServerDetails.getPort(), smtpServerDetails.getUsername(),
+				smtpServerDetails.getPassword())
 				.buildMailer()
 				.sendMail(email);
 	}
 
-	private String generateOTP() {
+	private static String generateOTP() {
 		StringBuilder otp = new StringBuilder();
 		for (int i = 0; i < 8; i++) {
 			otp.append(random.nextInt(10));
