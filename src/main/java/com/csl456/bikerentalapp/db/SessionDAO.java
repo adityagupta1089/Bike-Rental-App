@@ -15,11 +15,21 @@ public class SessionDAO extends AbstractDAO<Session> {
         persist(session);
     }
 
-    public void remove(Session session) {
-        currentSession().remove(session);
+    public int remove(String accessToken) {
+        return namedQuery("Session.remove").setParameter("accessToken", accessToken).executeUpdate();
     }
 
     public void removeAll(String username) {
         namedQuery("Session.removeAll").setParameter("username", username).executeUpdate();
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean notLoggedIn(String accessToken) {
+        return uniqueResult(namedQuery("Session.loggedIn").setParameter("accessToken", accessToken)) == null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String getUserName(String accessToken) {
+        return uniqueResult(namedQuery("Session.loggedIn").setParameter("accessToken", accessToken)).getIdentity();
     }
 }

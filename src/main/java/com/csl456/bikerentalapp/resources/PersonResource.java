@@ -1,7 +1,10 @@
 package com.csl456.bikerentalapp.resources;
 
 import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.core.UserRole;
 import com.csl456.bikerentalapp.db.PersonDAO;
+import com.csl456.bikerentalapp.filter.LoggedIn;
+import com.csl456.bikerentalapp.filter.RolesAllowed;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
@@ -26,7 +29,8 @@ public class PersonResource {
 
     @GET
     @UnitOfWork
-    public List<Person> listPerson() {
+    @RolesAllowed(UserRole.ADMIN)
+    public List<Person> listPeople() {
         return personDAO.findAll();
     }
 }

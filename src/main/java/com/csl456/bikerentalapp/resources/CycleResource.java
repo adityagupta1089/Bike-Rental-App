@@ -13,8 +13,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.csl456.bikerentalapp.core.Cycle;
+import com.csl456.bikerentalapp.core.UserRole;
 import com.csl456.bikerentalapp.db.CycleDAO;
 
+import com.csl456.bikerentalapp.filter.LoggedIn;
+import com.csl456.bikerentalapp.filter.RolesAllowed;
 import io.dropwizard.hibernate.UnitOfWork;
 
 @Path("/cycle")
@@ -29,12 +32,14 @@ public class CycleResource {
 
 	@POST
 	@UnitOfWork
+	@RolesAllowed(UserRole.ADMIN)
 	public Cycle createCycle(Cycle cycle) {
 		return cycleDAO.create(cycle);
 	}
 
 	@GET
 	@UnitOfWork
+	@RolesAllowed(UserRole.ADMIN)
 	public List<Cycle> listCycle(@QueryParam("ownerId") Optional<Integer> ownerId) {
 		if (ownerId.isPresent()) {
 			return cycleDAO.getCyclesByOwnerId(ownerId.get());
@@ -46,6 +51,7 @@ public class CycleResource {
 	@GET
 	@UnitOfWork
 	@Path("{id}")
+	@RolesAllowed(UserRole.ADMIN)
 	public Optional<Cycle> getCycleById(@PathParam("id") int id ) {
 		return cycleDAO.findById(id);
 	}

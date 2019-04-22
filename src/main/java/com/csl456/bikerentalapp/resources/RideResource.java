@@ -14,8 +14,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.csl456.bikerentalapp.core.Ride;
+import com.csl456.bikerentalapp.core.UserRole;
 import com.csl456.bikerentalapp.db.RideDAO;
 
+import com.csl456.bikerentalapp.filter.LoggedIn;
+import com.csl456.bikerentalapp.filter.RolesAllowed;
 import io.dropwizard.hibernate.UnitOfWork;
 
 @Path("ride")
@@ -31,6 +34,7 @@ public class RideResource {
 	@Path("start")
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@LoggedIn
 	public Ride startRide(@FormParam("startLocationId") int startLocationId, @FormParam("personId") int personId,
 			@FormParam("cycleId") int cycleId) {
 		Ride ride = new Ride();
@@ -45,6 +49,7 @@ public class RideResource {
 	@Path("end")
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@LoggedIn
 	public Ride endRide(@FormParam("endLocationId") int endLocationId, @FormParam("rideId") int rideId) {
 		Ride ride = rideDAO.getById(rideId);
 		ride.setEndLocationId(endLocationId);
@@ -55,6 +60,7 @@ public class RideResource {
 	
 	@GET
 	@UnitOfWork
+	@RolesAllowed(UserRole.ADMIN)
 	public List<Ride> listRidesByPersonId(@QueryParam("personId") int id ) {
 		return rideDAO.findByPersonId(id);
 	}

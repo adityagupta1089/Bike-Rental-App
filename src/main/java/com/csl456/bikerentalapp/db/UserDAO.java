@@ -1,13 +1,10 @@
 package com.csl456.bikerentalapp.db;
 
-import java.util.List;
-
+import com.csl456.bikerentalapp.core.User;
+import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
-import com.csl456.bikerentalapp.core.Person;
-import com.csl456.bikerentalapp.core.User;
-
-import io.dropwizard.hibernate.AbstractDAO;
+import java.util.List;
 
 public class UserDAO extends AbstractDAO<User> {
 
@@ -26,7 +23,20 @@ public class UserDAO extends AbstractDAO<User> {
 
     @SuppressWarnings("unchecked")
     public User findUsersByUsernameAndPassword(String username, String password) {
-        return uniqueResult(namedQuery("User.findByUserNameAndPassword").setParameter("username", username)
-                                                                .setParameter("password", password));
+        return uniqueResult(namedQuery("User.findByUserNameAndPassword")
+                .setParameter("username", username)
+                .setParameter("password", password));
+    }
+
+    @SuppressWarnings("unchecked")
+    public User findByUserName(String username) {
+        return uniqueResult(namedQuery("User.findByUserName").setParameter("username", username));
+    }
+
+    public void changePassword(String username, String newPassword) {
+        namedQuery("User.changePassword")
+                .setParameter("username", username)
+                .setParameter("password", newPassword)
+                .executeUpdate();
     }
 }

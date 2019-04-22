@@ -2,6 +2,8 @@ package com.csl456.bikerentalapp;
 
 import com.csl456.bikerentalapp.core.*;
 import com.csl456.bikerentalapp.db.*;
+import com.csl456.bikerentalapp.filter.LoggedInFeature;
+import com.csl456.bikerentalapp.filter.RolesAllowedFeature;
 import com.csl456.bikerentalapp.resources.*;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -57,23 +59,29 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
         LOGGER.info("Starting the Bike Rental App");
         SessionFactory factory = hibernateBundle.getSessionFactory();
 
-        final CycleDAO cycleDao = new CycleDAO(factory);
-        final PersonDAO personDao = new PersonDAO(factory);
+        /* DAOs */
+        final CycleDAO cycleDAO = new CycleDAO(factory);
+        final PersonDAO personDAO = new PersonDAO(factory);
         final SessionDAO sessionDAO = new SessionDAO(factory);
         final UserDAO userDAO = new UserDAO(factory);
         final RideDAO rideDAO = new RideDAO(factory);
         final ComplaintDAO complaintDAO = new ComplaintDAO(factory);
         final LocationDAO locationDAO = new LocationDAO(factory);
 
-        environment.jersey().register(new CycleResource(cycleDao));
-        environment.jersey().register(new PersonResource(personDao));
+        /* Resources */
+        environment.jersey().register(new CycleResource(cycleDAO));
+        environment.jersey().register(new PersonResource(personDAO));
         environment.jersey().register(new SessionResource(userDAO, sessionDAO));
-        environment.jersey().register(new UserResource(userDAO, sessionDAO));
+        environment.jersey().register(new UserResource(userDAO, sessionDAO, personDAO));
         environment.jersey().register(new RideResource(rideDAO));
         environment.jersey().register(new ComplaintResource(complaintDAO));
         environment.jersey().register(new LocationResource(locationDAO));
 
+        /* Exception Parsers */
         environment.jersey().register(new JsonProcessingExceptionMapper(true));
-        
+
+        /* Filters */
+        environment.jersey().register(new LoggedInFeature(hibernateBundle, sessionDAO));
+        environment.jersey().register(new RolesAllowedFeature(hibernateBundle, sessionDAO, userDAO));
     }
 }
