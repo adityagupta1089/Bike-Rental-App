@@ -46,7 +46,7 @@
                 <constraints nullable="false" foreignKeyName="fk_owner_id" references="person(id)"/>
             </column>
             <column name="status" type="int"/>
-            <column name="locationId" type="varchar(255)">
+            <column name="locationId" type="int">
                 <constraints nullable="false" foreignKeyName="fk_cycle_location" references="locations(id)"/>
             </column>
         </createTable>
@@ -82,10 +82,10 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="startLocationId" type="varchar(255)">
+            <column name="startLocationId" type="int">
                 <constraints nullable="false" foreignKeyName="fk_ride_start_location" references="locations(id)"/>
             </column>
-            <column name="endLocationId" type="varchar(255)">
+            <column name="endLocationId" type="int">
                 <constraints foreignKeyName="fk_ride_end_location" references="locations(id)"/>
             </column>
             <column name="startTime" type="datetime">
