@@ -32,8 +32,10 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 		return list(namedQuery("Cycle.findByPersonId").setParameter("ownerId", ownerId));
 	}
 
-	public void remove(Integer id) {
-		currentSession().remove(get(id));
+	public Cycle remove(Integer id) {
+		Cycle cycle = findById(id);
+		cycle.setStatus(0);
+		return persist(cycle);
 	}
 
 }

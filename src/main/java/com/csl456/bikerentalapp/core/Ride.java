@@ -64,9 +64,8 @@ public class Ride {
 		this.cost = cost;
 	}
 
-	public Ride(int id, int startLocationId, int endLocationId, Date startTime, Date endTime, int cycleId, int personId,
+	public Ride(int startLocationId, int endLocationId, Date startTime, Date endTime, int cycleId, int personId,
 			double cost) {
-		this.id = id;
 		this.startLocationId = startLocationId;
 		this.endLocationId = endLocationId;
 		this.startTime = startTime;

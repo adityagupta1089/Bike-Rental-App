@@ -31,7 +31,7 @@ import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
-public class ComplaintResourseTest {
+public class ComplaintResourceTest {
 	private static final ComplaintDAO COMPLAINT_DAO = mock(ComplaintDAO.class);
 
 	private static final ResourceExtension RESOURCES = 

@@ -57,9 +57,10 @@ public class CycleResource {
 
 	@DELETE
 	@UnitOfWork
+	@Path("{id}")
 	@RolesAllowed(UserRole.ADMIN)
-	public void removeCycle(@PathParam("id") int id) {
-		cycleDAO.remove(id);
+	public Cycle removeCycle(@PathParam("id") int id) {
+		return cycleDAO.remove(id);
 	}
 
 }
