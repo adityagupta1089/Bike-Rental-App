@@ -3,6 +3,7 @@ package com.csl456.bikerentalapp.resources;
 import com.csl456.bikerentalapp.core.Session;
 import com.csl456.bikerentalapp.db.SessionDAO;
 import com.csl456.bikerentalapp.db.UserDAO;
+import com.csl456.bikerentalapp.filter.LoggedIn;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
@@ -39,7 +40,8 @@ public class SessionResource {
 	@DELETE
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void logout(Session session) {
-		sessionDAO.remove(session);
+	@LoggedIn
+	public void logout(@HeaderParam("Acccess_Token") String accessToken) {
+		sessionDAO.remove(accessToken);
 	}
 }

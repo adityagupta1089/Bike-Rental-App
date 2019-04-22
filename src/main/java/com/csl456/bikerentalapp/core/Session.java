@@ -1,21 +1,30 @@
 package com.csl456.bikerentalapp.core;
 
+import javax.inject.Named;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "session")
-@NamedQuery(name = "Session.findAll", query = "DELETE FROM Session S WHERE S.identity = :username")
+@NamedQueries({
+        @NamedQuery(name = "Session.removeAll", query = "DELETE FROM Session S WHERE S.identity = :username"),
+        @NamedQuery(name = "Session.loggedIn", query = "SELECT S FROM Session S WHERE S.accessToken = :accessToken"),
+        @NamedQuery(name ="Session.remove", query = "DELETE FROM Session S WHERE S.accessToken = :accessToken")
+})
 public class Session {
     @Id
-    private final String accessToken;
+    private String accessToken;
 
     @Column(name = "username")
-    private final String identity;
+    private String identity;
 
     @Column
-    private final Date created;
+    private Date created;
+
+    public Session() {
+
+    }
 
     public Session(String username) {
         this.identity = username;

@@ -9,9 +9,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.csl456.bikerentalapp.core.LocationTest;
+import com.csl456.bikerentalapp.core.Location;
+import com.csl456.bikerentalapp.core.UserRole;
 import com.csl456.bikerentalapp.db.LocationDAO;
 
+import com.csl456.bikerentalapp.filter.RolesAllowed;
 import io.dropwizard.hibernate.UnitOfWork;
 
 @Path("/location")
@@ -26,13 +28,15 @@ public class LocationResource {
 
     @POST
     @UnitOfWork
-    public LocationTest createLocation(LocationTest location) {
+    @RolesAllowed(UserRole.ADMIN)
+    public Location createLocation(Location location) {
         return locationDAO.create(location);
     }
 
     @GET
     @UnitOfWork
-    public List<LocationTest> listLocation() {
+    @RolesAllowed(UserRole.ADMIN)
+    public List<Location> listLocations() {
         return locationDAO.findAll();
     }
 

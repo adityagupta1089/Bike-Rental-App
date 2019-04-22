@@ -48,7 +48,7 @@
 		</createTable>
 
 		<createTable tableName="session">
-			<column name="access_token" type="varchar(23)">
+			<column name="accessToken" type="varchar(23)">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="username" type="varchar(100)">
