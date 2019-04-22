@@ -52,7 +52,7 @@
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="username" type="varchar(100)">
-				<constraints nullable="false" foreignKeyName="fk_session_user" references="user(username)" />
+				<constraints nullable="false" foreignKeyName="fk_session_user" references="users(username)" />
 			</column>
 			<column name="created" type="datetime">
 				<constraints nullable="false" />
