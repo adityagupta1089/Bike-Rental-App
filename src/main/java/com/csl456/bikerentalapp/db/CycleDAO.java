@@ -1,11 +1,12 @@
 package com.csl456.bikerentalapp.db;
 
-import com.csl456.bikerentalapp.core.Cycle;
-import io.dropwizard.hibernate.AbstractDAO;
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 
-import java.util.List;
-import java.util.Optional;
+import com.csl456.bikerentalapp.core.Cycle;
+
+import io.dropwizard.hibernate.AbstractDAO;
 
 public class CycleDAO extends AbstractDAO<Cycle> {
 
@@ -30,9 +31,9 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 	public List<Cycle> getCyclesByOwnerId(int ownerId) {
 		return list(namedQuery("Cycle.findByPersonId").setParameter("ownerId", ownerId));
 	}
-	
-	public Cycle makeInactive(Cycle cycle) {
-		return persist(cycle);
+
+	public void remove(Integer id) {
+		currentSession().remove(get(id));
 	}
 
 }

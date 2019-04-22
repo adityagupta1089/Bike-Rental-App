@@ -8,6 +8,7 @@ import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
 
 @Path("session")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,7 +29,7 @@ public class SessionResource {
 			throws Exception {
 
 		if (userDAO.findUsersByUsernameAndPassword(username, password) == null) {
-			throw new Exception("Username or Password Wrong");
+			throw new WebApplicationException("Username or Password Wrong", Status.UNAUTHORIZED);
 		}
 
 		Session session = new Session(username);
@@ -41,7 +42,7 @@ public class SessionResource {
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_JSON)
 	@LoggedIn
-	public void logout(@HeaderParam("Acccess_Token") String accessToken) {
-		sessionDAO.remove(accessToken);
+	public int logout(@HeaderParam("Access_Token") String accessToken) {
+		return sessionDAO.remove(accessToken);
 	}
 }

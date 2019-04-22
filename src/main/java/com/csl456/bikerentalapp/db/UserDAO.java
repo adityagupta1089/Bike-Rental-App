@@ -33,8 +33,8 @@ public class UserDAO extends AbstractDAO<User> {
         return uniqueResult(namedQuery("User.findByUserName").setParameter("username", username));
     }
 
-    public void changePassword(String username, String newPassword) {
-        namedQuery("User.changePassword")
+    public int changePassword(String username, String newPassword) {
+        return namedQuery("User.changePassword")
                 .setParameter("username", username)
                 .setParameter("password", newPassword)
                 .executeUpdate();

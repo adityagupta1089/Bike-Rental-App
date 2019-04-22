@@ -1,5 +1,26 @@
 package com.csl456.bikerentalapp.resources;
 
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nonnull;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+
+import org.simplejavamail.email.Email;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
+
+import com.csl456.bikerentalapp.core.Pair;
 import com.csl456.bikerentalapp.core.Person;
 import com.csl456.bikerentalapp.core.SMTPServerDetails;
 import com.csl456.bikerentalapp.core.User;
@@ -9,21 +30,12 @@ import com.csl456.bikerentalapp.db.SessionDAO;
 import com.csl456.bikerentalapp.db.UserDAO;
 import com.csl456.bikerentalapp.filter.LoggedIn;
 import com.csl456.bikerentalapp.filter.RolesAllowed;
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import io.dropwizard.hibernate.UnitOfWork;
-import org.simplejavamail.email.Email;
-import org.simplejavamail.email.EmailBuilder;
-import org.simplejavamail.mailer.MailerBuilder;
 
-import javax.annotation.Nonnull;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+import io.dropwizard.hibernate.UnitOfWork;
 
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
@@ -44,6 +56,9 @@ public class UserResource {
 					return generateOTP();
 				}
 			});
+	private static final Cache<String, User> userCache = CacheBuilder
+			.newBuilder()
+			.build();
 
 	public UserResource(UserDAO userDAO, SessionDAO sessionDAO,
 						PersonDAO personDAO,
@@ -57,8 +72,21 @@ public class UserResource {
 	@POST
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_JSON)
-	public User register(User user) {
-		return userDAO.create(user);
+	public void register(User user) throws ExecutionException {
+		Person person = personDAO.findById(user.getPersonId()).get();
+		String otp = otpCache.get(user.getUsername());
+		Email email = EmailBuilder.startingBlank().from("Bike Rental Admin",
+				"noreply@bikerentalapp.com")
+				.to(person.getName(), person.getEmail())
+				.withSubject("Your Registration OTP")
+				.withPlainText("Your OTP is " + otp)
+				.buildEmail();
+		MailerBuilder.withSMTPServer(smtpServerDetails.getHost(),
+				smtpServerDetails.getPort(), smtpServerDetails.getUsername(),
+				smtpServerDetails.getPassword())
+				.buildMailer()
+				.sendMail(email);
+		userCache.put(user.getUsername(), user);
 	}
 
 	@GET
@@ -73,12 +101,13 @@ public class UserResource {
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@LoggedIn
-	public void changePassword(@FormParam("username") String username, @FormParam("password") String password, @FormParam("newPassword") String newPassword) throws Exception {
+	public Pair<Integer, Integer> changePassword(@FormParam("username") String username, @FormParam("password") String password, @FormParam("newPassword") String newPassword) throws Exception {
 		if (userDAO.findUsersByUsernameAndPassword(username, password) == null) {
 			throw new Exception("Username or Password Wrong");
 		}
-		sessionDAO.removeAll(username);
-		userDAO.changePassword(username, newPassword);
+		int removedSessions = sessionDAO.removeAll(username);
+		int usersAffected = userDAO.changePassword(username, newPassword);
+		return new Pair<Integer, Integer>(removedSessions, usersAffected);
 	}
 
 	@POST
@@ -108,11 +137,19 @@ public class UserResource {
 		}
 		return otp.toString();
 	}
-
 	@POST
-	@Path("validateOTP/{username}")
+	@Path("validateRegistrationOTP/{username}")
 	@UnitOfWork
-	public User validateOTP(@PathParam("username") String username, @FormParam("otp") String otp) throws ExecutionException {
+	public User validateRegistrationOTP(@PathParam("username") String username, @FormParam("otp") String otp) throws ExecutionException {
+		if (otpCache.get(username).equals(otp)) {
+			return userDAO.create(userCache.getIfPresent(username));
+		} else throw new WebApplicationException("OTP does not match");
+	}
+	
+	@POST
+	@Path("validateForgotPassOTP/{username}")
+	@UnitOfWork
+	public User validateForgotPassOTP(@PathParam("username") String username, @FormParam("otp") String otp) throws ExecutionException {
 		if (otpCache.get(username).equals(otp)) {
 			return userDAO.findByUserName(username);
 		} else throw new WebApplicationException("OTP does not match");
