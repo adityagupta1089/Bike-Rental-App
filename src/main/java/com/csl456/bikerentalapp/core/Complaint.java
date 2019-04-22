@@ -1,11 +1,15 @@
 package com.csl456.bikerentalapp.core;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "complaint")
+@NamedQueries({ @NamedQuery(name = "Complaint.findAll", query = "SELECT C FROM Complaint C")
+	 })
+
 public class Complaint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +23,12 @@ public class Complaint {
 
     @Column(nullable = false)
 	private int cycleId;
+    
+    @Column(nullable = false)
+	private Date startTime;
+
+	@Column
+	private Date endTime;
 
 	@Column(nullable = false)
 	private int personId;
@@ -47,30 +57,53 @@ public class Complaint {
         return status;
     }
 
-    public Complaint(int id, String details, ComplaintStatus status, int cycleId, int personId) {
+	public Complaint(int id, String details, ComplaintStatus status, int cycleId, Date startTime, Date endTime,
+			int personId) {
 		this.id = id;
 		this.details = details;
 		this.status = status;
 		this.cycleId = cycleId;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.personId = personId;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cycleId, details, personId, status);
+		return Objects.hash(cycleId, details, endTime, personId, startTime, status);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Complaint other = (Complaint) obj;
-		return cycleId == other.cycleId && Objects.equals(details, other.details) && personId == other.personId
-				&& status == other.status;
+		return cycleId == other.cycleId && Objects.equals(details, other.details)
+				&& Objects.equals(endTime, other.endTime) && personId == other.personId
+				&& Objects.equals(startTime, other.startTime) && status == other.status;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public void setStatus(ComplaintStatus status) {

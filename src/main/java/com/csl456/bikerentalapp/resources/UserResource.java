@@ -1,6 +1,5 @@
 package com.csl456.bikerentalapp.resources;
 
-import com.csl456.bikerentalapp.core.Person;
 import com.csl456.bikerentalapp.core.User;
 import com.csl456.bikerentalapp.db.SessionDAO;
 import com.csl456.bikerentalapp.db.UserDAO;

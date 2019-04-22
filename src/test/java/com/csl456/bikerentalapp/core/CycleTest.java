@@ -8,11 +8,11 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CycleTest {
-  /*  private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     public static Cycle getCycle() {
-        return new Cycle("Atlas", Location.SATLUJ_HOSTEL,
-                         new Person("Aditya Gupta", 1234567890L, "aditya@example.com")
+        return new Cycle(10,"Atlas", 1,
+                         1
         );
     }
 
@@ -20,5 +20,4 @@ public class CycleTest {
     public void deserializesFromJSON() throws Exception {
         assertThat(MAPPER.readValue(fixture("fixtures/cycle.json"), Cycle.class)).isEqualTo(getCycle());
     }
-*/
 }

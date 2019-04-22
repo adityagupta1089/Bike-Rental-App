@@ -1,6 +1,7 @@
 package com.csl456.bikerentalapp.db;
 
 import org.hibernate.SessionFactory;
+import java.util.List;
 
 import com.csl456.bikerentalapp.core.Ride;
 
@@ -21,5 +22,10 @@ public class RideDAO extends AbstractDAO<Ride> {
 
 	public Ride end(Ride ride) {
 		return persist(ride);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Ride> findByPersonId(int id) {
+		return list(namedQuery("Ride.findByPersonId").setParameter("personId", id));
 	}
 }

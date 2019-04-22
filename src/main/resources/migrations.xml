@@ -79,6 +79,8 @@
 			<column name="id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
+			<column name="startTime" type="datetime" />
+			<column name="endTime" type="datetime" />
 			<column name="details" type="text" />
 			<column name="status" type="varchar(255)" />
 			<column name="cycleId" type="int">

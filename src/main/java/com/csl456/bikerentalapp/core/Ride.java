@@ -5,6 +5,8 @@ import java.util.Date;
 
 @Entity
 @Table
+@NamedQueries({ @NamedQuery(name = "Ride.findByPersonId", query = "SELECT R FROM Ride R WHERE R.personId = :personId") })
+
 public class Ride {
 
 	/** 
