@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -30,6 +32,7 @@ public class CycleResource {
 	@POST
 	@UnitOfWork
 	public Cycle createCycle(Cycle cycle) {
+		cycle.setStatus(1);
 		return cycleDAO.create(cycle);
 	}
 
@@ -46,8 +49,17 @@ public class CycleResource {
 	@GET
 	@UnitOfWork
 	@Path("{id}")
-	public Optional<Cycle> getCycleById(@PathParam("id") int id ) {
+	public Cycle getCycleById(@PathParam("id") int id ) {
 		return cycleDAO.findById(id);
+	}
+	
+	@DELETE
+	@UnitOfWork
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Cycle resolveComplaint(@FormParam("cycleId") int cycleId) {
+		Cycle cycle = cycleDAO.findById(cycleId);
+		cycle.setStatus(0);
+		return cycleDAO.makeInactive(cycle);
 	}
 
 }

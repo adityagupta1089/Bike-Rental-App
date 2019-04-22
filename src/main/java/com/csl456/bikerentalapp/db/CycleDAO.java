@@ -22,13 +22,17 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 		return list(namedQuery("Cycle.findAll"));
 	}
 
-	public Optional<Cycle> findById(Integer id) {
-		return Optional.ofNullable(get(id));
+	public Cycle findById(Integer id) {
+		return get(id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Cycle> getCyclesByOwnerId(int ownerId) {
 		return list(namedQuery("Cycle.findByPersonId").setParameter("ownerId", ownerId));
+	}
+	
+	public Cycle makeInactive(Cycle cycle) {
+		return persist(cycle);
 	}
 
 }

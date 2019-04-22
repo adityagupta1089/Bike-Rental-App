@@ -1,7 +1,7 @@
 package com.csl456.bikerentalapp.resources;
 
 import com.csl456.bikerentalapp.core.Cycle;
-import com.csl456.bikerentalapp.core.Location;
+import com.csl456.bikerentalapp.core.LocationTest;
 import com.csl456.bikerentalapp.core.Person;
 import com.csl456.bikerentalapp.db.CycleDAO;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(DropwizardExtensionsSupport.class)
 class CycleResourceTest {
 
-	/*private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
+	private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
 
 	private static final ResourceExtension RESOURCES = ResourceExtension.builder()
 																		.addResource(new CycleResource(CYCLE_DAO))
@@ -64,14 +64,14 @@ class CycleResourceTest {
 	void setUp() {
 		cycle = new Cycle(
 			"Atlas",
-			Location.SATLUJ_HOSTEL,
-			new Person("Aditya Gupta", 1234567890L, "aditya@example.com")
+			1,
+			1,1
 		);
 	}
 
 	@AfterEach
 	void tearDown() {
 		reset(CYCLE_DAO);
-	}*/
+	}
 
 }

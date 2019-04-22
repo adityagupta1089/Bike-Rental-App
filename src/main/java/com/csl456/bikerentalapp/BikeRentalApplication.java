@@ -20,7 +20,7 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
     private static final Logger LOGGER = LoggerFactory.getLogger(BikeRentalAppConfiguration.class);
 
     private final HibernateBundle<BikeRentalAppConfiguration> hibernateBundle = new HibernateBundle<BikeRentalAppConfiguration>(
-            Cycle.class, Person.class, Session.class, User.class, Complaint.class, Ride.class, Location.class) {
+            Cycle.class, Person.class, Session.class, User.class, Complaint.class, Ride.class, LocationTest.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
             return configuration.getDataSourceFactory();

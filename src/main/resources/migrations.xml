@@ -28,6 +28,7 @@
 			<column name="ownerId" type="bigint">
 				<constraints nullable="false" foreignKeyName="fk_owner_id" references="person(id)" />
 			</column>
+			<column name="status" type="int" />
 			<column name="locationId" type="varchar(255)" />
 		</createTable>
 

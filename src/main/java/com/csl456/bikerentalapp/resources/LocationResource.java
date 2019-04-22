@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.csl456.bikerentalapp.core.Location;
+import com.csl456.bikerentalapp.core.LocationTest;
 import com.csl456.bikerentalapp.db.LocationDAO;
 
 import io.dropwizard.hibernate.UnitOfWork;
@@ -26,13 +26,13 @@ public class LocationResource {
 
     @POST
     @UnitOfWork
-    public Location createLocation(Location location) {
+    public LocationTest createLocation(LocationTest location) {
         return locationDAO.create(location);
     }
 
     @GET
     @UnitOfWork
-    public List<Location> listLocation() {
+    public List<LocationTest> listLocation() {
         return locationDAO.findAll();
     }
 
