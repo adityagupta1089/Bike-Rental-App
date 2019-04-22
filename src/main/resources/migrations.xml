@@ -22,6 +22,19 @@
             </column>
         </createTable>
 
+        <createTable tableName="locations">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="latitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <createTable tableName="cycle">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -105,19 +118,6 @@
             </column>
             <column name="personId" type="int">
                 <constraints nullable="false" foreignKeyName="fk_complaint_person" references="person(id)"/>
-            </column>
-        </createTable>
-
-        <createTable tableName="locations">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)"/>
-            <column name="latitude" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="longitude" type="double">
-                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
