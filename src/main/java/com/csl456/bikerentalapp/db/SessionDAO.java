@@ -19,8 +19,8 @@ public class SessionDAO extends AbstractDAO<Session> {
         return namedQuery("Session.remove").setParameter("accessToken", accessToken).executeUpdate();
     }
 
-    public void removeAll(String username) {
-        namedQuery("Session.removeAll").setParameter("username", username).executeUpdate();
+    public int removeAll(String username) {
+        return namedQuery("Session.removeAll").setParameter("username", username).executeUpdate();
     }
 
     @SuppressWarnings("unchecked")

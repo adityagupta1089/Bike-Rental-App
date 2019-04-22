@@ -11,9 +11,7 @@ public class CycleTest {
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     public static Cycle getCycle() {
-        return new Cycle(10,"Atlas", 1,
-                         1
-        );
+        return new Cycle("Atlas", 1, 1);
     }
 
     @Test

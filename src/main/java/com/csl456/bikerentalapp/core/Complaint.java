@@ -57,15 +57,19 @@ public class Complaint {
         return status;
     }
 
-	public Complaint(int id, String details, ComplaintStatus status, int cycleId, Date startTime, Date endTime,
-			int personId) {
-		this.id = id;
+	public Complaint(String details, ComplaintStatus status, int cycleId, Date startTime, Date endTime, int personId) {
 		this.details = details;
 		this.status = status;
 		this.cycleId = cycleId;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.personId = personId;
+	}
+
+	@Override
+	public String toString() {
+		return "Complaint [id=" + id + ", details=" + details + ", status=" + status + ", cycleId=" + cycleId
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", personId=" + personId + "]";
 	}
 
 	@Override

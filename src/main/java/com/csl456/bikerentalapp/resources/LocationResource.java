@@ -13,7 +13,6 @@ import com.csl456.bikerentalapp.core.Location;
 import com.csl456.bikerentalapp.core.UserRole;
 import com.csl456.bikerentalapp.db.LocationDAO;
 
-import com.csl456.bikerentalapp.filter.LoggedIn;
 import com.csl456.bikerentalapp.filter.RolesAllowed;
 import io.dropwizard.hibernate.UnitOfWork;
 

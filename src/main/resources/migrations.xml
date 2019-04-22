@@ -28,6 +28,7 @@
 			<column name="ownerId" type="bigint">
 				<constraints nullable="false" foreignKeyName="fk_owner_id" references="person(id)" />
 			</column>
+			<column name="status" type="int" />
 			<column name="locationId" type="varchar(255)" />
 		</createTable>
 
@@ -81,7 +82,7 @@
 			</column>
 			<column name="startTime" type="datetime" />
 			<column name="endTime" type="datetime" />
-			<column name="smtpServerDetails" type="text" />
+			<column name="details" type="text" />
 			<column name="status" type="varchar(255)" />
 			<column name="cycleId" type="int">
 				<constraints nullable="false" foreignKeyName="fk_complaint_cycle" references="cycle(id)" />

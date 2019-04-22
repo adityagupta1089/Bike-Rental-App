@@ -1,7 +1,6 @@
 package com.csl456.bikerentalapp.filter;
 
 import com.csl456.bikerentalapp.BikeRentalAppConfiguration;
-import com.csl456.bikerentalapp.core.Session;
 import com.csl456.bikerentalapp.db.SessionDAO;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;

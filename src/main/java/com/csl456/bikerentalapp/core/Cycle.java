@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NamedQueries({
                       @NamedQuery(name = "Cycle.findAll", query = "SELECT C FROM Cycle C"),
                       @NamedQuery(name = "Cycle.findById", query = "SELECT C FROM Cycle C WHERE C.id = :id"),
+                      @NamedQuery(name = "Cycle.deleteById", query = "DELETE FROM Cycle C WHERE C.id = :id"),
                       @NamedQuery(name = "Cycle.findByPersonId", query = "SELECT C FROM Cycle C WHERE C.ownerId = :ownerId")
               })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Cycle.class)
@@ -29,25 +30,10 @@ public class Cycle {
 
     @Column(nullable = false)
 	private int ownerId;
-
+    
     public Cycle() {
 
     }
-
-
-    public Cycle(int id, String brand, int locationId, int ownerId) {
-		this.id = id;
-		this.brand = brand;
-		this.locationId = locationId;
-		this.ownerId = ownerId;
-	}
-
-
-
-    
-
-	
-
 
 	public String getBrand() { return brand; }
 
@@ -67,28 +53,28 @@ public class Cycle {
 	}
 
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(brand, id, locationId, ownerId);
+	public Cycle(String brand, int locationId, int ownerId) {
+		this.brand = brand;
+		this.locationId = locationId;
+		this.ownerId = ownerId;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(brand, locationId, ownerId);
+	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		Cycle other = (Cycle) obj;
-		return Objects.equals(brand, other.brand) && id == other.id && locationId == other.locationId
-				&& ownerId == other.ownerId;
+		return Objects.equals(brand, other.brand) && locationId == other.locationId && ownerId == other.ownerId;
 	}
-
 
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
