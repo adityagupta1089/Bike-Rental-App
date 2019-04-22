@@ -67,4 +67,16 @@ public class CycleResource {
 		return cycleDAO.remove(id);
 	}
 
+	@POST
+	@UnitOfWork
+	@Path("changeLocation")
+	@RolesAllowed(UserRole.ADMIN)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Cycle changeLocation(@FormParam("id") int id, @FormParam(
+			"newLocation") int newLocationId) {
+		Cycle cycle = cycleDAO.findById(id);
+		cycle.setLocationId(newLocationId);
+		return cycleDAO.create(cycle);
+	}
+
 }
