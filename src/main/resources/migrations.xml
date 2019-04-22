@@ -32,7 +32,7 @@
 			<column name="locationId" type="varchar(255)" />
 		</createTable>
 
-		<createTable tableName="user">
+		<createTable tableName="users">
 			<column name="username" type="varchar(100)">
 				<constraints primaryKey="true" nullable="false" />
 			</column>

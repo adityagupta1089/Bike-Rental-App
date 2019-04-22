@@ -6,9 +6,11 @@ import com.csl456.bikerentalapp.db.SessionDAO;
 import com.csl456.bikerentalapp.db.UserDAO;
 import com.csl456.bikerentalapp.filter.LoggedIn;
 import com.csl456.bikerentalapp.filter.RolesAllowed;
-import com.google.common.cache.*;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import io.dropwizard.hibernate.UnitOfWork;
-import org.apache.log4j.Logger;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
@@ -41,9 +43,7 @@ public class UserResource {
 				}
 			});
 	private static final Cache<String, User> userCache = CacheBuilder
-			.newBuilder().removalListener((RemovalListener<String, User>) notification -> {
-				Logger.getLogger(UserResource.class).debug("Evicted: " + notification.getCause());
-			})
+			.newBuilder()
 			.build();
 
 	public UserResource(UserDAO userDAO, SessionDAO sessionDAO,

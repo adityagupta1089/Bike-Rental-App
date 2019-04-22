@@ -32,7 +32,6 @@ public class CycleResource {
 
 	@POST
 	@UnitOfWork
-	@RolesAllowed(UserRole.ADMIN)
 	public Cycle createCycle(Cycle cycle) {
 		return cycleDAO.create(cycle);
 	}
