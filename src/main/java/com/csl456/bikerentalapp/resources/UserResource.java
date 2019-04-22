@@ -1,41 +1,25 @@
 package com.csl456.bikerentalapp.resources;
 
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nonnull;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-
-import org.simplejavamail.email.Email;
-import org.simplejavamail.email.EmailBuilder;
-import org.simplejavamail.mailer.MailerBuilder;
-
-import com.csl456.bikerentalapp.core.Pair;
-import com.csl456.bikerentalapp.core.Person;
-import com.csl456.bikerentalapp.core.SMTPServerDetails;
-import com.csl456.bikerentalapp.core.User;
-import com.csl456.bikerentalapp.core.UserRole;
+import com.csl456.bikerentalapp.core.*;
 import com.csl456.bikerentalapp.db.PersonDAO;
 import com.csl456.bikerentalapp.db.SessionDAO;
 import com.csl456.bikerentalapp.db.UserDAO;
 import com.csl456.bikerentalapp.filter.LoggedIn;
 import com.csl456.bikerentalapp.filter.RolesAllowed;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-
+import com.google.common.cache.*;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.apache.log4j.Logger;
+import org.simplejavamail.email.Email;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
+
+import javax.annotation.Nonnull;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
@@ -57,7 +41,9 @@ public class UserResource {
 				}
 			});
 	private static final Cache<String, User> userCache = CacheBuilder
-			.newBuilder()
+			.newBuilder().removalListener((RemovalListener<String, User>) notification -> {
+				Logger.getLogger(UserResource.class).debug("Evicted: " + notification.getCause());
+			})
 			.build();
 
 	public UserResource(UserDAO userDAO, SessionDAO sessionDAO,
@@ -107,7 +93,7 @@ public class UserResource {
 		}
 		int removedSessions = sessionDAO.removeAll(username);
 		int usersAffected = userDAO.changePassword(username, newPassword);
-		return new Pair<Integer, Integer>(removedSessions, usersAffected);
+		return new Pair<>(removedSessions, usersAffected);
 	}
 
 	@POST
