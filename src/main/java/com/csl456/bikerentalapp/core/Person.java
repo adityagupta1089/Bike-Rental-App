@@ -2,12 +2,11 @@ package com.csl456.bikerentalapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Email;
 
+import java.util.Objects;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "person")
@@ -31,8 +30,6 @@ public class Person {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-    private Set<Cycle> cycles = new HashSet<>();
 
     public Person() {
 
@@ -44,29 +41,35 @@ public class Person {
         this.email = email;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-        Person person = (Person) o;
-        return contactNumber == person.contactNumber
-                && Objects.equal(name, person.name)
-                && Objects.equal(email, person.email)
-                && Objects.equal(cycles, person.cycles);
-    }
+  
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(name, contactNumber, email, cycles);
-    }
+	public int hashCode() {
+		return Objects.hash(contactNumber, email, name);
+	}
 
-    public long getContactNumber() { return contactNumber; }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Person other = (Person) obj;
+		return contactNumber == other.contactNumber && Objects.equals(email, other.email)
+				&& Objects.equals(name, other.name);
+	}
+
+	public long getContactNumber() { return contactNumber; }
 
     public void setContactNumber(long contactNumber) { this.contactNumber = contactNumber; }
 
-    public Set<Cycle> getCycles() { return cycles; }
 
-    public void setCycles(Set<Cycle> cycles) { this.cycles = cycles; }
+   
 
     public String getEmail() { return email; }
 

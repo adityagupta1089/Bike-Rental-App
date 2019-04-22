@@ -9,21 +9,26 @@ import java.util.Optional;
 
 public class CycleDAO extends AbstractDAO<Cycle> {
 
-    public CycleDAO(SessionFactory factory) {
-        super(factory);
-    }
+	public CycleDAO(SessionFactory factory) {
+		super(factory);
+	}
 
-    public Cycle create(Cycle cycle) {
-        return persist(cycle);
-    }
+	public Cycle create(Cycle cycle) {
+		return persist(cycle);
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Cycle> findAll() {
-        return list(namedQuery("Cycle.findAll"));
-    }
+	@SuppressWarnings("unchecked")
+	public List<Cycle> findAll() {
+		return list(namedQuery("Cycle.findAll"));
+	}
 
-    public Optional<Cycle> findById(Integer id) {
-        return Optional.ofNullable(get(id));
-    }
+	public Optional<Cycle> findById(Integer id) {
+		return Optional.ofNullable(get(id));
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Cycle> getCyclesByOwnerId(int ownerId) {
+		return list(namedQuery("Cycle.findByPersonId").setParameter("ownerId", ownerId));
+	}
 
 }

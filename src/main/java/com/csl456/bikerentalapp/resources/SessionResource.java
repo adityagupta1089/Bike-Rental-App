@@ -8,37 +8,38 @@ import io.dropwizard.hibernate.UnitOfWork;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-
 @Path("session")
 @Produces(MediaType.APPLICATION_JSON)
 public class SessionResource {
-    private final UserDAO userDAO;
+	private final UserDAO userDAO;
 
-    private final SessionDAO sessionDAO;
+	private final SessionDAO sessionDAO;
 
-    public SessionResource(UserDAO userDAO, SessionDAO sessionDAO) {
-        this.userDAO = userDAO;
-        this.sessionDAO = sessionDAO;
-    }
+	public SessionResource(UserDAO userDAO, SessionDAO sessionDAO) {
+		this.userDAO = userDAO;
+		this.sessionDAO = sessionDAO;
+	}
 
-    @POST
-    @UnitOfWork
-    public Session login(@FormParam("username") String username, @FormParam("password") String password)
-            throws Exception {
+	@POST
+	@UnitOfWork
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Session login(@FormParam("username") String username, @FormParam("password") String password)
+			throws Exception {
 
-        if (userDAO.findUsersByUsernameAndPassword(username, password).isEmpty()) {
-            throw new Exception("Username or Password Wrong");
-        }
+		if (userDAO.findUsersByUsernameAndPassword(username, password) == null) {
+			throw new Exception("Username or Password Wrong");
+		}
 
-        Session session = new Session(username);
-        sessionDAO.insert(session);
+		Session session = new Session(username);
+		sessionDAO.insert(session);
 
-        return session;
-    }
+		return session;
+	}
 
-    @DELETE
-    @UnitOfWork
-    public void logout(Session session) {
-        sessionDAO.remove(session);
-    }
+	@DELETE
+	@UnitOfWork
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void logout(Session session) {
+		sessionDAO.remove(session);
+	}
 }

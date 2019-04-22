@@ -1,10 +1,13 @@
 package com.csl456.bikerentalapp.db;
 
-import com.csl456.bikerentalapp.core.User;
-import io.dropwizard.hibernate.AbstractDAO;
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 
-import java.util.List;
+import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.core.User;
+
+import io.dropwizard.hibernate.AbstractDAO;
 
 public class UserDAO extends AbstractDAO<User> {
 
@@ -15,10 +18,15 @@ public class UserDAO extends AbstractDAO<User> {
     public User create(User user) {
         return persist(user);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<User> findAll() {
+        return list(namedQuery("User.findAll"));
+    }
 
     @SuppressWarnings("unchecked")
-    public List<User> findUsersByUsernameAndPassword(String username, String password) {
-        return list(namedQuery("User.findByUserNameAndPassword").setParameter("username", username)
+    public User findUsersByUsernameAndPassword(String username, String password) {
+        return uniqueResult(namedQuery("User.findByUserNameAndPassword").setParameter("username", username)
                                                                 .setParameter("password", password));
     }
 }

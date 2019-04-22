@@ -1,81 +1,91 @@
 package com.csl456.bikerentalapp.core;
 
-
 import com.google.common.base.Objects;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-@NamedQueries({
-                      @NamedQuery(name = "User.findAll", query = "SELECT U FROM User U"),
-                      @NamedQuery(name = "User.findByUserNameAndPassword",
-                                  query = "SELECT U FROM User U WHERE U.name = :name AND U.password = :password")
-              })
+@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT U FROM User U"),
+		@NamedQuery(name = "User.findByUserNameAndPassword", query = "SELECT U FROM User U WHERE U.username = :username AND U.password = :password") })
 public class User {
-    @Id
-    @Column
-    private String name;
+	@Id
+	private String username;
 
-    @Column
-    private String password;
+	@Column(nullable = false)
+	private String password;
 
-    @Column
-    private UserRole role;
+	@Column(nullable = false)
+	private UserRole role;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "personId", nullable = false)
-    private Person person;
+	@Column(nullable = false)
+	private int personId;
 
-    public User() {
+	public User() {
 
-    }
+	}
 
-    public Person getPerson() {
-        return person;
-    }
+	public User(String username, String password, UserRole role, int personId) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.personId = personId;
+	}
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+	public int getPersonId() {
+		return personId;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-        User user = (User) o;
-        return Objects.equal(name, user.name)
-                && Objects.equal(password, user.password)
-                && role == user.role
-                && Objects.equal(person, user.person);
-    }
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name, password, role, person);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		User user = (User) o;
+		return Objects.equal(username, user.username) && Objects.equal(password, user.password) && role == user.role
+				&& Objects.equal(personId, user.personId);
+	}
 
-    public String getName() {
-        return name;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(username, password, role, personId);
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public UserRole getRole() {
-        return role;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", role=" + role + ", personId=" + personId
+				+ "]";
+	}
+
 }

@@ -20,7 +20,7 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
     private static final Logger LOGGER = LoggerFactory.getLogger(BikeRentalAppConfiguration.class);
 
     private final HibernateBundle<BikeRentalAppConfiguration> hibernateBundle = new HibernateBundle<BikeRentalAppConfiguration>(
-            Cycle.class, Person.class, Session.class, User.class, Complaint.class, Ride.class) {
+            Cycle.class, Person.class, Session.class, User.class, Complaint.class, Ride.class, Location.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -63,6 +63,7 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
         final UserDAO userDAO = new UserDAO(factory);
         final RideDAO rideDAO = new RideDAO(factory);
         final ComplaintDAO complaintDAO = new ComplaintDAO(factory);
+        final LocationDAO locationDAO = new LocationDAO(factory);
 
         environment.jersey().register(new CycleResource(cycleDao));
         environment.jersey().register(new PersonResource(personDao));
@@ -70,7 +71,9 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
         environment.jersey().register(new UserResource(userDAO, sessionDAO));
         environment.jersey().register(new RideResource(rideDAO));
         environment.jersey().register(new ComplaintResource(complaintDAO));
+        environment.jersey().register(new LocationResource(locationDAO));
 
         environment.jersey().register(new JsonProcessingExceptionMapper(true));
+        
     }
 }

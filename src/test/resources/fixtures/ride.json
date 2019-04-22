@@ -1,0 +1,9 @@
+{
+	"startLocation" : "CHEM_DEPT",
+	"endLocation": "ME_DEPT",
+	"startTime": 0,
+	"endTime": 0,
+	"cycleId": 1,
+	"personId": 1,
+	"cost": 0
+}

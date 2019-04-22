@@ -1,9 +1,5 @@
 {
 	"brand": "Atlas",
 	"location": "SATLUJ_HOSTEL",
-	"owner": {
-		"name": "Aditya Gupta",
-		"contactNumber": 1234567890,
-		"email": "aditya@example.com"
-	}
+	"ownerId": 1
 }
