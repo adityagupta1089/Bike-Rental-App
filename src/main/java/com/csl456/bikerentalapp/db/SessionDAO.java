@@ -2,6 +2,7 @@ package com.csl456.bikerentalapp.db;
 
 
 import com.csl456.bikerentalapp.core.Session;
+import com.csl456.bikerentalapp.core.User;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 

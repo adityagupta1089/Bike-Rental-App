@@ -67,7 +67,7 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
 		final LocationDAO locationDAO = new LocationDAO(factory);
 
 		/* Resources */
-		environment.jersey().register(new CycleResource(cycleDAO));
+		environment.jersey().register(new CycleResource(cycleDAO, userDAO, sessionDAO));
 		environment.jersey().register(new PersonResource(personDAO));
 		environment.jersey().register(new SessionResource(userDAO, sessionDAO));
 		environment.jersey()
