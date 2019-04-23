@@ -12,8 +12,8 @@ public class SessionDAO extends AbstractDAO<Session> {
         super(factory);
     }
 
-    public Session insert(Session session) {
-        return persist(session);
+    public void insert(Session session) {
+        persist(session);
     }
 
     public int remove(String accessToken) {

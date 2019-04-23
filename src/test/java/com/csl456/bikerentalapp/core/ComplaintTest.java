@@ -14,15 +14,24 @@ import io.dropwizard.jackson.Jackson;
 public class ComplaintTest {
 	 private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 	 public static Complaint getComplaint() {
-			Calendar calendar = Calendar.getInstance();
-			calendar.set(2019, 3, 15, 17, 9, 57);
-			Date happyNewYearDate = calendar.getTime();
-	        return new Complaint("punctured", ComplaintStatus.UNRESOLVED, 1 ,happyNewYearDate , null, 1 );
+			Date d= new Date(0);
+	        return new Complaint("punctured", ComplaintStatus.UNRESOLVED, 1 ,d , null, 1 );
 	    }
 	 
 	 @Test
 	    public void deserializesFromJSON() throws Exception {
-	        assertThat(MAPPER.readValue(fixture("fixtures/complaint.json"), Complaint.class)).isEqualTo(getComplaint());
+	        assertThat(MAPPER.readValue(fixture("fixtures/complaint.json"), Complaint.class).getCycleId()).isEqualTo(
+	        		getComplaint().getCycleId());
+	        assertThat(MAPPER.readValue(fixture("fixtures/complaint.json"), Complaint.class).getDetails()).isEqualTo(
+	        		getComplaint().getDetails());
+	        assertThat(MAPPER.readValue(fixture("fixtures/complaint.json"), Complaint.class).getEndTime()).isEqualTo(
+	        		getComplaint().getEndTime());
+	        assertThat(MAPPER.readValue(fixture("fixtures/complaint.json"), Complaint.class).getPersonId()).isEqualTo(
+	        		getComplaint().getPersonId());
+	        assertThat(MAPPER.readValue(fixture("fixtures/complaint.json"), Complaint.class).getStartTime()).isEqualTo(
+	        		getComplaint().getStartTime());
+	        assertThat(MAPPER.readValue(fixture("fixtures/complaint.json"), Complaint.class).getStatus()).isEqualTo(
+	        		getComplaint().getStatus());
 	    }
 
 }
