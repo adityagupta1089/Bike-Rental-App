@@ -1,10 +1,10 @@
 package com.csl456.bikerentalapp.db;
 
-import com.csl456.bikerentalapp.core.User;
-import io.dropwizard.hibernate.AbstractDAO;
-import org.hibernate.SessionFactory;
+import com.csl456.bikerentalapp.core.*;
+import io.dropwizard.hibernate.*;
+import org.hibernate.*;
 
-import java.util.List;
+import java.util.*;
 
 public class UserDAO extends AbstractDAO<User> {
 
@@ -15,14 +15,15 @@ public class UserDAO extends AbstractDAO<User> {
     public User create(User user) {
         return persist(user);
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
         return list(namedQuery("User.findAll"));
     }
 
     @SuppressWarnings("unchecked")
-    public User findUsersByUsernameAndPassword(String username, String password) {
+    public User findUsersByUsernameAndPassword(String username,
+            String password) {
         return uniqueResult(namedQuery("User.findByUserNameAndPassword")
                 .setParameter("username", username)
                 .setParameter("password", password));
@@ -30,13 +31,16 @@ public class UserDAO extends AbstractDAO<User> {
 
     @SuppressWarnings("unchecked")
     public User findByUserName(String username) {
-        return uniqueResult(namedQuery("User.findByUserName").setParameter("username", username));
+        return uniqueResult(namedQuery("User.findByUserName").setParameter("username",
+                username
+        ));
     }
 
-    public int changePassword(String username, String newPassword) {
-        return namedQuery("User.changePassword")
+    public void changePassword(String username, String newPassword) {
+        namedQuery("User.changePassword")
                 .setParameter("username", username)
                 .setParameter("password", newPassword)
                 .executeUpdate();
     }
+
 }

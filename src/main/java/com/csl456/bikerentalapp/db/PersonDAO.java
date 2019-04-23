@@ -1,13 +1,13 @@
 package com.csl456.bikerentalapp.db;
 
-import com.csl456.bikerentalapp.core.Person;
-import io.dropwizard.hibernate.AbstractDAO;
-import org.hibernate.SessionFactory;
+import com.csl456.bikerentalapp.core.*;
+import io.dropwizard.hibernate.*;
+import org.hibernate.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PersonDAO extends AbstractDAO<Person> {
+
     public PersonDAO(SessionFactory factory) {
         super(factory);
     }
@@ -24,4 +24,5 @@ public class PersonDAO extends AbstractDAO<Person> {
     public Optional<Person> findById(Integer id) {
         return Optional.ofNullable(get(id));
     }
+
 }

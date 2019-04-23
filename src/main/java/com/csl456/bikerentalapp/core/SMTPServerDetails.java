@@ -1,51 +1,36 @@
 package com.csl456.bikerentalapp.core;
 
 public class SMTPServerDetails {
-    String host;
-    int port;
-    String username;
-    String password;
+
+    private String host;
+    private int    port;
+    private String username;
+    private String password;
 
     public SMTPServerDetails(String host, int port, String username,
-                             String password) {
-        this.host = host;
-        this.port = port;
+            String password) {
+        this.host     = host;
+        this.port     = port;
         this.username = username;
         this.password = password;
     }
 
-    public String getHost() {
-        return host;
-    }
+    public SMTPServerDetails() {}
 
-    public void setHost(String host) {
-        this.host = host;
-    }
+    public String getHost() { return host;}
 
-    public int getPort() {
-        return port;
-    }
+    public void setHost(String host) { this.host = host;}
 
-    public void setPort(int port) {
-        this.port = port;
-    }
+    public int getPort() { return port;}
 
-    public String getUsername() {
-        return username;
-    }
+    public void setPort(int port) { this.port = port;}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public String getUsername() { return username;}
 
-    public String getPassword() {
-        return password;
-    }
+    public void setUsername(String username) { this.username = username;}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getPassword() { return password;}
 
-    public SMTPServerDetails() {
-    }
+    public void setPassword(String password) { this.password = password;}
+
 }

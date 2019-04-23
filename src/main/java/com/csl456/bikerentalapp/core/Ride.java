@@ -1,129 +1,94 @@
 package com.csl456.bikerentalapp.core;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table
-@NamedQueries({ @NamedQuery(name = "Ride.findByPersonId", query = "SELECT R FROM Ride R WHERE R.personId = :personId") })
-
+@NamedQueries({
+        @NamedQuery(name = "Ride.findByPersonId",
+                query = "SELECT R FROM Ride R WHERE R.personId = :personId")
+})
 public class Ride {
 
-	/** 
-	 * */
-	private static final double MIN_COST = 10;
-	/**
-	 * We want to have a cost of 10 Rupees per hour, this is measured in
-	 * Rupees/millisecond so we have 10Rs/(60*60*1000)millisecond
-	 */
-	private static final double COST_MULTIPLIER = 10.0 / (60.0 * 60.0 * 1000.0);
+    private static final double MIN_COST        = 10;
+    /**
+     * We want to have a cost of 10 Rupees per hour, this is measured in Rupees/millisecond so we have 10Rs/(60*60*1000)millisecond
+     */
+    private static final double COST_MULTIPLIER = 10.0 / (60.0 * 60.0 * 1000.0);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private              int    id;
+    @Column(nullable = false)
+    private              int    startLocationId;
+    @Column
+    private              int    endLocationId;
+    @Column(nullable = false)
+    private              Date   startTime;
+    @Column
+    private              Date   endTime;
+    @Column(nullable = false)
+    private              int    cycleId;
+    @Column(nullable = false)
+    private              int    personId;
+    @Column
+    private              double cost;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    public Ride() {}
 
-	@Column(nullable = false)
-	private int startLocationId;
+    public Ride(int startLocationId, int endLocationId, Date startTime,
+            Date endTime, int cycleId, int personId, double cost) {
+        this.startLocationId = startLocationId;
+        this.endLocationId   = endLocationId;
+        this.startTime       = startTime;
+        this.endTime         = endTime;
+        this.cycleId         = cycleId;
+        this.personId        = personId;
+        this.cost            = cost;
+    }
 
-	@Column
-	private int endLocationId;
+    public int getId() { return id;}
 
-	@Column(nullable = false)
-	private Date startTime;
+    public void setId(int id) { this.id = id;}
 
-	@Column
-	private Date endTime;
+    public double getCost() { return cost;}
 
-	@Column(nullable = false)
-	private int cycleId;
+    public void setCost(double cost) { this.cost = cost;}
 
-	@Column(nullable = false)
-	private int personId;
+    public Date getStartTime() { return startTime;}
 
-	@Column
-	private double cost;
+    public void setStartTime(Date startTime) { this.startTime = startTime;}
 
-	public Ride() {
+    public int getStartLocationId() { return startLocationId;}
 
-	}
+    public void setStartLocationId(int startLocationId) {
+        this.startLocationId = startLocationId;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getEndLocationId() { return endLocationId;}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setEndLocationId(int endLocationId) {
+        this.endLocationId = endLocationId;
+    }
 
-	public double getCost() {
+    public Date getEndTime() { return endTime;}
 
-		return cost;
-	}
+    public void setEndTime(Date endTime) { this.endTime = endTime;}
 
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
+    public int getCycleId() { return cycleId;}
 
-	public Ride(int startLocationId, int endLocationId, Date startTime, Date endTime, int cycleId, int personId,
-			double cost) {
-		this.startLocationId = startLocationId;
-		this.endLocationId = endLocationId;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.cycleId = cycleId;
-		this.personId = personId;
-		this.cost = cost;
-	}
+    public void setCycleId(int cycleId) { this.cycleId = cycleId;}
 
-	public Date getStartTime() {
-		return startTime;
-	}
+    public int getPersonId() { return personId;}
 
-	public int getStartLocationId() {
-		return startLocationId;
-	}
+    public void setPersonId(int personId) { this.personId = personId;}
 
-	public void setStartLocationId(int startLocationId) {
-		this.startLocationId = startLocationId;
-	}
+    public void calculateCost() {
+        this.cost = Math.min(
+                MIN_COST,
+                COST_MULTIPLIER * (this.endTime.getTime()
+                        - this.startTime.getTime())
+        );
+    }
 
-	public int getEndLocationId() {
-		return endLocationId;
-	}
-
-	public void setEndLocationId(int endLocationId) {
-		this.endLocationId = endLocationId;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public int getCycleId() {
-		return cycleId;
-	}
-
-	public void setCycleId(int cycleId) {
-		this.cycleId = cycleId;
-	}
-
-	public int getPersonId() {
-		return personId;
-	}
-
-	public void setPersonId(int personId) {
-		this.personId = personId;
-	}
-
-	public void calculateCost() {
-		this.cost = Math.min(MIN_COST, COST_MULTIPLIER * (this.endTime.getTime() - this.startTime.getTime()));
-	}
 }

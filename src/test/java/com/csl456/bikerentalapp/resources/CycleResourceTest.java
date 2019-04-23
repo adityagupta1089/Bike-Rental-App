@@ -1,78 +1,73 @@
 package com.csl456.bikerentalapp.resources;
 
+import com.csl456.bikerentalapp.core.*;
+import com.csl456.bikerentalapp.db.*;
+import io.dropwizard.testing.junit5.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.*;
+import org.mockito.*;
+
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.*;
+import java.util.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-import java.util.List;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import com.csl456.bikerentalapp.db.SessionDAO;
-import com.csl456.bikerentalapp.db.UserDAO;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-
-import com.csl456.bikerentalapp.core.Cycle;
-import com.csl456.bikerentalapp.db.CycleDAO;
-
-import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
-import io.dropwizard.testing.junit5.ResourceExtension;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 class CycleResourceTest {
 
-	private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
-	private static final UserDAO USER_DAO = mock(UserDAO.class);
-	private static final SessionDAO SESSION_DAO = mock(SessionDAO.class);
+    private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
 
-	private static final ResourceExtension RESOURCES = ResourceExtension.builder()
-			.addResource(new CycleResource(CYCLE_DAO, USER_DAO, SESSION_DAO)).build();
+    private static final UserDAO USER_DAO = mock(UserDAO.class);
 
-	private final ArgumentCaptor<Cycle> cycleCaptor = ArgumentCaptor.forClass(Cycle.class);
+    private static final SessionDAO SESSION_DAO = mock(SessionDAO.class);
 
-	private Cycle cycle;
+    private static final ResourceExtension RESOURCES = ResourceExtension
+            .builder()
+            .addResource(new CycleResource(CYCLE_DAO, USER_DAO, SESSION_DAO))
+            .build();
 
-	@Test
-	void createCycle() {
-		when(CYCLE_DAO.create(any(Cycle.class))).thenReturn(cycle);
-		final Response response = RESOURCES.target("/cycle").request(MediaType.APPLICATION_JSON_TYPE)
-				.post(Entity.entity(cycle, MediaType.APPLICATION_JSON_TYPE));
-		assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
-		verify(CYCLE_DAO).create(cycleCaptor.capture());
-		assertThat(cycleCaptor.getValue()).isEqualTo(cycle);
-	}
+    private final ArgumentCaptor<Cycle> cycleCaptor = ArgumentCaptor.forClass(
+            Cycle.class);
 
-	@Test
-	void listCycles() {
-		final List<Cycle> cycles = Collections.singletonList(cycle);
-		when(CYCLE_DAO.findAll()).thenReturn(cycles);
+    private Cycle cycle;
 
-		final List<Cycle> response = RESOURCES.target("/cycle").request().get(new GenericType<List<Cycle>>() {
-		});
+    @Test
+    void createCycle() {
+        when(CYCLE_DAO.create(any(Cycle.class))).thenReturn(cycle);
+        final Response response = RESOURCES
+                .target("/cycle")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(cycle, MediaType.APPLICATION_JSON_TYPE));
+        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
+        verify(CYCLE_DAO).create(cycleCaptor.capture());
+        assertThat(cycleCaptor.getValue()).isEqualTo(cycle);
+    }
 
-		verify(CYCLE_DAO).findAll();
-		assertThat(response).containsAll(cycles);
-	}
+    @Test
+    void listCycles() {
+        final List<Cycle> cycles = Collections.singletonList(cycle);
+        when(CYCLE_DAO.findAll()).thenReturn(cycles);
 
-	@BeforeEach
-	void setUp() {
-		cycle = new Cycle("Atlas", 1, 1,1);
-	}
+        final List<Cycle> response = RESOURCES
+                .target("/cycle")
+                .request()
+                .get(new GenericType<List<Cycle>>() {});
 
-	@AfterEach
-	void tearDown() {
-		reset(CYCLE_DAO);
-	}
+        verify(CYCLE_DAO).findAll();
+        assertThat(response).containsAll(cycles);
+    }
+
+    @BeforeEach
+    void setUp() {
+        cycle = new Cycle("Atlas", 1, 1, 1);
+    }
+
+    @AfterEach
+    void tearDown() {
+        reset(CYCLE_DAO);
+    }
 
 }

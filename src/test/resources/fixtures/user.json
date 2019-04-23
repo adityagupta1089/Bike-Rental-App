@@ -1,6 +1,6 @@
 {
-	"username" : "Vinit",
-	"password": "abc",
-	"role": "ADMIN",
-	"personId": 1
+  "username": "Vinit",
+  "password": "abc",
+  "role": "ADMIN",
+  "personId": 1
 }

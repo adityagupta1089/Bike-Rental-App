@@ -1,12 +1,12 @@
 package com.csl456.bikerentalapp;
 
-import com.csl456.bikerentalapp.core.SMTPServerDetails;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.csl456.bikerentalapp.core.*;
+import com.fasterxml.jackson.annotation.*;
 import io.dropwizard.Configuration;
-import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.db.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.*;
+import javax.validation.constraints.*;
 
 public class BikeRentalAppConfiguration extends Configuration {
 
@@ -19,15 +19,12 @@ public class BikeRentalAppConfiguration extends Configuration {
     @JsonProperty("smtpServerDetails")
     private SMTPServerDetails smtpServerDetails;
 
-    public SMTPServerDetails getSmtpServerDetails() {
-        return smtpServerDetails;
-    }
+    public SMTPServerDetails getSmtpServerDetails() { return smtpServerDetails;}
 
     public void setSmtpServerDetails(SMTPServerDetails smtpServerDetails) {
         this.smtpServerDetails = smtpServerDetails;
     }
 
-    public DataSourceFactory getDatabase() {
-        return database;
-    }
+    public DataSourceFactory getDatabase() { return database;}
+
 }

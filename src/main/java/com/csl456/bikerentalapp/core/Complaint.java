@@ -1,16 +1,16 @@
 package com.csl456.bikerentalapp.core;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "complaint")
-@NamedQueries({@NamedQuery(name = "Complaint.findAll", query = "SELECT C FROM" +
-		" Complaint C")
+@NamedQueries({
+        @NamedQuery(name = "Complaint.findAll",
+                query = "SELECT C FROM Complaint C")
 })
-
 public class Complaint {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -33,74 +33,44 @@ public class Complaint {
     @Column(nullable = false)
     private int personId;
 
-    public Complaint() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public ComplaintStatus getStatus() {
-        return status;
-    }
+    public Complaint() {}
 
     public Complaint(String details, ComplaintStatus status, int cycleId,
-					 Date startTime, Date endTime, int personId) {
-        this.details = details;
-        this.status = status;
-        this.cycleId = cycleId;
+            Date startTime, Date endTime, int personId) {
+        this.details   = details;
+        this.status    = status;
+        this.cycleId   = cycleId;
         this.startTime = startTime;
-        this.endTime = endTime;
-        this.personId = personId;
+        this.endTime   = endTime;
+        this.personId  = personId;
     }
 
-    private Date getStartTime() {
-        return startTime;
-    }
+    public int getId() { return id;}
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
+    public void setId(int id) { this.id = id;}
 
-    private Date getEndTime() {
-        return endTime;
-    }
+    public String getDetails() { return details;}
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
+    public void setDetails(String details) { this.details = details;}
 
-    public void setStatus(ComplaintStatus status) {
-        this.status = status;
-    }
+    public ComplaintStatus getStatus() { return status;}
 
-    public int getCycleId() {
-        return cycleId;
-    }
+    public void setStatus(ComplaintStatus status) { this.status = status;}
 
-    public void setCycleId(int cycleId) {
-        this.cycleId = cycleId;
-    }
+    private Date getStartTime() { return startTime;}
 
-    public int getPersonId() {
-        return personId;
-    }
+    public void setStartTime(Date startTime) { this.startTime = startTime;}
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
+    private Date getEndTime() { return endTime;}
+
+    public void setEndTime(Date endTime) { this.endTime = endTime;}
+
+    public int getCycleId() { return cycleId;}
+
+    public void setCycleId(int cycleId) { this.cycleId = cycleId;}
+
+    public int getPersonId() { return personId;}
+
+    public void setPersonId(int personId) { this.personId = personId;}
 
 }

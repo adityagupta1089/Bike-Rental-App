@@ -1,26 +1,20 @@
 package com.csl456.bikerentalapp.resources;
 
-import java.util.List;
+import com.csl456.bikerentalapp.core.*;
+import com.csl456.bikerentalapp.db.*;
+import com.csl456.bikerentalapp.filter.*;
+import io.dropwizard.hibernate.*;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import com.csl456.bikerentalapp.core.Location;
-import com.csl456.bikerentalapp.core.UserRole;
-import com.csl456.bikerentalapp.db.LocationDAO;
-
-import com.csl456.bikerentalapp.filter.RolesAllowed;
-import io.dropwizard.hibernate.UnitOfWork;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.*;
 
 @Path("/location")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class LocationResource {
-	private final LocationDAO locationDAO;
+
+    private final LocationDAO locationDAO;
 
     public LocationResource(LocationDAO locationDAO) {
         this.locationDAO = locationDAO;
@@ -29,15 +23,12 @@ public class LocationResource {
     @POST
     @UnitOfWork
     @RolesAllowed(UserRole.ADMIN)
-    public Location createLocation(Location location) {
-        return locationDAO.create(location);
-    }
+    public Location createLocation(
+            Location location) { return locationDAO.create(location);}
 
     @GET
     @UnitOfWork
     @RolesAllowed(UserRole.ADMIN)
-    public List<Location> listLocations() {
-        return locationDAO.findAll();
-    }
+    public List<Location> listLocations() { return locationDAO.findAll();}
 
 }

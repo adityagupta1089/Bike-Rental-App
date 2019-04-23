@@ -1,13 +1,12 @@
 package com.csl456.bikerentalapp.filter;
 
-import com.csl456.bikerentalapp.db.SessionDAO;
-import io.dropwizard.hibernate.UnitOfWork;
+import com.csl456.bikerentalapp.db.*;
+import io.dropwizard.hibernate.*;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.Provider;
+import javax.ws.rs.*;
+import javax.ws.rs.container.*;
+import javax.ws.rs.core.*;
+import javax.ws.rs.ext.*;
 
 @Provider
 public class LoggedInFilter implements ContainerRequestFilter {
@@ -21,9 +20,13 @@ public class LoggedInFilter implements ContainerRequestFilter {
     @Override
     @UnitOfWork
     public void filter(ContainerRequestContext requestContext) {
-        final String accessToken = requestContext.getHeaderString("Access_Token");
+        final String accessToken
+                = requestContext.getHeaderString("Access_Token");
         if (sessionDAO.notLoggedIn(accessToken)) {
-            throw new WebApplicationException("You are not logged in.", Response.Status.UNAUTHORIZED);
+            throw new WebApplicationException("You are not logged in.",
+                    Response.Status.UNAUTHORIZED
+            );
         }
     }
+
 }

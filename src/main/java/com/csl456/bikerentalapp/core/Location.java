@@ -1,18 +1,21 @@
 package com.csl456.bikerentalapp.core;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "locations")
-@NamedQueries({@NamedQuery(name = "Location.findAll", query = "SELECT L FROM " +
-		"Location L"), @NamedQuery(name = "Location.findById", query = "SELECT" +
-		" L FROM Location L WHERE L.id = :id")})
+@NamedQueries({
+        @NamedQuery(name = "Location.findAll",
+                query = "SELECT L FROM Location L"),
+        @NamedQuery(name = "Location.findById",
+                query = "SELECT L FROM Location L WHERE L.id = :id")
+})
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int    id;
     @Column
     private String name;
     @Column(nullable = false)
@@ -21,65 +24,42 @@ public class Location {
     private double longitude;
 
     public Location(String name, double latitude, double longitude) {
-        this.name = name;
-        this.latitude = latitude;
+        this.name      = name;
+        this.latitude  = latitude;
         this.longitude = longitude;
     }
 
-    public Location() {
+    public Location() {}
 
-    }
+    public double getLongitude() { return longitude;}
 
-    public double getLongitude() {
-        return longitude;
-    }
+    public void setLongitude(double longitude) { this.longitude = longitude;}
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
+    public int getId() { return id;}
 
-    public int getId() {
-        return id;
-    }
+    public void setId(int id) { this.id = id;}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getName() { return name;}
 
-    public String getName() {
-        return name;
-    }
+    public void setName(String name) { this.name = name;}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public double getLatitude() { return latitude;}
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
+    public void setLatitude(double latitude) { this.latitude = latitude;}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(longitude, latitude, name);
-    }
+    public int hashCode() { return Objects.hash(longitude, latitude, name);}
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Location other = (Location) obj;
-        return id == other.id && Double.doubleToLongBits(longitude) == Double.doubleToLongBits(other.longitude) && Double.doubleToLongBits(latitude) == Double.doubleToLongBits(other.latitude) && Objects.equals(name, other.name);
+        return id == other.id && Double.doubleToLongBits(longitude)
+                == Double.doubleToLongBits(other.longitude)
+                && Double.doubleToLongBits(latitude) == Double.doubleToLongBits(
+                other.latitude) && Objects.equals(name, other.name);
     }
 
 }
