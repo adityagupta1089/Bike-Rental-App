@@ -12,13 +12,13 @@ public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     @Column
-    String name;
+    private String name;
     @Column(nullable = false)
-    double latitude;
+    private double latitude;
     @Column(nullable = false)
-    double longitude;
+    private double longitude;
 
     public Location(String name, double latitude, double longitude) {
         this.name = name;
@@ -64,7 +64,7 @@ public class Location {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, longitude, latitude, name);
+        return Objects.hash(longitude, latitude, name);
     }
 
     @Override
