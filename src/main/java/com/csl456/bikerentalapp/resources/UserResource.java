@@ -18,6 +18,7 @@ import org.simplejavamail.mailer.MailerBuilder;
 import javax.annotation.Nonnull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -131,7 +132,7 @@ public class UserResource {
 			return userDAO.create(userCache.getIfPresent(username));
 		} else throw new WebApplicationException("OTP does not match");
 	}
-	
+
 	@POST
 	@Path("validateForgotPassOTP/{username}")
 	@UnitOfWork
@@ -140,4 +141,13 @@ public class UserResource {
 			return userDAO.findByUserName(username);
 		} else throw new WebApplicationException("OTP does not match");
 	}
+
+    @GET
+    @Path("person")
+    @UnitOfWork
+    public Person getPerson(@QueryParam("username") String username) {
+        return personDAO.findById(userDAO.findByUserName(username).getPersonId())
+                .orElseThrow(() -> new WebApplicationException("Person for " +
+                        "this uername not found.", Response.Status.NOT_FOUND));
+    }
 }
