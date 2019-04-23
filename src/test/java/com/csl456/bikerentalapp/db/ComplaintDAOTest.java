@@ -65,21 +65,11 @@ public class ComplaintDAOTest {
 		});
 
 		final Complaint complaint = complaintDAO.getById(1);		
-		assertThat(complaint.getId()).isGreaterThan(1);
+		assertThat(complaint.getId()).isGreaterThan(0);
 		assertThat(complaint.getDetails()).isEqualTo("punctured");
 		assertThat(complaint.getStatus()).isEqualTo(ComplaintStatus.UNRESOLVED);
 		assertThat(complaint.getPersonId()).isEqualTo(1);
 		assertThat(complaint.getCycleId()).isEqualTo(1);
-	}
-
-	@Test
-	public void handlesNullOwner() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2019, 3, 15, 17, 9, 57);
-		Date happyNewYearDate = calendar.getTime();
-		assertThatExceptionOfType(ConstraintViolationException.class)
-				.isThrownBy(() -> daoTestRule.inTransaction(() -> complaintDAO
-						.create(new Complaint(null, ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1))));
 	}
 
 	@BeforeEach

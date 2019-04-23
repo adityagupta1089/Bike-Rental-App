@@ -81,12 +81,15 @@ class RideResourceTest {
         when(RIDE_DAO.findByPersonId(2)).thenReturn(rides);
 
         final List<Ride> response =
-                RESOURCES.target("/ride?personId=2")
+                RESOURCES.target("/ride")
+                        .queryParam("personId", 2)
                         .request()
                         .get(new GenericType<List<Ride>>() {});
 
         verify(RIDE_DAO).findByPersonId(2);
-        assertThat(response).containsAll(rides);
+        assertThat(response.size()).isEqualTo(1);
+        Ride result = response.get(0);
+        assertThat(result.getPersonId()).isEqualTo(2);
     }
 
     @BeforeEach

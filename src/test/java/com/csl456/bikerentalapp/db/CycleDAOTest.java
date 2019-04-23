@@ -29,7 +29,7 @@ public class CycleDAOTest {
 		assertThat(cycle.getBrand()).isEqualTo("Atlas");
 		assertThat(cycle.getLocationId()).isEqualTo(1);
 		assertThat(cycle.getOwnerId()).isEqualTo(1);
-		assertThat(cycleDAO.findById(cycle.getId())).isEqualTo(Optional.of(cycle));
+		assertThat(cycleDAO.findById(cycle.getId())).isEqualTo(cycle);
 	}
 
 	@Test

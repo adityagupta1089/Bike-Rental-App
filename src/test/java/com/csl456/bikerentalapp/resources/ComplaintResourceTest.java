@@ -49,7 +49,12 @@ public class ComplaintResourceTest {
 			.post(Entity.entity(complaint, MediaType.APPLICATION_JSON_TYPE));
 		assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
 		verify(COMPLAINT_DAO).create(complaintCaptor.capture());
-		assertThat(complaintCaptor.getValue()).isEqualTo(complaint);
+		Complaint result = complaintCaptor.getValue();
+		assertThat(result.getId()).isEqualTo(complaint.getId());
+		assertThat(result.getDetails()).isEqualTo(complaint.getDetails());
+		assertThat(result.getStatus()).isEqualTo(complaint.getStatus());
+		assertThat(result.getPersonId()).isEqualTo(complaint.getPersonId());
+		assertThat(result.getCycleId()).isEqualTo(complaint.getCycleId());
 	}
 
 	@Test
