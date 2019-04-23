@@ -13,36 +13,36 @@ import javax.ws.rs.core.Response.Status;
 @Path("session")
 @Produces(MediaType.APPLICATION_JSON)
 public class SessionResource {
-	private final UserDAO userDAO;
+    private final UserDAO userDAO;
 
-	private final SessionDAO sessionDAO;
+    private final SessionDAO sessionDAO;
 
-	public SessionResource(UserDAO userDAO, SessionDAO sessionDAO) {
-		this.userDAO = userDAO;
-		this.sessionDAO = sessionDAO;
-	}
+    public SessionResource(UserDAO userDAO, SessionDAO sessionDAO) {
+        this.userDAO = userDAO;
+        this.sessionDAO = sessionDAO;
+    }
 
-	@POST
-	@UnitOfWork
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Session login(@FormParam("username") String username, @FormParam("password") String password)
-			throws Exception {
+    @POST
+    @UnitOfWork
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Session login(@FormParam("username") String username, @FormParam(
+    		"password") String password) {
 
-		if (userDAO.findUsersByUsernameAndPassword(username, password) == null) {
-			throw new WebApplicationException("Username or Password Wrong", Status.UNAUTHORIZED);
-		}
+        if (userDAO.findUsersByUsernameAndPassword(username, password) == null) {
+            throw new WebApplicationException("Username or Password Wrong",
+					Status.UNAUTHORIZED);
+        }
 
-		Session session = new Session(username);
-		sessionDAO.insert(session);
+        Session session = new Session(username);
+        sessionDAO.insert(session);
 
-		return session;
-	}
+        return session;
+    }
 
-	@DELETE
-	@UnitOfWork
-	@Consumes(MediaType.APPLICATION_JSON)
-	@LoggedIn
-	public int logout(@HeaderParam("Access_Token") String accessToken) {
-		return sessionDAO.remove(accessToken);
-	}
+    @DELETE
+    @UnitOfWork
+    @LoggedIn
+    public int logout(@HeaderParam("Access_Token") String accessToken) {
+        return sessionDAO.remove(accessToken);
+    }
 }

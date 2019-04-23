@@ -6,6 +6,14 @@ public class SMTPServerDetails {
     String username;
     String password;
 
+    public SMTPServerDetails(String host, int port, String username,
+                             String password) {
+        this.host = host;
+        this.port = port;
+        this.username = username;
+        this.password = password;
+    }
+
     public String getHost() {
         return host;
     }

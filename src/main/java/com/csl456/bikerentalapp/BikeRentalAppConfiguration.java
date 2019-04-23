@@ -15,6 +15,7 @@ public class BikeRentalAppConfiguration extends Configuration {
     @JsonProperty("database")
     private final DataSourceFactory database = new DataSourceFactory();
 
+    @NotNull
     @JsonProperty("smtpServerDetails")
     private SMTPServerDetails smtpServerDetails;
 
@@ -26,5 +27,7 @@ public class BikeRentalAppConfiguration extends Configuration {
         this.smtpServerDetails = smtpServerDetails;
     }
 
-    public DataSourceFactory getDataSourceFactory() { return database; }
+    public DataSourceFactory getDatabase() {
+        return database;
+    }
 }

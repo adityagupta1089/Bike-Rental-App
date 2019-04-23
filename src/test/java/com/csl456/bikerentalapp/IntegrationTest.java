@@ -22,7 +22,7 @@ public class IntegrationTest {
 	private static final String CONFIG_PATH = ResourceHelpers.resourceFilePath("test.yml");
 
 	@BeforeAll
-	public static void migrateDb() throws Exception {
+	private static void migrateDb() throws Exception {
 		RULE.getApplication().run("db", "migrate", CONFIG_PATH);
 	}
 

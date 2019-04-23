@@ -25,7 +25,7 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
 			Cycle.class, Person.class, Session.class, User.class, Complaint.class, Ride.class, Location.class) {
 		@Override
 		public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
-			return configuration.getDataSourceFactory();
+			return configuration.getDatabase();
 		}
 	};
 
@@ -46,7 +46,7 @@ public class BikeRentalApplication extends Application<BikeRentalAppConfiguratio
 		bootstrap.addBundle(new MigrationsBundle<BikeRentalAppConfiguration>() {
 			@Override
 			public DataSourceFactory getDataSourceFactory(BikeRentalAppConfiguration configuration) {
-				return configuration.getDataSourceFactory();
+				return configuration.getDatabase();
 			}
 		});
 		bootstrap.addBundle(hibernateBundle);
