@@ -15,6 +15,7 @@ public class CycleDAO extends AbstractDAO<Cycle> {
 	}
 
 	public Cycle create(Cycle cycle) {
+		cycle.setStatus(1);
 		return persist(cycle);
 	}
 

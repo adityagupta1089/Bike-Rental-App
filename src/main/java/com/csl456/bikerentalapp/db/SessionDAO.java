@@ -2,6 +2,7 @@ package com.csl456.bikerentalapp.db;
 
 
 import com.csl456.bikerentalapp.core.Session;
+import com.csl456.bikerentalapp.core.User;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
@@ -11,8 +12,8 @@ public class SessionDAO extends AbstractDAO<Session> {
         super(factory);
     }
 
-    public Session insert(Session session) {
-        return persist(session);
+    public void insert(Session session) {
+        persist(session);
     }
 
     public int remove(String accessToken) {

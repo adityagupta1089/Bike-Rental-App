@@ -5,7 +5,7 @@ import com.google.common.base.Objects;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT U FROM User U"),
         @NamedQuery(name = "User.findByUserNameAndPassword", query = "SELECT U FROM User U WHERE U.username = :username AND U.password = :password"),

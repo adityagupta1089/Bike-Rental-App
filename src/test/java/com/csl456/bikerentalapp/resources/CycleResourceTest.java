@@ -15,6 +15,8 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.csl456.bikerentalapp.db.SessionDAO;
+import com.csl456.bikerentalapp.db.UserDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,9 +33,11 @@ import io.dropwizard.testing.junit5.ResourceExtension;
 class CycleResourceTest {
 
 	private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
+	private static final UserDAO USER_DAO = mock(UserDAO.class);
+	private static final SessionDAO SESSION_DAO = mock(SessionDAO.class);
 
 	private static final ResourceExtension RESOURCES = ResourceExtension.builder()
-			.addResource(new CycleResource(CYCLE_DAO)).build();
+			.addResource(new CycleResource(CYCLE_DAO, USER_DAO, SESSION_DAO)).build();
 
 	private final ArgumentCaptor<Cycle> cycleCaptor = ArgumentCaptor.forClass(Cycle.class);
 

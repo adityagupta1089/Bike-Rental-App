@@ -3,6 +3,12 @@ database:
     url: ${JDBC_DATABASE_URL}
     user: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
+    properties:
+      charSet: UTF-8
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.hbm2ddl.auto: create
+      hibernate.naming.implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      hibernate.naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 server:
     type: simple

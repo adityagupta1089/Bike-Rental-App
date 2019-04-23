@@ -40,7 +40,7 @@ public class Ride {
 	@Column(nullable = false)
 	private int personId;
 
-	@Column(nullable = false)
+	@Column
 	private double cost;
 
 	public Ride() {
@@ -77,13 +77,6 @@ public class Ride {
 
 	public Date getStartTime() {
 		return startTime;
-	}
-
-	@Override
-	public String toString() {
-		return "Ride [id=" + id + ", startLocationId=" + startLocationId + ", endLocationId=" + endLocationId
-				+ ", startTime=" + startTime + ", endTime=" + endTime + ", cycleId=" + cycleId + ", personId="
-				+ personId + ", cost=" + cost + "]";
 	}
 
 	public int getStartLocationId() {
