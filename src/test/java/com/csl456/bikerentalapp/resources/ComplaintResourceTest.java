@@ -43,12 +43,12 @@ public class ComplaintResourceTest {
 
 	@Test
 	void createComplaint() {
-		when(COMPLAINT_DAO.add(any(Complaint.class))).thenReturn(complaint);
+		when(COMPLAINT_DAO.create(any(Complaint.class))).thenReturn(complaint);
 		final Response response = RESOURCES.target("/complaint")
 			.request(MediaType.APPLICATION_JSON_TYPE)
 			.post(Entity.entity(complaint, MediaType.APPLICATION_JSON_TYPE));
 		assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
-		verify(COMPLAINT_DAO).add(complaintCaptor.capture());
+		verify(COMPLAINT_DAO).create(complaintCaptor.capture());
 		assertThat(complaintCaptor.getValue()).isEqualTo(complaint);
 	}
 
@@ -64,7 +64,7 @@ public class ComplaintResourceTest {
 		verify(COMPLAINT_DAO).findAll();
 		assertThat(response).containsAll(complaints);
 	}
-
+	
 	@BeforeEach
 	void setUp() {
 		Calendar calendar = Calendar.getInstance();

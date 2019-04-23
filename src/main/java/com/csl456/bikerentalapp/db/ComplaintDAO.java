@@ -13,14 +13,10 @@ public class ComplaintDAO extends AbstractDAO<Complaint> {
         super(factory);
     }
 
-    public Complaint add(Complaint complaint) {
+    public Complaint create(Complaint complaint) {
         return persist(complaint);
     }
     
-    public Complaint resolve(Complaint complaint) {
-        return persist(complaint);
-    }
-
     @SuppressWarnings("unchecked")
     public List<Complaint> findAll() {
         return list(namedQuery("Complaint.findAll"));

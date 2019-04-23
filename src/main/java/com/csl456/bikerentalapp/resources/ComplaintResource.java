@@ -29,7 +29,7 @@ public class ComplaintResource {
     public Complaint addComplaint(Complaint complaint) {
         complaint.setStartTime(new Date());
         complaint.setStatus(ComplaintStatus.UNRESOLVED);
-        return complaintDAO.add(complaint);
+        return complaintDAO.create(complaint);
     }
 
     @GET
@@ -47,7 +47,7 @@ public class ComplaintResource {
         Complaint complaint = complaintDAO.getById(complaintId);
         complaint.setStatus(ComplaintStatus.RESOLVED);
         complaint.setEndTime(new Date());
-        return complaintDAO.resolve(complaint);
+        return complaintDAO.create(complaint);
     }
 
 }

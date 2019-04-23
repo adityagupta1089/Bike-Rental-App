@@ -79,6 +79,13 @@ public class Ride {
 		return startTime;
 	}
 
+	@Override
+	public String toString() {
+		return "Ride [id=" + id + ", startLocationId=" + startLocationId + ", endLocationId=" + endLocationId
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", cycleId=" + cycleId + ", personId="
+				+ personId + ", cost=" + cost + "]";
+	}
+
 	public int getStartLocationId() {
 		return startLocationId;
 	}
