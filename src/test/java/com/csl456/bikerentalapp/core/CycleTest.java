@@ -19,8 +19,6 @@ public class CycleTest {
         )).isEqualTo(getCycle());
     }
 
-    public static Cycle getCycle() {
-        return new Cycle("Atlas", 1, 1, 1);
-    }
+    public static Cycle getCycle() { return new Cycle("Atlas", 1, 1, 1);}
 
 }

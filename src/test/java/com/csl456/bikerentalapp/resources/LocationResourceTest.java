@@ -18,8 +18,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(DropwizardExtensionsSupport.class)
 class LocationResourceTest {
 
-    private static final LocationDAO LOCATION_DAO = mock(LocationDAO.class);
-
+    private static final LocationDAO       LOCATION_DAO
+                                                     = mock(LocationDAO.class);
     private static final ResourceExtension RESOURCES = ResourceExtension
             .builder()
             .addResource(new LocationResource(LOCATION_DAO))
@@ -46,24 +46,18 @@ class LocationResourceTest {
     void listLocations() {
         final List<Location> locations = Collections.singletonList(location);
         when(LOCATION_DAO.findAll()).thenReturn(locations);
-
         final List<Location> response = RESOURCES
                 .target("/location")
                 .request()
                 .get(new GenericType<List<Location>>() {});
-
         verify(LOCATION_DAO).findAll();
         assertThat(response).containsAll(locations);
     }
 
     @BeforeEach
-    void setUp() {
-        location = new Location("SATLUJ_HOSTEL", 5, 6);
-    }
+    void setUp() { location = new Location("SATLUJ_HOSTEL", 5, 6);}
 
     @AfterEach
-    void tearDown() {
-        reset(LOCATION_DAO);
-    }
+    void tearDown() { reset(LOCATION_DAO);}
 
 }

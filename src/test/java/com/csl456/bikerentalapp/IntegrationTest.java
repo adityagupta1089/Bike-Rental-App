@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class IntegrationTest {
 
     private static final String TMP_FILE = createTempFile();
-
     private static final String CONFIG_PATH = ResourceHelpers.resourceFilePath(
             "test.yml");
 
@@ -34,9 +33,7 @@ public class IntegrationTest {
     private static String createTempFile() {
         try {
             return File.createTempFile("test", null).getAbsolutePath();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        } catch (IOException e) { throw new IllegalStateException(e);}
     }
 
     @Test
@@ -50,7 +47,6 @@ public class IntegrationTest {
         assertThat(newPerson.getName()).isEqualTo(person.getName());
         assertThat(newPerson.getContactNumber()).isEqualTo(person.getContactNumber());
         assertThat(newPerson.getEmail()).isEqualTo(person.getEmail());
-
     }
 
     private Person postPerson(Person person) {

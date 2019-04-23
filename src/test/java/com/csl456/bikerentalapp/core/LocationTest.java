@@ -13,13 +13,18 @@ public class LocationTest {
 
     @Test
     public void deserializesFromJSON() throws Exception {
-        assertThat(MAPPER.readValue(fixture("fixtures/location.json"),
+        assertThat(MAPPER.readValue(
+                fixture("fixtures/location.json"),
                 Location.class
         )).isEqualTo(getLocation());
     }
 
     public static Location getLocation() {
-        return new Location("SATLUJ_HOSTEL", 5, 7);
+        return new Location(
+                "SATLUJ_HOSTEL",
+                5,
+                7
+        );
     }
 
 }

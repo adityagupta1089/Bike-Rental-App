@@ -13,14 +13,18 @@ public class PersonTest {
 
     @Test
     public void deserializesFromJSON() throws Exception {
-        assertEquals(
-                MAPPER.readValue(fixture("fixtures/person.json"), Person.class),
-                getPerson()
-        );
+        assertEquals(MAPPER.readValue(
+                fixture("fixtures/person.json"),
+                Person.class
+        ), getPerson());
     }
 
     private static Person getPerson() {
-        return new Person("Aditya Gupta", 1234567890L, "aditya@example.com");
+        return new Person(
+                "Aditya Gupta",
+                1234567890L,
+                "aditya@example.com"
+        );
     }
 
 }

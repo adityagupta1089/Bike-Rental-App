@@ -17,8 +17,7 @@ import static org.mockito.Mockito.*;
 class SessionResourceTest {
 
     private static final SessionDAO SESSION_DAO = mock(SessionDAO.class);
-
-    private static final UserDAO USER_DAO = mock(UserDAO.class);
+    private static final UserDAO    USER_DAO    = mock(UserDAO.class);
 
     private static final ResourceExtension RESOURCES = ResourceExtension
             .builder()
@@ -29,8 +28,7 @@ class SessionResourceTest {
             = ArgumentCaptor.forClass(Session.class);
 
     private Session session;
-
-    private User user;
+    private User    user;
 
     @Test
     void login() {
@@ -67,8 +65,6 @@ class SessionResourceTest {
     }
 
     @AfterEach
-    void tearDown() {
-        reset(SESSION_DAO);
-    }
+    void tearDown() { reset(SESSION_DAO);}
 
 }

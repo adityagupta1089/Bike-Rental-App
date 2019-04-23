@@ -1,5 +1,8 @@
 package com.csl456.bikerentalapp.core;
 
+import com.fasterxml.jackson.annotation.*;
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -25,9 +28,11 @@ public class Complaint {
     private int cycleId;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER, pattern = "s")
     private Date startTime;
 
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER, pattern = "s")
     private Date endTime;
 
     @Column(nullable = false)
@@ -37,12 +42,12 @@ public class Complaint {
 
     public Complaint(String details, ComplaintStatus status, int cycleId,
             Date startTime, Date endTime, int personId) {
-        this.details   = details;
-        this.status    = status;
-        this.cycleId   = cycleId;
+        this.details = details;
+        this.status = status;
+        this.cycleId = cycleId;
         this.startTime = startTime;
-        this.endTime   = endTime;
-        this.personId  = personId;
+        this.endTime = endTime;
+        this.personId = personId;
     }
 
     public int getId() { return id;}
@@ -57,11 +62,11 @@ public class Complaint {
 
     public void setStatus(ComplaintStatus status) { this.status = status;}
 
-    private Date getStartTime() { return startTime;}
+    public Date getStartTime() { return startTime;}
 
     public void setStartTime(Date startTime) { this.startTime = startTime;}
 
-    private Date getEndTime() { return endTime;}
+    public Date getEndTime() { return endTime;}
 
     public void setEndTime(Date endTime) { this.endTime = endTime;}
 
@@ -72,5 +77,36 @@ public class Complaint {
     public int getPersonId() { return personId;}
 
     public void setPersonId(int personId) { this.personId = personId;}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Complaint complaint = (Complaint) o;
+        return cycleId == complaint.cycleId && personId == complaint.personId
+                && Objects.equal(details, complaint.details)
+                && status == complaint.status && Objects.equal(startTime,
+                complaint.startTime
+        ) && Objects.equal(endTime, complaint.endTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(details,
+                status,
+                cycleId,
+                startTime,
+                endTime,
+                personId
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "Complaint{" + "id=" + id + ", details='" + details + '\''
+                + ", status=" + status + ", cycleId=" + cycleId + ", startTime="
+                + startTime + ", endTime=" + endTime + ", personId=" + personId
+                + '}';
+    }
 
 }

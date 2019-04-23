@@ -1,5 +1,8 @@
 package com.csl456.bikerentalapp.core;
 
+import com.fasterxml.jackson.annotation.*;
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -11,28 +14,38 @@ import java.util.*;
 })
 public class Ride {
 
-    private static final double MIN_COST        = 10;
+    private static final double MIN_COST = 10;
     /**
-     * We want to have a cost of 10 Rupees per hour, this is measured in Rupees/millisecond so we have 10Rs/(60*60*1000)millisecond
+     * We want to have a cost of 10 Rupees per hour.
      */
     private static final double COST_MULTIPLIER = 10.0 / (60.0 * 60.0 * 1000.0);
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private              int    id;
+    private int id;
+
     @Column(nullable = false)
-    private              int    startLocationId;
+    private int startLocationId;
+
     @Column
-    private              int    endLocationId;
+    private int endLocationId;
+
     @Column(nullable = false)
-    private              Date   startTime;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER, pattern = "s")
+    private Date startTime;
+
     @Column
-    private              Date   endTime;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER, pattern = "s")
+    private Date endTime;
+
     @Column(nullable = false)
-    private              int    cycleId;
+    private int cycleId;
+
     @Column(nullable = false)
-    private              int    personId;
+    private int personId;
+
     @Column
-    private              double cost;
+    private double cost;
 
     public Ride() {}
 
@@ -84,10 +97,34 @@ public class Ride {
     public void setPersonId(int personId) { this.personId = personId;}
 
     public void calculateCost() {
-        this.cost = Math.min(
-                MIN_COST,
+        this.cost = Math.min(MIN_COST,
                 COST_MULTIPLIER * (this.endTime.getTime()
                         - this.startTime.getTime())
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ride ride = (Ride) o;
+        return startLocationId == ride.startLocationId
+                && endLocationId == ride.endLocationId
+                && cycleId == ride.cycleId && personId == ride.personId
+                && Double.compare(ride.cost, cost) == 0 && Objects.equal(startTime,
+                ride.startTime
+        ) && Objects.equal(endTime, ride.endTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(startLocationId,
+                endLocationId,
+                startTime,
+                endTime,
+                cycleId,
+                personId,
+                cost
         );
     }
 

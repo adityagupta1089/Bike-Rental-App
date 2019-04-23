@@ -14,11 +14,11 @@ public class ComplaintTest {
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     public static Complaint getComplaint() {
-        Date date = new Date(0);
-        return new Complaint("punctured",
+        return new Complaint(
+                "punctured",
                 ComplaintStatus.UNRESOLVED,
                 1,
-                date,
+                new Date(0),
                 null,
                 1
         );
@@ -26,8 +26,8 @@ public class ComplaintTest {
 
     @Test
     public void deserializesFromJSON() throws Exception {
-        Complaint complaint
-                = MAPPER.readValue(fixture("fixtures/complaint.json"),
+        Complaint complaint = MAPPER.readValue(
+                fixture("fixtures/complaint.json"),
                 Complaint.class
         );
         assertThat(complaint).isEqualTo(getComplaint());

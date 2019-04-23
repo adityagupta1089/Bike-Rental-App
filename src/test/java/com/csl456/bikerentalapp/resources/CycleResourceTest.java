@@ -18,10 +18,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(DropwizardExtensionsSupport.class)
 class CycleResourceTest {
 
-    private static final CycleDAO CYCLE_DAO = mock(CycleDAO.class);
-
-    private static final UserDAO USER_DAO = mock(UserDAO.class);
-
+    private static final CycleDAO   CYCLE_DAO   = mock(CycleDAO.class);
+    private static final UserDAO    USER_DAO    = mock(UserDAO.class);
     private static final SessionDAO SESSION_DAO = mock(SessionDAO.class);
 
     private static final ResourceExtension RESOURCES = ResourceExtension
@@ -50,24 +48,18 @@ class CycleResourceTest {
     void listCycles() {
         final List<Cycle> cycles = Collections.singletonList(cycle);
         when(CYCLE_DAO.findAll()).thenReturn(cycles);
-
         final List<Cycle> response = RESOURCES
                 .target("/cycle")
                 .request()
                 .get(new GenericType<List<Cycle>>() {});
-
         verify(CYCLE_DAO).findAll();
         assertThat(response).containsAll(cycles);
     }
 
     @BeforeEach
-    void setUp() {
-        cycle = new Cycle("Atlas", 1, 1, 1);
-    }
+    void setUp() { cycle = new Cycle("Atlas", 1, 1, 1);}
 
     @AfterEach
-    void tearDown() {
-        reset(CYCLE_DAO);
-    }
+    void tearDown() { reset(CYCLE_DAO);}
 
 }

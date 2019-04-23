@@ -13,14 +13,19 @@ public class UserTest {
 
     @Test
     public void deserializesFromJSON() throws Exception {
-        assertEquals(
-                MAPPER.readValue(fixture("fixtures/user.json"), User.class),
-                getUser()
-        );
+        assertEquals(MAPPER.readValue(
+                fixture("fixtures/user.json"),
+                User.class
+        ), getUser());
     }
 
     private static User getUser() {
-        return new User("Vinit", "abc", UserRole.ADMIN, 1);
+        return new User(
+                "Vinit",
+                "abc",
+                UserRole.ADMIN,
+                1
+        );
     }
 
 }

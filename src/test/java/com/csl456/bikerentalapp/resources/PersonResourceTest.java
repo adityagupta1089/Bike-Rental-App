@@ -18,8 +18,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(DropwizardExtensionsSupport.class)
 class PersonResourceTest {
 
-    private static final PersonDAO PERSON_DAO = mock(PersonDAO.class);
-
+    private static final PersonDAO PERSON_DAO        = mock(PersonDAO.class);
     private static final ResourceExtension RESOURCES = ResourceExtension
             .builder()
             .addResource(new PersonResource(PERSON_DAO))
@@ -46,12 +45,10 @@ class PersonResourceTest {
     void listPeople() {
         final List<Person> people = Collections.singletonList(person);
         when(PERSON_DAO.findAll()).thenReturn(people);
-
         final List<Person> response = RESOURCES
                 .target("/person")
                 .request()
                 .get(new GenericType<List<Person>>() {});
-
         verify(PERSON_DAO).findAll();
         assertThat(response).containsAll(people);
     }
@@ -62,8 +59,6 @@ class PersonResourceTest {
     }
 
     @AfterEach
-    void tearDown() {
-        reset(PERSON_DAO);
-    }
+    void tearDown() { reset(PERSON_DAO);}
 
 }

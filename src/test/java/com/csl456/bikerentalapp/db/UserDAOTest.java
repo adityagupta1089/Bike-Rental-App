@@ -18,7 +18,7 @@ public class UserDAOTest {
             .addEntityClass(User.class)
             .build();
 
-    private UserDAO userDAO;
+    private       UserDAO          userDAO;
 
     @Test
     public void createUser() {
@@ -33,7 +33,8 @@ public class UserDAOTest {
         assertThat(user.getPassword()).isEqualTo("abc");
         assertThat(user.getRole()).isEqualTo(UserRole.ADMIN);
         assertThat(user.getPersonId()).isEqualTo(1);
-        assertThat(userDAO.findUsersByUsernameAndPassword("Vinit",
+        assertThat(userDAO.findUsersByUsernameAndPassword(
+                "Vinit",
                 "abc"
         )).isEqualTo(user);
     }

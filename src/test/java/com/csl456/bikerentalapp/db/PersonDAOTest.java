@@ -37,23 +37,19 @@ public class PersonDAOTest {
     @Test
     public void findAll() {
         daoTestRule.inTransaction(() -> {
-            personDAO.create(new Person(
-                    "Aditya",
+            personDAO.create(new Person("Aditya",
                     1234567890L,
                     "aditya@example.com"
             ));
-            personDAO.create(new Person(
-                    "Vinit",
+            personDAO.create(new Person("Vinit",
                     2345678901L,
                     "vinit@example.com"
             ));
-            personDAO.create(new Person(
-                    "Piyush",
+            personDAO.create(new Person("Piyush",
                     3456789012L,
                     "piyush@example.com"
             ));
-            personDAO.create(new Person(
-                    "Sachin",
+            personDAO.create(new Person("Sachin",
                     4567890123L,
                     "sachin@example.com"
             ));

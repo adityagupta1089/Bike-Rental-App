@@ -42,7 +42,6 @@ public class CycleDAOTest {
             cycleDAO.create(new Cycle("Atlas", 1, 1, 1));
             cycleDAO.create(new Cycle("Avon", 2, 2, 1));
         });
-
         final List<Cycle> cycles = cycleDAO.findAll();
         assertThat(cycles).extracting("brand").containsOnly("Atlas", "Avon");
         assertThat(cycles).extracting("locationId").containsOnly(1, 2);

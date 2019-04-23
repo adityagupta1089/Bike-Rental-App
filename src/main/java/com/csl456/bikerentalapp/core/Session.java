@@ -1,5 +1,7 @@
 package com.csl456.bikerentalapp.core;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -17,10 +19,13 @@ public class Session {
 
     @Id
     private String accessToken;
+
     @Column(name = "username", nullable = false)
     private String identity;
+
     @Column(nullable = false)
-    private Date   created;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER, pattern = "s")
+    private Date created;
 
     public Session() {}
 

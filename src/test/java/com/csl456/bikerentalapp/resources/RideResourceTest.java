@@ -74,13 +74,11 @@ class RideResourceTest {
     void listRidesByPersonId() {
         final List<Ride> rides = Collections.singletonList(endRide);
         when(RIDE_DAO.findByPersonId(2)).thenReturn(rides);
-
         final List<Ride> response = RESOURCES
                 .target("/ride")
                 .queryParam("personId", 2)
                 .request()
                 .get(new GenericType<List<Ride>>() {});
-
         verify(RIDE_DAO).findByPersonId(2);
         assertThat(response.size()).isEqualTo(1);
         Ride result = response.get(0);
@@ -91,15 +89,15 @@ class RideResourceTest {
     void setup() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat(
                 "dd-MMM-yyyy " + "HH:mm:ss");
+
         Date startDate = formatter.parse("15-Jan-2019 15:00:00");
         Date endDate   = formatter.parse("15-Jan-2019 16:00:00");
+
         startRide = new Ride(1, 0, startDate, null, 1, 2, 0);
         endRide   = new Ride(1, 2, startDate, endDate, 1, 2, 10.0);
     }
 
     @AfterEach
-    void tearDown() {
-        reset(RIDE_DAO);
-    }
+    void tearDown() { reset(RIDE_DAO);}
 
 }

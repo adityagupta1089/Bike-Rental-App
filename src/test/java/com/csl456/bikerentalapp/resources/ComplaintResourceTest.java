@@ -65,14 +65,11 @@ public class ComplaintResourceTest {
 
     @BeforeEach
     void setUp() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2019, 3, 15, 17, 9, 57);
-        Date happyNewYearDate = calendar.getTime();
         complaint = new Complaint("punctured",
                 ComplaintStatus.UNRESOLVED,
                 1,
-                happyNewYearDate,
-                null,
+                new Date(0),
+                new Date(500),
                 1
         );
     }

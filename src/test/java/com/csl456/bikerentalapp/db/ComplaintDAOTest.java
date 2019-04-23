@@ -21,15 +21,11 @@ public class ComplaintDAOTest {
 
     @Test
     public void createComplaint() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2019, 3, 15, 17, 9, 57);
-        Date happyNewYearDate = calendar.getTime();
         final Complaint complaint = daoTestRule.inTransaction(() -> complaintDAO
-                .create(new Complaint(
-                        "punctured",
+                .create(new Complaint("punctured",
                         ComplaintStatus.UNRESOLVED,
                         1,
-                        happyNewYearDate,
+                        new Date(123),
                         null,
                         1
                 )));
@@ -38,62 +34,64 @@ public class ComplaintDAOTest {
         assertThat(complaint.getStatus()).isEqualTo(ComplaintStatus.UNRESOLVED);
         assertThat(complaint.getPersonId()).isEqualTo(1);
         assertThat(complaint.getCycleId()).isEqualTo(1);
+        assertThat(complaint.getStartTime()).isEqualTo(new Date(123));
     }
 
     @Test
     public void findAll() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2019, 3, 15, 17, 9, 57);
-        Date happyNewYearDate = calendar.getTime();
         daoTestRule.inTransaction(() -> {
-            complaintDAO.create(new Complaint(
-                    "punctured",
+            complaintDAO.create(new Complaint("punctured",
                     ComplaintStatus.UNRESOLVED,
                     1,
-                    happyNewYearDate,
+                    new Date(250),
                     null,
                     1
             ));
-            complaintDAO.create(new Complaint(
-                    "brake failed",
-                    ComplaintStatus.UNRESOLVED,
+            complaintDAO.create(new Complaint("brake failed",
+                    ComplaintStatus.RESOLVED,
                     2,
-                    happyNewYearDate,
-                    null,
+                    new Date(750),
+                    new Date(1000),
                     2
             ));
         });
-
         final List<Complaint> complaints = complaintDAO.findAll();
         assertThat(complaints)
                 .extracting("details")
                 .containsOnly("punctured", "brake failed");
         assertThat(complaints).extracting("cycleId").containsOnly(1, 2);
         assertThat(complaints).extracting("personId").containsOnly(1, 2);
+        assertThat(complaints)
+                .extracting("status")
+                .containsOnly(ComplaintStatus.UNRESOLVED,
+                        ComplaintStatus.RESOLVED
+                );
+        assertThat(complaints)
+                .extracting("startTime")
+                .containsOnly(new Date(250), new Date(750));
+        assertThat(complaints)
+                .extracting("endTime")
+                .containsOnly(null, new Date(1000));
     }
 
     @Test
     public void findById() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2019, 3, 15, 17, 9, 57);
-        Date happyNewYearDate = calendar.getTime();
         daoTestRule.inTransaction(() -> {
-            complaintDAO.create(new Complaint(
-                    "punctured",
+            complaintDAO.create(new Complaint("punctured",
                     ComplaintStatus.UNRESOLVED,
                     1,
-                    happyNewYearDate,
+                    new Date(0),
                     null,
                     1
             ));
         });
-
         final Complaint complaint = complaintDAO.getById(1);
         assertThat(complaint.getId()).isGreaterThan(0);
         assertThat(complaint.getDetails()).isEqualTo("punctured");
         assertThat(complaint.getStatus()).isEqualTo(ComplaintStatus.UNRESOLVED);
         assertThat(complaint.getPersonId()).isEqualTo(1);
         assertThat(complaint.getCycleId()).isEqualTo(1);
+        assertThat(complaint.getStartTime()).isEqualTo(new Date(0));
     }
 
     @BeforeEach
