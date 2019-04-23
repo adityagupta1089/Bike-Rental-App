@@ -30,7 +30,7 @@ public class ComplaintDAOTest {
 		calendar.set(2019, 3, 15, 17, 9, 57);
 		Date happyNewYearDate = calendar.getTime();
 		final Complaint complaint = daoTestRule.inTransaction(() -> complaintDAO
-				.add(new Complaint("punctured", ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1)));
+				.create(new Complaint("punctured", ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1)));
 		assertThat(complaint.getId()).isGreaterThan(0);
 		assertThat(complaint.getDetails()).isEqualTo("punctured");
 		assertThat(complaint.getStatus()).isEqualTo(ComplaintStatus.UNRESOLVED);
@@ -44,8 +44,9 @@ public class ComplaintDAOTest {
 		calendar.set(2019, 3, 15, 17, 9, 57);
 		Date happyNewYearDate = calendar.getTime();
 		daoTestRule.inTransaction(() -> {
-			complaintDAO.add(new Complaint("punctured", ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1));
-			complaintDAO.add(new Complaint("brake failed", ComplaintStatus.UNRESOLVED, 2, happyNewYearDate, null, 2));
+			complaintDAO.create(new Complaint("punctured", ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1));
+			complaintDAO
+					.create(new Complaint("brake failed", ComplaintStatus.UNRESOLVED, 2, happyNewYearDate, null, 2));
 		});
 
 		final List<Complaint> complaints = complaintDAO.findAll();
@@ -55,12 +56,30 @@ public class ComplaintDAOTest {
 	}
 
 	@Test
+	public void findById() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2019, 3, 15, 17, 9, 57);
+		Date happyNewYearDate = calendar.getTime();
+		daoTestRule.inTransaction(() -> {
+			complaintDAO.create(new Complaint("punctured", ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1));
+		});
+
+		final Complaint complaint = complaintDAO.getById(1);		
+		assertThat(complaint.getId()).isGreaterThan(1);
+		assertThat(complaint.getDetails()).isEqualTo("punctured");
+		assertThat(complaint.getStatus()).isEqualTo(ComplaintStatus.UNRESOLVED);
+		assertThat(complaint.getPersonId()).isEqualTo(1);
+		assertThat(complaint.getCycleId()).isEqualTo(1);
+	}
+
+	@Test
 	public void handlesNullOwner() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2019, 3, 15, 17, 9, 57);
 		Date happyNewYearDate = calendar.getTime();
-		assertThatExceptionOfType(ConstraintViolationException.class).isThrownBy(() -> daoTestRule.inTransaction(
-				() -> complaintDAO.add(new Complaint(null, ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1))));
+		assertThatExceptionOfType(ConstraintViolationException.class)
+				.isThrownBy(() -> daoTestRule.inTransaction(() -> complaintDAO
+						.create(new Complaint(null, ComplaintStatus.UNRESOLVED, 1, happyNewYearDate, null, 1))));
 	}
 
 	@BeforeEach
