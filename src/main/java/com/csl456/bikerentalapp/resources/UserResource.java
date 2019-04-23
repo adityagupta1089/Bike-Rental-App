@@ -88,13 +88,12 @@ public class UserResource {
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@LoggedIn
-	public Pair<Integer, Integer> changePassword(@FormParam("username") String username, @FormParam("password") String password, @FormParam("newPassword") String newPassword) throws Exception {
+	public void changePassword(@FormParam("username") String username, @FormParam("password") String password, @FormParam("newPassword") String newPassword) throws Exception {
 		if (userDAO.findUsersByUsernameAndPassword(username, password) == null) {
 			throw new Exception("Username or Password Wrong");
 		}
-		int removedSessions = sessionDAO.removeAll(username);
-		int usersAffected = userDAO.changePassword(username, newPassword);
-		return new Pair<>(removedSessions, usersAffected);
+		sessionDAO.removeAll(username);
+		userDAO.changePassword(username, newPassword);
 	}
 
 	@POST

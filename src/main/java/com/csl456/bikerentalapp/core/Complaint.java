@@ -67,38 +67,7 @@ public class Complaint {
         this.personId = personId;
     }
 
-    @Override
-    public String toString() {
-        return "Complaint [id=" + id + ", details=" + details + ", status=" + status + ", cycleId=" + cycleId
-                + ", startTime=" + startTime + ", endTime=" + endTime + ", " +
-				"personId=" + personId + "]";
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cycleId, details, endTime, personId, startTime,
-				status);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Complaint other = (Complaint) obj;
-        return cycleId == other.cycleId && Objects.equals(details,
-				other.details)
-                && Objects.equals(endTime, other.endTime) && personId == other.personId
-                && Objects.equals(startTime, other.startTime) && status == other.status;
-    }
-
-    public Date getStartTime() {
+    private Date getStartTime() {
         return startTime;
     }
 
@@ -106,7 +75,7 @@ public class Complaint {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    private Date getEndTime() {
         return endTime;
     }
 
