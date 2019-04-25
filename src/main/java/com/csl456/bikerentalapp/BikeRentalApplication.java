@@ -80,7 +80,9 @@ public class BikeRentalApplication
                 .jersey()
                 .register(new CycleResource(cycleDAO, userDAO, sessionDAO));
         environment.jersey().register(new PersonResource(personDAO));
-        environment.jersey().register(new SessionResource(userDAO, sessionDAO));
+        environment
+                .jersey()
+                .register(new SessionResource(userDAO, sessionDAO, personDAO));
         environment.jersey().register(new UserResource(userDAO,
                 sessionDAO,
                 personDAO,
