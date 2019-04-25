@@ -1,8 +1,13 @@
 package com.csl456.bikerentalapp.core;
 
-import com.google.common.base.*;
+import com.google.common.base.Objects;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -51,7 +56,10 @@ public class User {
         User user = (User) o;
         return Objects.equal(username, user.username) && Objects.equal(password,
                 user.password
-        ) && role == user.role && Objects.equal(personId, user.personId);
+        ) && role == user.role && Objects.equal(
+                personId,
+                user.personId
+        );
     }
 
     public String getUsername() { return username;}

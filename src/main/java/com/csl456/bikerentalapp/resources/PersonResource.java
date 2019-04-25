@@ -1,13 +1,18 @@
 package com.csl456.bikerentalapp.resources;
 
-import com.csl456.bikerentalapp.core.*;
-import com.csl456.bikerentalapp.db.*;
-import com.csl456.bikerentalapp.filter.*;
-import io.dropwizard.hibernate.*;
+import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.core.UserRole;
+import com.csl456.bikerentalapp.db.PersonDAO;
+import com.csl456.bikerentalapp.filter.RolesAllowed;
+import io.dropwizard.hibernate.UnitOfWork;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.util.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/person")
 @Consumes(MediaType.APPLICATION_JSON)

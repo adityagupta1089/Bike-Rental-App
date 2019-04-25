@@ -1,11 +1,14 @@
 package com.csl456.bikerentalapp.db;
 
-import com.csl456.bikerentalapp.core.*;
-import io.dropwizard.testing.junit5.*;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.*;
+import com.csl456.bikerentalapp.core.User;
+import com.csl456.bikerentalapp.core.UserRole;
+import io.dropwizard.testing.junit5.DAOTestExtension;
+import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import javax.persistence.*;
+import javax.persistence.PersistenceException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;

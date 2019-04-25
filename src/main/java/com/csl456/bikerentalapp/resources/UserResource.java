@@ -1,30 +1,43 @@
 package com.csl456.bikerentalapp.resources;
 
-import com.csl456.bikerentalapp.core.*;
-import com.csl456.bikerentalapp.db.*;
-import com.csl456.bikerentalapp.filter.*;
-import com.google.common.cache.*;
-import io.dropwizard.hibernate.*;
-import org.simplejavamail.email.*;
-import org.simplejavamail.mailer.*;
+import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.core.SMTPServerDetails;
+import com.csl456.bikerentalapp.core.User;
+import com.csl456.bikerentalapp.core.UserRole;
+import com.csl456.bikerentalapp.db.PersonDAO;
+import com.csl456.bikerentalapp.db.SessionDAO;
+import com.csl456.bikerentalapp.db.UserDAO;
+import com.csl456.bikerentalapp.filter.LoggedIn;
+import com.csl456.bikerentalapp.filter.RolesAllowed;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import io.dropwizard.hibernate.UnitOfWork;
+import org.simplejavamail.email.Email;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
 
-import javax.annotation.*;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.util.*;
-import java.util.concurrent.*;
+import javax.annotation.Nonnull;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
     private static final Random random = new Random();
-
-    private final UserDAO           userDAO;
-    private final SessionDAO        sessionDAO;
-    private final PersonDAO         personDAO;
-    private final SMTPServerDetails smtpServerDetails;
-
     private static final LoadingCache<String, String> otpCache = CacheBuilder
             .newBuilder()
             .expireAfterWrite(5, TimeUnit.MINUTES)
@@ -33,10 +46,13 @@ public class UserResource {
                 public String load(
                         @Nonnull String username) { return generateOTP();}
             });
-
     private static final Cache<String, User> userCache = CacheBuilder
             .newBuilder()
             .build();
+    private final UserDAO           userDAO;
+    private final SessionDAO        sessionDAO;
+    private final PersonDAO         personDAO;
+    private final SMTPServerDetails smtpServerDetails;
 
     public UserResource(UserDAO userDAO, SessionDAO sessionDAO,
             PersonDAO personDAO, SMTPServerDetails smtpServerDetails) {
@@ -56,8 +72,11 @@ public class UserResource {
     @UnitOfWork
     @Consumes(MediaType.APPLICATION_JSON)
     public void register(User user) throws ExecutionException {
-        Person person = personDAO.findById(user.getPersonId()).get();
-        String otp    = otpCache.get(user.getUsername());
+        Person person = personDAO
+                .findById(user.getPersonId())
+                .orElseThrow(() -> new WebApplicationException(
+                        "Related Person not Found"));
+        String otp = otpCache.get(user.getUsername());
         Email email = EmailBuilder
                 .startingBlank()
                 .from("Bike Rental Admin", "noreply@bikerentalapp.com")
@@ -98,9 +117,12 @@ public class UserResource {
     @UnitOfWork
     public void forgotPass(@PathParam("username") String username) throws
             Exception {
-        User   user   = userDAO.findByUserName(username);
-        Person person = personDAO.findById(user.getPersonId()).get();
-        String otp    = otpCache.get(username);
+        User user = userDAO.findByUserName(username);
+        Person person = personDAO
+                .findById(user.getPersonId())
+                .orElseThrow(() -> new WebApplicationException(
+                        "Related Person not Found"));
+        String otp = otpCache.get(username);
         Email email = EmailBuilder
                 .startingBlank()
                 .from("Bike Rental Admin", "noreply@bikerentalapp.com")

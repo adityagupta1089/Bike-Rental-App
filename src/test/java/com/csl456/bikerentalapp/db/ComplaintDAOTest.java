@@ -1,11 +1,15 @@
 package com.csl456.bikerentalapp.db;
 
-import com.csl456.bikerentalapp.core.*;
-import io.dropwizard.testing.junit5.*;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.*;
+import com.csl456.bikerentalapp.core.Complaint;
+import com.csl456.bikerentalapp.core.ComplaintStatus;
+import io.dropwizard.testing.junit5.DAOTestExtension;
+import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

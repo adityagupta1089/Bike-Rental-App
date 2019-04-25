@@ -2,8 +2,8 @@ package com.csl456.bikerentalapp.db;
 
 
 import com.csl456.bikerentalapp.core.Session;
-import io.dropwizard.hibernate.*;
-import org.hibernate.*;
+import io.dropwizard.hibernate.AbstractDAO;
+import org.hibernate.SessionFactory;
 
 public class SessionDAO extends AbstractDAO<Session> {
 

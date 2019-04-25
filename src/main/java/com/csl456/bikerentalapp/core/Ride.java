@@ -1,10 +1,17 @@
 package com.csl456.bikerentalapp.core;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.base.Objects;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table
@@ -104,6 +111,18 @@ public class Ride {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(startLocationId,
+                endLocationId,
+                startTime,
+                endTime,
+                cycleId,
+                personId,
+                cost
+        );
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -113,18 +132,9 @@ public class Ride {
                 && cycleId == ride.cycleId && personId == ride.personId
                 && Double.compare(ride.cost, cost) == 0 && Objects.equal(startTime,
                 ride.startTime
-        ) && Objects.equal(endTime, ride.endTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(startLocationId,
-                endLocationId,
-                startTime,
+        ) && Objects.equal(
                 endTime,
-                cycleId,
-                personId,
-                cost
+                ride.endTime
         );
     }
 

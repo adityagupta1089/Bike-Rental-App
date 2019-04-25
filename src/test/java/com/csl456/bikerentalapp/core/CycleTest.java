@@ -1,8 +1,8 @@
 package com.csl456.bikerentalapp.core;
 
-import com.fasterxml.jackson.databind.*;
-import io.dropwizard.jackson.*;
-import org.junit.jupiter.api.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.dropwizard.jackson.Jackson;
+import org.junit.jupiter.api.Test;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;

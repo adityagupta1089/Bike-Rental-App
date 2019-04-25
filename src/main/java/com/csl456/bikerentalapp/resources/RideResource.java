@@ -1,13 +1,22 @@
 package com.csl456.bikerentalapp.resources;
 
-import com.csl456.bikerentalapp.core.*;
-import com.csl456.bikerentalapp.db.*;
-import com.csl456.bikerentalapp.filter.*;
-import io.dropwizard.hibernate.*;
+import com.csl456.bikerentalapp.core.Ride;
+import com.csl456.bikerentalapp.core.UserRole;
+import com.csl456.bikerentalapp.db.RideDAO;
+import com.csl456.bikerentalapp.filter.LoggedIn;
+import com.csl456.bikerentalapp.filter.RolesAllowed;
+import io.dropwizard.hibernate.UnitOfWork;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.util.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import java.util.Date;
+import java.util.List;
 
 @Path("ride")
 @Produces(MediaType.APPLICATION_JSON)

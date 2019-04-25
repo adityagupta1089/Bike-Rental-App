@@ -1,12 +1,15 @@
 package com.csl456.bikerentalapp.filter;
 
-import com.csl456.bikerentalapp.*;
-import com.csl456.bikerentalapp.core.*;
-import com.csl456.bikerentalapp.db.*;
-import io.dropwizard.hibernate.*;
+import com.csl456.bikerentalapp.BikeRentalAppConfiguration;
+import com.csl456.bikerentalapp.core.UserRole;
+import com.csl456.bikerentalapp.db.SessionDAO;
+import com.csl456.bikerentalapp.db.UserDAO;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
-import javax.ws.rs.container.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.container.DynamicFeature;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.FeatureContext;
 
 public class RolesAllowedFeature implements DynamicFeature {
 

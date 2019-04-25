@@ -1,10 +1,17 @@
 package com.csl456.bikerentalapp.core;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.base.Objects;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "complaint")
@@ -79,6 +86,17 @@ public class Complaint {
     public void setPersonId(int personId) { this.personId = personId;}
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(details,
+                status,
+                cycleId,
+                startTime,
+                endTime,
+                personId
+        );
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -87,17 +105,9 @@ public class Complaint {
                 && Objects.equal(details, complaint.details)
                 && status == complaint.status && Objects.equal(startTime,
                 complaint.startTime
-        ) && Objects.equal(endTime, complaint.endTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(details,
-                status,
-                cycleId,
-                startTime,
+        ) && Objects.equal(
                 endTime,
-                personId
+                complaint.endTime
         );
     }
 

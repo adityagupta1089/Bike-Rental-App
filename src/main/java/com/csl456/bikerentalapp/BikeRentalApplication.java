@@ -1,19 +1,40 @@
 package com.csl456.bikerentalapp;
 
+import com.csl456.bikerentalapp.core.Complaint;
+import com.csl456.bikerentalapp.core.Cycle;
+import com.csl456.bikerentalapp.core.Location;
+import com.csl456.bikerentalapp.core.Person;
+import com.csl456.bikerentalapp.core.Ride;
 import com.csl456.bikerentalapp.core.Session;
-import com.csl456.bikerentalapp.core.*;
-import com.csl456.bikerentalapp.db.*;
-import com.csl456.bikerentalapp.filter.*;
-import com.csl456.bikerentalapp.resources.*;
-import io.dropwizard.*;
-import io.dropwizard.configuration.*;
-import io.dropwizard.db.*;
-import io.dropwizard.hibernate.*;
-import io.dropwizard.jersey.jackson.*;
-import io.dropwizard.migrations.*;
-import io.dropwizard.setup.*;
-import org.hibernate.*;
-import org.slf4j.*;
+import com.csl456.bikerentalapp.core.User;
+import com.csl456.bikerentalapp.db.ComplaintDAO;
+import com.csl456.bikerentalapp.db.CycleDAO;
+import com.csl456.bikerentalapp.db.LocationDAO;
+import com.csl456.bikerentalapp.db.PersonDAO;
+import com.csl456.bikerentalapp.db.RideDAO;
+import com.csl456.bikerentalapp.db.SessionDAO;
+import com.csl456.bikerentalapp.db.UserDAO;
+import com.csl456.bikerentalapp.filter.LoggedInFeature;
+import com.csl456.bikerentalapp.filter.RolesAllowedFeature;
+import com.csl456.bikerentalapp.resources.ComplaintResource;
+import com.csl456.bikerentalapp.resources.CycleResource;
+import com.csl456.bikerentalapp.resources.LocationResource;
+import com.csl456.bikerentalapp.resources.PersonResource;
+import com.csl456.bikerentalapp.resources.RideResource;
+import com.csl456.bikerentalapp.resources.SessionResource;
+import com.csl456.bikerentalapp.resources.UserResource;
+import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
+import io.dropwizard.migrations.MigrationsBundle;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BikeRentalApplication
         extends Application<BikeRentalAppConfiguration> {

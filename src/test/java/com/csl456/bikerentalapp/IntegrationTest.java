@@ -1,14 +1,18 @@
 package com.csl456.bikerentalapp;
 
-import com.csl456.bikerentalapp.core.*;
-import io.dropwizard.testing.*;
-import io.dropwizard.testing.junit5.*;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.*;
+import com.csl456.bikerentalapp.core.Person;
+import io.dropwizard.testing.ConfigOverride;
+import io.dropwizard.testing.ResourceHelpers;
+import io.dropwizard.testing.junit5.DropwizardAppExtension;
+import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import javax.ws.rs.client.*;
-import javax.ws.rs.core.*;
-import java.io.*;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import java.io.File;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

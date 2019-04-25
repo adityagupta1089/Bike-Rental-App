@@ -1,17 +1,18 @@
 package com.csl456.bikerentalapp.filter;
 
-import com.csl456.bikerentalapp.db.*;
-import io.dropwizard.hibernate.*;
+import com.csl456.bikerentalapp.db.SessionDAO;
+import io.dropwizard.hibernate.UnitOfWork;
 
-import javax.ws.rs.*;
-import javax.ws.rs.container.*;
-import javax.ws.rs.core.*;
-import javax.ws.rs.ext.*;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 
 @Provider
 public class LoggedInFilter implements ContainerRequestFilter {
 
-    private SessionDAO sessionDAO;
+    private final SessionDAO sessionDAO;
 
     public LoggedInFilter(SessionDAO sessionDAO) {
         this.sessionDAO = sessionDAO;

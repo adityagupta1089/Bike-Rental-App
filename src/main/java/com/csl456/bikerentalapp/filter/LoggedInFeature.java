@@ -1,17 +1,19 @@
 package com.csl456.bikerentalapp.filter;
 
-import com.csl456.bikerentalapp.*;
-import com.csl456.bikerentalapp.db.*;
-import io.dropwizard.hibernate.*;
+import com.csl456.bikerentalapp.BikeRentalAppConfiguration;
+import com.csl456.bikerentalapp.db.SessionDAO;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
-import javax.ws.rs.container.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.container.DynamicFeature;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.FeatureContext;
 
 public class LoggedInFeature implements DynamicFeature {
 
-    private HibernateBundle<BikeRentalAppConfiguration> hibernateBundle;
+    private final HibernateBundle<BikeRentalAppConfiguration> hibernateBundle;
 
-    private SessionDAO sessionDAO;
+    private final SessionDAO sessionDAO;
 
     public LoggedInFeature(
             HibernateBundle<BikeRentalAppConfiguration> hibernateBundle,

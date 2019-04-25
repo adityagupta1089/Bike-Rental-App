@@ -1,12 +1,12 @@
 package com.csl456.bikerentalapp;
 
-import com.csl456.bikerentalapp.core.*;
-import com.fasterxml.jackson.annotation.*;
+import com.csl456.bikerentalapp.core.SMTPServerDetails;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
-import io.dropwizard.db.*;
+import io.dropwizard.db.DataSourceFactory;
 
-import javax.validation.*;
-import javax.validation.constraints.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 public class BikeRentalAppConfiguration extends Configuration {
 

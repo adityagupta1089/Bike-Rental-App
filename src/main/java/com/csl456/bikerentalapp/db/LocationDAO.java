@@ -1,10 +1,11 @@
 package com.csl456.bikerentalapp.db;
 
-import com.csl456.bikerentalapp.core.*;
-import io.dropwizard.hibernate.*;
-import org.hibernate.*;
+import com.csl456.bikerentalapp.core.Location;
+import io.dropwizard.hibernate.AbstractDAO;
+import org.hibernate.SessionFactory;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public class LocationDAO extends AbstractDAO<Location> {
 
