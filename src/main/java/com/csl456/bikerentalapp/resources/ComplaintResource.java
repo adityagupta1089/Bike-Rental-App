@@ -15,7 +15,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +52,12 @@ public class ComplaintResource {
     @RolesAllowed(UserRole.ADMIN)
     public Complaint resolveComplaint(
             @FormParam("complaintId") int complaintId) {
-        Complaint complaint = complaintDAO.getById(complaintId);
+        Complaint complaint = complaintDAO
+                .getById(complaintId)
+                .orElseThrow(() -> new WebApplicationException(
+                        "Complaint not found \"" + complaintId + "\"",
+                        Response.Status.NOT_FOUND
+                ));
         complaint.setStatus(ComplaintStatus.RESOLVED);
         complaint.setEndTime(new Date());
         return complaintDAO.create(complaint);

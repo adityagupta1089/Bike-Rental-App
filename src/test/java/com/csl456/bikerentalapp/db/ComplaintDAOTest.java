@@ -89,7 +89,7 @@ public class ComplaintDAOTest {
                     1
             ));
         });
-        final Complaint complaint = complaintDAO.getById(1);
+        final Complaint complaint = complaintDAO.getById(1).get();
         assertThat(complaint.getId()).isGreaterThan(0);
         assertThat(complaint.getDetails()).isEqualTo("punctured");
         assertThat(complaint.getStatus()).isEqualTo(ComplaintStatus.UNRESOLVED);

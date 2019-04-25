@@ -58,8 +58,14 @@ public class CycleResource {
     @UnitOfWork
     @Path("{id}")
     @RolesAllowed(UserRole.ADMIN)
-    public Cycle getCycleById(
-            @PathParam("id") int id) { return cycleDAO.findById(id);}
+    public Cycle getCycleById(@PathParam("id") int id) {
+        return cycleDAO
+                .findById(id)
+                .orElseThrow(() -> new WebApplicationException(
+                        "Cycle not found \"" + id + "\"",
+                        Response.Status.NOT_FOUND
+                ));
+    }
 
     @DELETE
     @UnitOfWork
@@ -67,7 +73,13 @@ public class CycleResource {
     @RolesAllowed(UserRole.ADMIN)
     public Cycle removeCycle(@PathParam("id") int id,
             @HeaderParam("Access_Token") String accessToken) {
-        if (cycleDAO.findById(id).getOwnerId() != userDAO
+        if (cycleDAO
+                .findById(id)
+                .orElseThrow(() -> new WebApplicationException(
+                        "Cycle not found \"" + id + "\"",
+                        Response.Status.NOT_FOUND
+                ))
+                .getOwnerId() != userDAO
                 .findByUserName(sessionDAO.getUserName(accessToken))
                 .getPersonId()) {
             throw new WebApplicationException("You do not own this cycle",
@@ -84,7 +96,13 @@ public class CycleResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Cycle changeLocation(@FormParam("id") int id,
             @FormParam("newLocation") int newLocationId) {
-        Cycle cycle = cycleDAO.findById(id);
+        Cycle cycle = cycleDAO
+                .findById(id)
+                .orElseThrow(() -> new WebApplicationException(
+                        "Cycle not found \"" + id + "\"",
+                        Response.Status.NOT_FOUND
+                ));
+        ;
         cycle.setLocationId(newLocationId);
         return cycleDAO.create(cycle);
     }

@@ -5,6 +5,7 @@ import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ComplaintDAO extends AbstractDAO<Complaint> {
 
@@ -21,8 +22,8 @@ public class ComplaintDAO extends AbstractDAO<Complaint> {
         return list(namedQuery("Complaint.findAll"));
     }
 
-    public Complaint getById(int complaintId) {
-        return get(complaintId);
+    public Optional<Complaint> getById(int complaintId) {
+        return Optional.ofNullable(get(complaintId));
     }
 
 }

@@ -4,7 +4,10 @@ import com.csl456.bikerentalapp.core.Cycle;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 public class CycleDAO extends AbstractDAO<Cycle> {
 
@@ -30,13 +33,16 @@ public class CycleDAO extends AbstractDAO<Cycle> {
     }
 
     public Cycle remove(Integer id) {
-        Cycle cycle = findById(id);
+        Cycle cycle
+                = findById(id).orElseThrow(() -> new WebApplicationException("Cycle not found \"" + id + "\"",
+                Response.Status.NOT_FOUND
+        ));
         cycle.setStatus(0);
         return persist(cycle);
     }
 
-    public Cycle findById(Integer id) {
-        return get(id);
+    public Optional<Cycle> findById(Integer id) {
+        return Optional.ofNullable(get(id));
     }
 
 }
