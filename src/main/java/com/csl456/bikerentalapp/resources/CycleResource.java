@@ -64,7 +64,6 @@ public class CycleResource {
     @DELETE
     @UnitOfWork
     @Path("{id}")
-    @RolesAllowed(UserRole.ADMIN)
     public Cycle removeCycle(@PathParam("id") int id,
             @HeaderParam("Access_Token") String accessToken) {
         if (cycleDAO.findById(id).getOwnerId() != userDAO
