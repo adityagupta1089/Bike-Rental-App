@@ -59,6 +59,8 @@ public class CycleDAOTest {
                 ))));
     }
 
+    //TODO remove cycle
+
     @BeforeEach
     public void setUp() {
         cycleDAO = new CycleDAO(daoTestRule.getSessionFactory());

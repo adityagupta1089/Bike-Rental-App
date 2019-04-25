@@ -136,16 +136,4 @@ public class UserResource {
         } else { throw new WebApplicationException("OTP does not match"); }
     }
 
-    @GET
-    @Path("person")
-    @UnitOfWork
-    public Person getPerson(@QueryParam("username") String username) {
-        return personDAO
-                .findById(userDAO.findByUserName(username).getPersonId())
-                .orElseThrow(() -> new WebApplicationException(
-                        "Person for this username not found.",
-                        Response.Status.NOT_FOUND
-                ));
-    }
-
 }

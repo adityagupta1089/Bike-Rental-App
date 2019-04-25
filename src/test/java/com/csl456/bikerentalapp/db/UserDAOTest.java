@@ -18,13 +18,12 @@ public class UserDAOTest {
             .addEntityClass(User.class)
             .build();
 
-    private       UserDAO          userDAO;
+    private UserDAO userDAO;
 
     @Test
     public void createUser() {
         final User user
-                = daoTestRule.inTransaction(() -> userDAO.create(new User(
-                "Vinit",
+                = daoTestRule.inTransaction(() -> userDAO.create(new User("Vinit",
                 "abc",
                 UserRole.ADMIN,
                 1
@@ -33,11 +32,14 @@ public class UserDAOTest {
         assertThat(user.getPassword()).isEqualTo("abc");
         assertThat(user.getRole()).isEqualTo(UserRole.ADMIN);
         assertThat(user.getPersonId()).isEqualTo(1);
-        assertThat(userDAO.findUsersByUsernameAndPassword(
-                "Vinit",
+        assertThat(userDAO.findUsersByUsernameAndPassword("Vinit",
                 "abc"
         )).isEqualTo(user);
     }
+
+    //TODO findall
+    //TODO find by user name
+    //TODO change password
 
     @Test
     public void handlesNullFields() {

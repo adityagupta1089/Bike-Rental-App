@@ -15,26 +15,35 @@ public class SessionResource {
 
     private final UserDAO    userDAO;
     private final SessionDAO sessionDAO;
+    private final PersonDAO  personDAO;
 
-    public SessionResource(UserDAO userDAO, SessionDAO sessionDAO) {
+    public SessionResource(UserDAO userDAO, SessionDAO sessionDAO,
+            PersonDAO personDAO) {
         this.userDAO    = userDAO;
         this.sessionDAO = sessionDAO;
+        this.personDAO  = personDAO;
     }
 
     @POST
     @UnitOfWork
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Session login(@FormParam("username") String username,
+    public UserInformation login(@FormParam("username") String username,
             @FormParam("password") String password) {
-        if (userDAO.findUsersByUsernameAndPassword(username, password)
-                == null) {
+        User user = userDAO.findUsersByUsernameAndPassword(username, password);
+        if (user == null) {
             throw new WebApplicationException("Username or Password Wrong",
                     Status.UNAUTHORIZED
             );
         }
+        Person person = personDAO
+                .findById(user.getPersonId())
+                .orElseThrow(() -> new WebApplicationException(
+                        "No Person Found for this User",
+                        Status.NOT_FOUND
+                ));
         Session session = new Session(username);
         sessionDAO.insert(session);
-        return session;
+        return new UserInformation(session, user, person);
     }
 
     @DELETE

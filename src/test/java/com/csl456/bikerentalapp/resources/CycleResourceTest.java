@@ -46,6 +46,7 @@ class CycleResourceTest {
 
     @Test
     void listCycles() {
+        //TODO get cycle by ownerid
         final List<Cycle> cycles = Collections.singletonList(cycle);
         when(CYCLE_DAO.findAll()).thenReturn(cycles);
         final List<Cycle> response = RESOURCES
@@ -55,6 +56,10 @@ class CycleResourceTest {
         verify(CYCLE_DAO).findAll();
         assertThat(response).containsAll(cycles);
     }
+
+    //TODO get cycle by id
+    //TODO remove cycle
+    //TODO change location
 
     @BeforeEach
     void setUp() { cycle = new Cycle("Atlas", 1, 1, 1);}

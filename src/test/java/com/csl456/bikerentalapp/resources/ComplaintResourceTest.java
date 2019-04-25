@@ -74,6 +74,8 @@ public class ComplaintResourceTest {
         );
     }
 
+    //TODO resolve complaint
+
     @AfterEach
     void tearDown() {
         reset(COMPLAINT_DAO);
