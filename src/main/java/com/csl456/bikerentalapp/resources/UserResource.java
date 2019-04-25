@@ -28,6 +28,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -75,7 +76,8 @@ public class UserResource {
         Person person = personDAO
                 .findById(user.getPersonId())
                 .orElseThrow(() -> new WebApplicationException(
-                        "Related Person not Found"));
+                        "Related Person not Found",
+                        Response.Status.NOT_FOUND));
         String otp = otpCache.get(user.getUsername());
         Email email = EmailBuilder
                 .startingBlank()
@@ -121,7 +123,8 @@ public class UserResource {
         Person person = personDAO
                 .findById(user.getPersonId())
                 .orElseThrow(() -> new WebApplicationException(
-                        "Related Person not Found"));
+                        "Related Person not Found",
+                        Response.Status.NOT_FOUND));
         String otp = otpCache.get(username);
         Email email = EmailBuilder
                 .startingBlank()
@@ -145,7 +148,8 @@ public class UserResource {
             @FormParam("otp") String otp) throws ExecutionException {
         if (otpCache.get(username).equals(otp)) {
             return userDAO.create(userCache.getIfPresent(username));
-        } else { throw new WebApplicationException("OTP does not match"); }
+        } else { throw new WebApplicationException("OTP does not match",
+                Response.Status.UNAUTHORIZED); }
     }
 
     @POST
@@ -155,7 +159,8 @@ public class UserResource {
             @FormParam("otp") String otp) throws ExecutionException {
         if (otpCache.get(username).equals(otp)) {
             return userDAO.findByUserName(username);
-        } else { throw new WebApplicationException("OTP does not match"); }
+        } else { throw new WebApplicationException("OTP does not match",
+                Response.Status.UNAUTHORIZED); }
     }
 
 }
